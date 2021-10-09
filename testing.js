@@ -11,8 +11,11 @@
  * test cases after students have already started their projects and copied this code. Arguably
  * we could just serve this code up from elsewhere too and that would let us change the code too.
  * ¯\_(ツ)_/¯
+ * 
+ * N.B. When the last arg is true it produces a URL with a random string at the end to prevent
+ * caching. This is only needed when updating the test cases to make sure we see the updates here.
  */
-const TEST_CASES_URL = gistURL("gigamonkey", "abf2b7252213f653f9990e071030c3ab", "tests.json", false);
+const TEST_CASES_URL = gistURL("gigamonkey", "abf2b7252213f653f9990e071030c3ab", "tests.json", true);
 
 /*
  * Called from body.onload. For all the test cases we know about, if the function exists, test it.
