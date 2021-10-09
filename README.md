@@ -19,4 +19,4 @@ You are of course free to look at the other files in this project but you do not
 - ⌘-z to undo.
 - Double click with mouse to select a word.
 - Triple click with a mouse to select a whole line.
-- Shift and movement commands extends the selection. (So a quick way to select a bunch of lines is to triple click in the first line to select it and then hold shift and click at the end of the last line or even triple click the last line.)
+- While holding the Shift key movement commands extends the selection. (So a quick way to select a bunch of lines is to triple click in the first line to select it and then hold shift and click at the end of the last line or even triple click the last line.)
