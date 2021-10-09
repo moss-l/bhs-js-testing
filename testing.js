@@ -18,13 +18,28 @@ const TEST_CASES_URL = gistURL("gigamonkey", "abf2b7252213f653f9990e071030c3ab",
  * Called from body.onload. For all the test cases we know about, if the function exists, test it.
  */
 function setup() {
+  const missing = [];
   loadTestCases(TEST_CASES_URL, cases => {
     // FIXME: may want to display the function names that exist in the test cases
     // for which there aren't functions defined.
     for (const fn in cases) {
       if (fn in window) {
         runTests(fn, cases[fn]);
+      } else {
+        missing.push(fn);
       }
+    }
+
+    if (missing.length > 0) {
+      missing.sort();
+      $("#missing").append($("<p>", "Test cases also available for these unimplemented functions"));
+      const ul = $("<ul>");
+      $("#missing").append(ul);
+      for (const fn of missing) {
+        ul.append($("<li>", fn + " "));
+      }
+    } else {
+      $("#missing").append($("<p>", "All functions implemented!"));
     }
   });
 }
