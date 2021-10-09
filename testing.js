@@ -12,11 +12,15 @@ function setup() {
 /*
  * Poor man's jQuery.
  */
-function $(s) {
+function $(s, t) {
   if (s[0] == "#") {
     return document.getElementById(s.substring(1));
   } else if (s[0] == "<") {
-    return document.createElement(s.substring(1, s.length - 1));
+    const e = document.createElement(s.substring(1, s.length - 1));
+    if (t != undefined) {
+      e.append($(t));
+    }
+    return e;
   } else {
     return document.createTextNode(s);
   }
@@ -26,46 +30,38 @@ function $(s) {
  * Run the test cases for a given function.
  */
 function runTests(fn, cases) {
-  reportTest(fn);
+  const table = $("<table>");
+  const colgroup = $("<colgroup>");
+  colgroup.append($("<col>", "functionCall"));
+  colgroup.append($("<col>", "got"));
+  colgroup.append($("<col>", "expected"));
+  colgroup.append($("<col>", "result"));
+  table.append(colgroup);
+
+  const thead = $("<thead>");
+  const tr = $("<tr>");
+  tr.append($("<th>", "Invocation"));
+  tr.append($("<th>", "Got"))
+  tr.append($("<th>", "Expected"));
+  tr.append($("<th>", "Result"));
+  thead.append(tr);
+  table.append(thead);
+  table.append($("<tbody>"));
   for (const c of cases) {
     let result = window[fn].apply(null, c.input);
     if (result == c.output) {
-      reportPass(fn, c.input, result);
+      addResultRow(table, fn, c.input, result, result, true);
     } else {
-      reportFailure(fn, c.input, result, c.output);
+      addResultRow(table, fn, c.input, result, c.output, false);
     }
   }
+  $("#results").append($("<h1>", "Function " + fn));
+  $("#results").append(table);
 }
 
-/*
- * Report the function for which we are running tests.
- */
-function reportTest(fn) {
-  let p = $("<h1>");
-  p.append($("Function " + fn))  ;
-  $("#results").append(p);
-}
-
-/*
- * Report a passing test case.
- */
-function reportPass(fn, input, result) {
-  addResultRow(fn, input, result, result, true);
-}
-
-/*
- * Report a failing test case.
- */
-function reportFailure(fn, input, result, expected) {
-  addResultRow(fn, input, result, expected, false);
-}
-
-
-function addResultRow(fn, input, got, expected, pass) {
-  const t = $("#results_table");
-  const row = t.insertRow();
+function addResultRow(table, fn, input, got, expected, pass) {
+  const row = table.insertRow();
   row.className = pass ? "pass" : "fail";
-  console.log(row);
   row.insertCell().append($(stringifyCall(fn, input)));
   row.insertCell().append($(JSON.stringify(got)));
   row.insertCell().append($(JSON.stringify(expected)));
@@ -79,12 +75,20 @@ function stringifyCall(fn, input) {
   return fn + "(" + input.map(JSON.stringify).join(", ") + ")";
 }
 
-
 // In theory these could be fetched from elsewhere via XMLHttpRequest or something.
 testCases = {
   "countClumps": [
     { input: [[]], output: 0 },
     { input: [[1]], output: 0 },
     { input: [[1, 1]], output: 42 },
+  ],
+  "fib": [
+    { input: [0], output: 1 },
+    { input: [1], output: 1 },
+    { input: [2], output: 2 },
+    { input: [3], output: 3 },
+    { input: [4], output: 5 },
+    { input: [10], output: 89 },
+    { input: [20], output: 10946 },
   ]
 };

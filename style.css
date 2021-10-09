@@ -3,13 +3,14 @@ body {
   font-family: sans-serif;
 }
 
-#results_table {
+table {
   margin: auto;
   width: 95%;
 }
 
 col.functionCall { width: 50%; }
 col.got, col.expected { width: 20%; }
+col.result { width: 10%; }
 
 td, th { padding: 10px; }
 td, th { text-align: center; }
