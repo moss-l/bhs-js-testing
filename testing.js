@@ -41,8 +41,8 @@ function runTests(fn, cases) {
  * Report the function for which we are running tests.
  */
 function reportTest(fn) {
-  let p = $("<p>");
-  p.append($(fn))  ;
+  let p = $("<h1>");
+  p.append($("Function " + fn))  ;
   $("#results").append(p);
 }
 
@@ -50,18 +50,26 @@ function reportTest(fn) {
  * Report a passing test case.
  */
 function reportPass(fn, input, result) {
-  let p = $("<p>");
-  p.append($("PASS: " + stringifyCall(fn, input) + " => " + JSON.stringify(result)));
-  $("#results").append(p);
+  addResultRow(fn, input, result, result, true);
 }
 
 /*
  * Report a failing test case.
  */
 function reportFailure(fn, input, result, expected) {
-  let p = $("<p>");
-  p.append($("FAIL: " + stringifyCall(fn, input) + " => " + JSON.stringify(result) + "; expected: " + JSON.stringify(expected)));
-  $("$results").append(p);
+  addResultRow(fn, input, result, expected, false);
+}
+
+
+function addResultRow(fn, input, got, expected, pass) {
+  const t = $("#results_table");
+  const row = t.insertRow();
+  row.className = pass ? "pass" : "fail";
+  console.log(row);
+  row.insertCell().append($(stringifyCall(fn, input)));
+  row.insertCell().append($(JSON.stringify(got)));
+  row.insertCell().append($(JSON.stringify(expected)));
+  row.insertCell().append($(pass ? "✅" : "❌"));
 }
 
 /*
@@ -77,6 +85,6 @@ testCases = {
   "countClumps": [
     { input: [[]], output: 0 },
     { input: [[1]], output: 0 },
-    { input: [[1, 1]], output: 1 },
+    { input: [[1, 1]], output: 42 },
   ]
 };
