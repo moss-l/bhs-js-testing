@@ -20,8 +20,6 @@ const TEST_CASES_URL = gistURL("gigamonkey", "abf2b7252213f653f9990e071030c3ab",
 function setup() {
   const missing = [];
   loadTestCases(TEST_CASES_URL, cases => {
-    // FIXME: may want to display the function names that exist in the test cases
-    // for which there aren't functions defined.
     for (const fn in cases) {
       if (fn in window) {
         runTests(fn, cases[fn]);
@@ -32,11 +30,11 @@ function setup() {
 
     if (missing.length > 0) {
       missing.sort();
-      $("#missing").append($("<p>", "Test cases also available for these unimplemented functions"));
+      $("#missing").append($("<p>", "Test cases available for these unimplemented functions"));
       const ul = $("<ul>");
       $("#missing").append(ul);
       for (const fn of missing) {
-        ul.append($("<li>", fn + " "));
+        ul.append($("<li>", fn));
       }
     } else {
       $("#missing").append($("<p>", "All functions implemented!"));
@@ -105,6 +103,9 @@ function runTests(fn, cases) {
   $("#results").append(div);
 }
 
+/*
+ * Make a table to told the results of running the tests for one function.
+ */
 function makeResultsTable() {
   const table = $("<table>");
   const colgroup = $("<colgroup>");
@@ -125,6 +126,10 @@ function makeResultsTable() {
   return table;
 }
 
+/*
+ * Given the results of invoking the function on a given input, check
+ * whether it produced the correct result and add a row to the given tbody.
+ */
 function addResultRow(tbody, fn, input, got, expected) {
   // Kind of a hack to compare values other than numbers and strings. Should work for arrays and dicts
   const passed = JSON.stringify(got) == JSON.stringify(expected);

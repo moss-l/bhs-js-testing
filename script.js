@@ -1,13 +1,11 @@
+// This file is where you should write your code. 
+
 function countClumps(xs) {
-  var clumps = 0;
-  for (var i = 0; i < xs.length;) {
-    var s = i + 1;
-    while (s < xs.length && xs[i] == xs[s]) {
-      s++;
-    }
-    if (s - i > 1) {
-      clumps++;
-    }
+  let clumps = 0;
+  for (let i = 0; i < xs.length;) {
+    let s = i + 1;
+    while (s < xs.length && xs[i] == xs[s]) s++;
+    if (s - i > 1) clumps++;
     i = s;
   }
   return clumps;
