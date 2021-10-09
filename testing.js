@@ -1,82 +1,78 @@
-function runTests() {
-  // Unfortunately we don't seem to have complete control over when repl.it
-  // saves our code so that reloading it will help. It is possible to make a
-  // change and click Run tests and excecute the old version of the code and
-  // then a second later click Run tests again and pick up the changes.
-  clearResults();
-  loadScript("script.js", () => {
-    let fn = document.getElementById("functions").value;
-    let cases = testCases[fn];
-    clearResults();
-    for (var i = 0; i < cases.length; i++) {
-      let c = cases[i];
-      let result = window[fn].apply(null, cases[i].input);
-      if (result == c.output) {
-        reportPass(fn, c.input, result);
-      } else {
-        reportFailure(fn, c.input, result, c.output);
-      }
+/*
+ * Called from body.onload. For all the test cases we know about, if the function exists, test it.
+ */
+function setup() {
+  for (const fn in testCases) {
+    if (fn in window) {
+      runTests(fn, testCases[fn]);
     }
-  });
-}
-
-function clearResults() {
-  clear(document.getElementById("results"));
-}
-
-function reportPass(fn, input, result) {
-  let p = document.createElement("p");
-  p.append(document.createTextNode("PASS: " + call(fn, input) + " => " + JSON.stringify(result)));
-  document.getElementById("results").append(p);
-}
-
-function reportFailure(fn, input, result, expected) {
-  let p = document.createElement("p");
-  p.append(document.createTextNode("FAIL: " + call(fn, input) + " => " + JSON.stringify(result) + "; expected: " + JSON.stringify(expected)));
-  document.getElementById("results").append(p);
-}
-
-function clear(e) {
-  while (e.firstChild) {
-    e.removeChild(e.firstChild);
   }
 }
 
-function call(fn, input) {
+/*
+ * Poor man's jQuery.
+ */
+function $(s) {
+  if (s[0] == "#") {
+    return document.getElementById(s.substring(1));
+  } else if (s[0] == "<") {
+    return document.createElement(s.substring(1, s.length - 1));
+  } else {
+    return document.createTextNode(s);
+  }
+}
+
+/*
+ * Run the test cases for a given function.
+ */
+function runTests(fn, cases) {
+  reportTest(fn);
+  for (const c of cases) {
+    let result = window[fn].apply(null, c.input);
+    if (result == c.output) {
+      reportPass(fn, c.input, result);
+    } else {
+      reportFailure(fn, c.input, result, c.output);
+    }
+  }
+}
+
+/*
+ * Report the function for which we are running tests.
+ */
+function reportTest(fn) {
+  let p = $("<p>");
+  p.append($(fn))  ;
+  $("#results").append(p);
+}
+
+/*
+ * Report a passing test case.
+ */
+function reportPass(fn, input, result) {
+  let p = $("<p>");
+  p.append($("PASS: " + stringifyCall(fn, input) + " => " + JSON.stringify(result)));
+  $("#results").append(p);
+}
+
+/*
+ * Report a failing test case.
+ */
+function reportFailure(fn, input, result, expected) {
+  let p = $("<p>");
+  p.append($("FAIL: " + stringifyCall(fn, input) + " => " + JSON.stringify(result) + "; expected: " + JSON.stringify(expected)));
+  $("$results").append(p);
+}
+
+/*
+ * Render a function call with it's array of arguments as a call.
+ */
+function stringifyCall(fn, input) {
   return fn + "(" + input.map(JSON.stringify).join(", ") + ")";
 }
 
-function setup() {
-  let menu = document.getElementById("functions");
-  for (let fn in testCases) {
-    let opt = document.createElement("option");
-    opt.value = fn;
-    opt.append(document.createTextNode(fn));
-    menu.append(opt);
-  }
-}
 
-function reloadCode() {
-
-}
-
-function loadScript(src, callback) {
-  let oldCode = document.getElementById("code");
-
-  let newCode = document.createElement('script');
-  newCode.type = 'text/javascript';
-  newCode.id = "code";
-  newCode.src = src;
-  newCode.onload = newCode.onreadystatechange = function () {
-    if (!this.readyState || this.readyState == 'complete') {
-      callback();
-    }
-  };
-  oldCode.parentNode.replaceChild(newCode, oldCode);
-}
-
-
-
+// In theory these could be fetched from elsewhere via XMLHttpRequest or something.
 testCases = {
   "countClumps": [
     { input: [[]], output: 0 },
