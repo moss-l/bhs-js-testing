@@ -14,7 +14,7 @@ function countClumps(xs) {
 }
 
 
-function fib(n) {
+function xfib(n) {
   if (n == 0 || n == 1) {
     return 1
   } else {

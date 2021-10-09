@@ -1,12 +1,50 @@
 /*
+ * Testing infrastructure. You do not need to look at this code (though you are, of course,
+ * free to do so.) This code fetches a set of test cases from a URL and then uses them to test
+ * any functions you have defined. So if there are test cases for a function named fib and in
+ * script.js you write a function named fib it will test your function with the test cases it
+ * has fetched.
+ */
+
+/*
+ * The URL. We fetch the test cases rather than embed them in this code so that we can add new 
+ * test cases after students have already started their projects and copied this code. Arguably
+ * we could just serve this code up from elsewhere too and that would let us change the code too.
+ * ¯\_(ツ)_/¯
+ */
+const TEST_CASES_URL = gistURL("gigamonkey", "abf2b7252213f653f9990e071030c3ab", "tests.json", false);
+
+/*
  * Called from body.onload. For all the test cases we know about, if the function exists, test it.
  */
 function setup() {
-  for (const fn in testCases) {
-    if (fn in window) {
-      runTests(fn, testCases[fn]);
+  loadTestCases(TEST_CASES_URL, cases => {
+    // FIXME: may want to display the function names that exist in the test cases
+    // for which there aren't functions defined.
+    for (const fn in cases) {
+      if (fn in window) {
+        runTests(fn, cases[fn]);
+      }
     }
-  }
+  });
+}
+
+/*
+ * Load test case data via XMLHttpRequest.
+ */
+function loadTestCases(url, testRunner) {
+  const r = new XMLHttpRequest();
+  r.open('GET', url, true);
+  r.onload = function () {
+    if (this.status == 200) {
+      testRunner(JSON.parse(this.responseText));
+    } else {
+      // FIXME: Should put an error in the HTML page so we don't have to look in the console
+      // to know something went wrong.
+      console.log("Couldn't fetch test cases: " + this.status + "(" + this.statusText + ")");
+    }
+  };
+  r.send(null);
 }
 
 /*
@@ -75,20 +113,14 @@ function stringifyCall(fn, input) {
   return fn + "(" + input.map(JSON.stringify).join(", ") + ")";
 }
 
-// In theory these could be fetched from elsewhere via XMLHttpRequest or something.
-testCases = {
-  "countClumps": [
-    { input: [[]], output: 0 },
-    { input: [[1]], output: 0 },
-    { input: [[1, 1]], output: 42 },
-  ],
-  "fib": [
-    { input: [0], output: 1 },
-    { input: [1], output: 1 },
-    { input: [2], output: 2 },
-    { input: [3], output: 3 },
-    { input: [4], output: 5 },
-    { input: [10], output: 89 },
-    { input: [20], output: 10946 },
-  ]
-};
+/*
+ * Return the permalink URL for a gist, possibly randomizing to prevent caching.
+ */ 
+function gistURL(user, gistID, fileName, randomize=true) {
+  const base = "https://gist.githubusercontent.com/" + user + "/" + gistID + "/raw/" + fileName;
+  if (randomize) {
+    return base + "?" + new Date().getTime() + "" + Math.floor(Math.random() * 1000000);
+  } else {
+    return base;
+  }
+}
