@@ -23,14 +23,20 @@ const TEST_CASES_URL = gistURL("gigamonkey", "abf2b7252213f653f9990e071030c3ab",
 function setup() {
   const missing = [];
   loadTestCases(TEST_CASES_URL, cases => {
-    for (const fn in cases) {
-      if (fn in window) {
-        runTests(fn, cases[fn]);
-      } else {
-        missing.push(fn);
+
+    if (window.workingOn) {
+      const fn = workingOn instanceof Function ? workingOn.name : workingOn;
+      console.log(fn);
+      runTests(fn, cases[fn]);
+    } else {
+      for (const fn in cases) {
+        if (fn in window) {
+          runTests(fn, cases[fn]);
+        } else {
+          missing.push(fn);
+        }
       }
     }
-
     if (missing.length > 0) {
       missing.sort();
       $("#missing").append($("<p>", "Test cases available for these unimplemented functions"));
