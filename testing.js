@@ -24,10 +24,14 @@ function setup() {
   const missing = [];
   loadTestCases(TEST_CASES_URL, cases => {
 
-    if (window.workingOn) {
+    if (window.workingOn && workingOn) {
       const fn = workingOn instanceof Function ? workingOn.name : workingOn;
       console.log(fn);
-      runTests(fn, cases[fn]);
+      if (fn in cases) {
+        runTests(fn, cases[fn]);
+      } else {
+        reportError(["No test cases for workingOn function " + fn]);
+      }
     } else {
       for (const fn in cases) {
         if (fn in window) {
@@ -36,17 +40,18 @@ function setup() {
           missing.push(fn);
         }
       }
-    }
-    if (missing.length > 0) {
-      missing.sort();
-      $("#missing").append($("<p>", "Test cases available for these unimplemented functions"));
-      const ul = $("<ul>");
-      $("#missing").append(ul);
-      for (const fn of missing) {
-        ul.append($("<li>", fn));
+
+      if (missing.length > 0) {
+        missing.sort();
+        $("#missing").append($("<p>", "Test cases available for these unimplemented functions"));
+        const ul = $("<ul>");
+        $("#missing").append(ul);
+        for (const fn of missing) {
+          ul.append($("<li>", fn));
+        }
+      } else {
+        $("#missing").append($("<p>", "All functions implemented!"));
       }
-    } else {
-      $("#missing").append($("<p>", "All functions implemented!"));
     }
   });
 }
@@ -61,14 +66,22 @@ function loadTestCases(url, testRunner) {
     if (this.status == 200) {
       testRunner(JSON.parse(this.responseText));
     } else {
-      const div = $("<div>");
-      div.className = "error";
-      div.append($("<p>", "Oh no! Couldn't fetch test cases"));
-      div.append($("<p>", this.status + " (" + this.statusText + ")"));
-      $("#results").append(div);
+      reportError([
+        "Oh no! Couldn't fetch test cases",
+        this.status + " (" + this.statusText + ")"
+      ]);
     }
   };
   r.send(null);
+}
+
+function reportError(messages) {
+  const div = $("<div>");
+  div.className = "error";
+  for (let m of messages) {
+    div.append($("<p>", m));
+  }
+  $("#results").append(div);
 }
 
 /*

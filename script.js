@@ -1,8 +1,9 @@
 // This file is where you should write your code. 
 
-// If you only want to run tests for one function that you're working on, uncomment
-// the next line and set the value to the name of the function you are working on.
-//workingOn = "fib";
+// If you only want to run tests for one function that you're working on, set the value 
+// of this variale to the name of the function you are working on. To run tests for all
+// the functions you have defined, set it to an empty string.
+workingOn = "";
 
 function countClumps(xs) {
   let clumps = 0;

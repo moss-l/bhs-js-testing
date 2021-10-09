@@ -1,6 +1,13 @@
 # bhs-js-testing
 
-Playing around with some Javascript testing infra for replit.com.
+Use this project to check your Javascript implementations of the TK problems. The only file you need to worry about is `script.js` which is where you will write your code.
+
+When you click Run it will render a web page that will test any functions you have defined for which we have defined test cases and will tell you the names of the functions that there are test cases for that you have not yet implemented.
+
+You can also choose to only run the tests for a specific function by giving a value to the variable `workingOn` in `script.js`.
+
+You are of course free to look at the other files in this project but you do not need to understand them to write our own code.
+
 
 ## Key keyboard and menu shortcuts
 
