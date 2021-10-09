@@ -53,6 +53,20 @@ function setup() {
         $("#missing").append($("<p>", "All functions implemented!"));
       }
     }
+
+    // Extract test cases
+    const collection = {};
+    for (let i = 0; i < 50; i++) {
+      const name = "test_" + i;
+      if (name in window) {
+        collection[name] = {
+          "cases": window[name],
+          "answers": window["answer_" + i]
+        };
+      }
+    }
+    console.log(JSON.stringify(collection));
+
   });
 }
 
