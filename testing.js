@@ -39,9 +39,11 @@ function loadTestCases(url, testRunner) {
     if (this.status == 200) {
       testRunner(JSON.parse(this.responseText));
     } else {
-      // FIXME: Should put an error in the HTML page so we don't have to look in the console
-      // to know something went wrong.
-      console.log("Couldn't fetch test cases: " + this.status + "(" + this.statusText + ")");
+      const div = $("<div>");
+      div.className = "error";
+      div.append($("<p>", "Oh no! Couldn't fetch test cases"));
+      div.append($("<p>", this.status + " (" + this.statusText + ")"));
+      $("#results").append(div);
     }
   };
   r.send(null);
@@ -68,6 +70,27 @@ function $(s, t) {
  * Run the test cases for a given function.
  */
 function runTests(fn, cases) {
+  const table = makeResultsTable();
+  const tbody = $("<tbody>");
+  table.append(tbody);
+
+  let number = 0;
+  let passed = 0;
+  for (const c of cases) {
+    const result = window[fn].apply(null, c.input);
+    number++;
+    if (addResultRow(tbody, fn, c.input, result, c.output)) {
+      passed++;
+    }
+  }
+  $("#results").append($("<h1>", "Function " + fn));
+  const div = $("<div>");
+  div.append(table);
+  div.append($("<p>", passed + " of " + number + " test cases passed."));
+  $("#results").append(div);
+}
+
+function makeResultsTable() {
   const table = $("<table>");
   const colgroup = $("<colgroup>");
   colgroup.append($("<col>", "functionCall"));
@@ -84,26 +107,19 @@ function runTests(fn, cases) {
   tr.append($("<th>", "Result"));
   thead.append(tr);
   table.append(thead);
-  table.append($("<tbody>"));
-  for (const c of cases) {
-    let result = window[fn].apply(null, c.input);
-    if (result == c.output) {
-      addResultRow(table, fn, c.input, result, result, true);
-    } else {
-      addResultRow(table, fn, c.input, result, c.output, false);
-    }
-  }
-  $("#results").append($("<h1>", "Function " + fn));
-  $("#results").append(table);
+  return table;
 }
 
-function addResultRow(table, fn, input, got, expected, pass) {
-  const row = table.insertRow();
-  row.className = pass ? "pass" : "fail";
+function addResultRow(tbody, fn, input, got, expected) {
+  // Kind of a hack to compare values other than numbers and strings. Should work for arrays and dicts
+  const passed = JSON.stringify(got) == JSON.stringify(expected);
+  const row = tbody.insertRow();
+  row.className = passed ? "pass" : "fail";
   row.insertCell().append($(stringifyCall(fn, input)));
   row.insertCell().append($(JSON.stringify(got)));
   row.insertCell().append($(JSON.stringify(expected)));
-  row.insertCell().append($(pass ? "✅" : "❌"));
+  row.insertCell().append($(passed ? "✅" : "❌"));
+  return passed;
 }
 
 /*
@@ -115,8 +131,8 @@ function stringifyCall(fn, input) {
 
 /*
  * Return the permalink URL for a gist, possibly randomizing to prevent caching.
- */ 
-function gistURL(user, gistID, fileName, randomize=true) {
+ */
+function gistURL(user, gistID, fileName, randomize = true) {
   const base = "https://gist.githubusercontent.com/" + user + "/" + gistID + "/raw/" + fileName;
   if (randomize) {
     return base + "?" + new Date().getTime() + "" + Math.floor(Math.random() * 1000000);
