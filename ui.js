@@ -2,6 +2,8 @@
  * UI: code to deal with the HTML page.
  */
 
+let testData = null;
+
 /*
  * Poor man's jQuery.
  */
@@ -21,10 +23,14 @@ function $(s, t) {
   }
 }
 
+/*
+ * Remove all the children from the given DOM element.
+ */
 function clear(e) {
   while (e.firstChild) {
-    e.removeChild(e.firstChild);
+    e.removeChild(e.lastChild);
   }
+  return e;
 }
 
 function reportError(messages) {
@@ -37,76 +43,122 @@ function reportError(messages) {
 }
 
 /*
- * Called from body.onload. For all the test cases we know about, if the function exists, test it.
+ * Called from body.onload
  */
 function setup() {
-  const missing = [];
-
   loadTestCases(TEST_CASES_URL, data => {
+    testData = data;
     populateProblemSets(data);
-    cases = data["test_cases"];
-    casesData = cases;
-
-    const cp = currentProblem();
-    if (cp) {
-      if (cp in cases && cp in window) {
-        runTests(cp, cases[cp]);
-      } else {
-        if (cp in cases) {
-          reportError(["No implementation for " + cp]);
-        } else {
-          reportError(["No test cases for current function " + cp]);
-        }
-      }
-    } else {
-      for (const fn in cases) {
-        if (fn in window) {
-          runTests(fn, cases[fn]);
-        } else {
-          missing.push(fn);
-        }
-      }
-
-      if (missing.length > 0) {
-        missing.sort();
-        $("#missing").append($("<p>", "Test cases available for these unimplemented functions"));
-        const ul = $("<ul>");
-        $("#missing").append(ul);
-        for (const fn of missing) {
-          li = $("<li>", fn);
-          li.onclick = e => setCurrentProblem(e.target.innerText);
-          ul.append(li);
-
-        }
-      } else {
-        $("#missing").append($("<p>", "All functions implemented!"));
-      }
-    }
+    showFunctions();
   });
 }
+
+function defineLocalStorage(name) {
+  return function (value) {
+    if (value) {
+      localStorage.setItem(name, value);
+    } else if (value === null) {
+      localStorage.removeItem(name);
+    }
+    return localStorage.getItem(name);
+  }
+}
+
+let currentSet = defineLocalStorage('currentSet');
+let currentProblem = defineLocalStorage('currentProblem');
+
+function showFunctions() {
+  const problemSet = currentSet();
+  const problem = currentProblem();
+
+  clear($("#results"));
+
+  if (problem) {
+    showFunction(problem);
+  } else if (problemSet) {
+    for (const p of testData.problems[problemSet]) {
+      showFunction(p);
+    }
+  }
+}
+
+function showFunction(name, currentState) {
+  if (name in window) {
+    displayTestResults(name, testResults(name, testData.test_cases[name]));
+  } else {
+    displayMissingFunction(name);
+  }
+}
+
+
 
 
 function populateProblemSets(data) {
   const menu = $("#problem_sets");
-  menu.onchange = e => populateProblems(data.problems[e.target.value]);
+
+  function onChange(e) {
+    localStorage.removeItem('currentProblem');
+    selectProblemSet(menu, e.target.value, data);
+    showFunctions();
+  }
+
+  menu.onchange = onChange;
+
   for (const s of data.sets) {
     const opt = $("<option>", s);
     opt.value = s;
     menu.append(opt);
   }
-}
-
-function populateProblems(problems) {
-  // TODO: 
-  //  - select the button of the currently selected problem if there is one.
-  //  - Add event handlers to set/unset the current problem and redisplay.
-  const div = $("#problems");
-  clear(div);
-  for (const p of problems) {
-    div.append($("<button>", p));
-    //div.append($(" "));
+  const currentProblemSet = localStorage.getItem('currentSet');
+  if (currentProblemSet != null) {
+    selectProblemSet(menu, currentProblemSet, data);
   }
 }
+
+function selectProblemSet(menu, setName, data) {
+  menu.value = setName;
+  populateProblems(data.problems[setName]);
+  localStorage.setItem('currentSet', setName);
+}
+
+
+
+function populateProblems(problems) {
+  const div = clear($("#problems"));
+  for (const p of problems) {
+    const b = $("<button>", p);
+    b.value = p;
+    b.onclick = e => selectProblem(p);
+    if (p == localStorage.getItem('currentProblem')) {
+      b.className = 'selected';
+    }
+    div.append(b);
+  }
+}
+
+function selectProblem(name) {
+  console.log("here " + name);
+  if (name === currentProblem()) {
+    currentProblem(null);
+  } else {
+    currentProblem(name);
+  }
+  const selected = currentProblem();
+  for (const b of $("#problems").children) {
+    b.className = b.value === selected ? 'selected' : '';
+  }
+  showFunctions();
+}
+
+
+
+
+// Drawing
+
+function displayMissingFunction(name) {
+  $("#results").append($("<p>", "No function definition for " + name));
+}
+
 
 function displayTestResults(fn, results) {
   const table = makeResultsTable();
@@ -157,16 +209,9 @@ function makeResultsTable() {
 function addResultRow(tbody, fn, input, got, expected, passed) {
   const row = tbody.insertRow();
   row.className = passed ? "pass" : "fail";
-  row.insertCell().append($(stringifyCall(fn, input)));
+  row.insertCell().append(fn + "(" + input.map(JSON.stringify).join(", ") + ")");
   row.insertCell().append($(JSON.stringify(got)));
   row.insertCell().append($(JSON.stringify(expected)));
   row.insertCell().append($(passed ? "✅" : "❌"));
   return passed;
-}
-
-/*
- * Render a function call with it's array of arguments as a call.
- */
-function stringifyCall(fn, input) {
-  return fn + "(" + input.map(JSON.stringify).join(", ") + ")";
 }

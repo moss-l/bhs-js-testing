@@ -17,34 +17,6 @@ const BASE_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-testing/ma
 // When second arg is true, randomizes the URL to prevent caching.
 const TEST_CASES_URL = maybeRandomizeURL(BASE_URL, true)
 
-let casesData;
-
-// Load the test case data from the internet.
-//
-// Basic flow: when working on a particular problem, show information about that problem: the definition if
-// we have it and the table of test results. This allows us to re-run the repl and stay on the same problem.
-// We can close the current problem whenever we want to get back to the list of all problems. Perhaps even when
-// working on a specific problem we can display stats about the total state of the world: number of problems
-// started (i.e. function is defined at least), number completed (all tests passing), and number not started.
-// (On the other hand, we might not want to run all tests all the time since some of them may be slow or
-// even sufficiently buggy as to break things. If we only try to execute the tests for the current problem then
-// the bar is just to keep script.js in a state that it can be loaded and the current problem function can be run.)
-// 
-// If there is a current problem set in local storage, run the tests and display the results for that function.
-//
-// Otherwse, collect the state of all the functions in the test case data: is the function defined
-// and if so the test results. Then render the names of the test cases, distinguishing between names for
-// which there is no function defined, those that have a definition but are not passing all their tests,
-// and those that are passing all tests.
-//
-// Clicking on the name of a defined function should show the test results and make it the current problem.
-// There should be a way to X out of the current problem and get back to the list of functions.
-// Clicking the name of an undefined function should give the definition of the function and/or a snippet
-// of code to paste into script.js.
-
-
-
-
 function allResults(cases) {
   const state = {};
   for (const fn in cases) {
@@ -64,15 +36,6 @@ function allResults(cases) {
     }
   }
   return state;
-}
-
-
-function setCurrentProblem(name) {
-  localStorage.setItem('currentProblem', name);
-}
-
-function currentProblem() {
-  return localStorage.getItem('currentProblem');
 }
 
 /*
@@ -95,12 +58,7 @@ function loadTestCases(url, testRunner) {
 }
 
 
-/*
- * Run the test cases for a given function.
- */
-function runTests(fn, cases) {
-  displayTestResults(fn, testResults(fn, cases));
-}
+
 
 /*
  * Compute test results for a single function given its test cases.

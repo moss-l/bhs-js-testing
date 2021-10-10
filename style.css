@@ -17,6 +17,11 @@ h1, h2 { font-weight: 300; }
   padding: 2px;
 }
 
+#problems button.selected {
+  background: blue;
+  color: white;
+}
+
 
 #results div {
   margin: auto;
