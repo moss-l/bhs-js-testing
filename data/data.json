@@ -1,0 +1,525 @@
+{
+  "sets": [
+    "SL 1-10",
+    "SL 11-20",
+    "SL 21-30",
+    "Eat Cake!",
+    "HL F/M/R",
+    "HL Recursion"
+  ],
+  "problems": {
+    "SL 1-10": [
+      "sleep_in",
+      "monkey_trouble",
+      "string_times",
+      "front_times",
+      "string_bits",
+      "caughtSpeeding",
+      "fizz_buzz",
+      "specialEleven",
+      "withoutDoubles",
+      "left2"
+    ],
+    "SL 11-20": [
+      "firstLast6",
+      "has23",
+      "fix23",
+      "countYZ",
+      "endOther",
+      "starOut",
+      "getSandwich",
+      "canBalance",
+      "countClumps",
+      "sameEnds"
+    ],
+    "SL 21-30": [
+      "countEvens",
+      "countHi",
+      "no14",
+      "either24",
+      "makeChocolate",
+      "luckySum",
+      "maxBlock",
+      "linearIn",
+      "countTriple",
+      "sameEnds"
+    ],
+    "Eat Cake!": [
+      "eat_cake"
+    ],
+    "HL F/M/R": [
+      "all_even",
+      "no_space",
+      "all_positive",
+      "same_vowels",
+      "times_ten",
+      "shift_right",
+      "no_vowels",
+      "double_matrix",
+      "sum_nums",
+      "product_matrix",
+      "objectify",
+      "lucky_numbers"
+    ],
+    "HL Recursion": [
+      "triangle",
+      "fibonacci",
+      "countHi",
+      "sumDigits"
+    ]
+  },
+  "test_cases": {
+    "sleep_in": [
+      {"input": [false, false], "output": true},
+      {"input": [true, false], "output": false},
+      {"input": [false, true], "output": true},
+      {"input": [true, true], "output": true}
+    ],
+    "monkey_trouble": [
+      {"input": [true, false], "output": false},
+      {"input": ["yes", "no"], "output": false},
+      {"input": [false, false], "output": true},
+      {"input": [false, true], "output": false},
+      {"input": [true, true], "output": true},
+      {"input": [100, [1, 2]], "output": false}
+    ],
+    "string_times": [
+      {"input": ["dude", 2], "output": "dudedude"},
+      {"input": ["yeah", 0], "output": ""},
+      {"input": ["bro", 4], "output": "brobrobrobro"},
+      {"input": ["o ", 20], "output": "o o o o o o o o o o o o o o o o o o o o "},
+      {"input": ["", 100], "output": ""}
+    ],
+    "front_times": [
+      {"input": ["oo", 3], "output": "oooooo"},
+      {"input": ["dude", 2], "output": "duddud"},
+      {"input": ["yeah", 0], "output": ""},
+      {"input": ["brothers", 4], "output": "brobrobrobro"},
+      {"input": ["", 100], "output": ""}
+    ],
+    "string_bits": [
+      {"input": ["dude"], "output": "dd"},
+      {"input": ["yeahyeahyeah"], "output": "yayaya"},
+      {"input": ["oo"], "output": "o"},
+      {"input": [""], "output": ""},
+      {"input": ["brothers"], "output": "bohr"}
+    ],
+    "caughtSpeeding": [
+      {"input": [90, false], "output": 2},
+      {"input": [75, false], "output": 1},
+      {"input": [85, true], "output": 1},
+      {"input": [65, true], "output": 0},
+      {"input": [80, false], "output": 1},
+      {"input": [60, false], "output": 0},
+      {"input": [65, false], "output": 1},
+      {"input": [40, true], "output": 0},
+      {"input": [75, true], "output": 1},
+      {"input": [70, false], "output": 1},
+      {"input": [40, false], "output": 0},
+      {"input": [85, false], "output": 2}
+    ],
+    "fizz_buzz": [
+      {"input": [143], "output": "143!"},
+      {"input": [-5], "output": "Buzz"},
+      {"input": [0], "output": "FizzBuzz"},
+      {"input": [15], "output": "FizzBuzz"},
+      {"input": [33], "output": "Fizz"}
+    ],
+    "specialEleven": [
+      {"input": [12], "output": true},
+      {"input": [0], "output": true},
+      {"input": [63829], "output": false},
+      {"input": [56], "output": true},
+      {"input": [11], "output": true},
+      {"input": [245], "output": false},
+      {"input": [6], "output": false},
+      {"input": [99], "output": true},
+      {"input": [30], "output": false}
+    ],
+    "withoutDoubles": [
+      {"input": [5, 5, false], "output": 10},
+      {"input": [3, 3, false], "output": 6},
+      {"input": [6, 6, true], "output": 7},
+      {"input": [6, 1, false], "output": 7},
+      {"input": [6, 6, false], "output": 12},
+      {"input": [1, 6, true], "output": 7},
+      {"input": [5, 4, true], "output": 9},
+      {"input": [5, 4, false], "output": 9},
+      {"input": [3, 3, true], "output": 7},
+      {"input": [5, 5, true], "output": 11},
+      {"input": [2, 3, false], "output": 5},
+      {"input": [2, 3, true], "output": 5}
+    ],
+    "left2": [
+      {"input": ["Hi"], "output": "Hi"},
+      {"input": ["code"], "output": "deco"},
+      {"input": ["Hello"], "output": "lloHe"},
+      {"input": ["cat"], "output": "tca"},
+      {"input": ["java"], "output": "vaja"},
+      {"input": ["12345"], "output": "34512"},
+      {"input": ["Chocolate"], "output": "ocolateCh"},
+      {"input": ["bricks"], "output": "icksbr"}
+    ],
+    "firstLast6": [
+      {"input": [[1, 2, 3, 4]], "output": false},
+      {"input": [[1, 2, 3, 4, 6]], "output": true},
+      {"input": [[6, 1, 2, 3]], "output": true},
+      {"input": [[3]], "output": false},
+      {"input": [[6]], "output": true},
+      {"input": [[13, 6, 1, 2, 6]], "output": true},
+      {"input": [[3, 6]], "output": true},
+      {"input": [[5, 6]], "output": true},
+      {"input": [[1, 2, 6]], "output": true},
+      {"input": [[3, 2, 1]], "output": false},
+      {"input": [[3, 6, 1]], "output": false},
+      {"input": [[13, 6, 1, 2, 3]], "output": false},
+      {"input": [[5, 5]], "output": false}
+    ],
+    "has23": [
+      {"input": [[9, 5]], "output": false},
+      {"input": [[4, 3]], "output": true},
+      {"input": [[4, 5]], "output": false},
+      {"input": [[2, 2]], "output": true},
+      {"input": [[3, 3]], "output": true},
+      {"input": [[3, 2]], "output": true},
+      {"input": [[3, 9]], "output": true},
+      {"input": [[2, 5]], "output": true},
+      {"input": [[7, 7]], "output": false}
+    ],
+    "fix23": [
+      {"input": [[2, 3, 3]], "output": [2, 0, 3]},
+      {"input": [[2, 2, 3]], "output": [2, 2, 0]},
+      {"input": [[3, 2, 1]], "output": [3, 2, 1]},
+      {"input": [[2, 3, 5]], "output": [2, 0, 5]},
+      {"input": [[1, 2, 3]], "output": [1, 2, 0]},
+      {"input": [[1, 2, 1]], "output": [1, 2, 1]}
+    ],
+    "countYZ": [
+      {"input": ["day fyyyz"], "output": 2},
+      {"input": ["yak zak"], "output": 0},
+      {"input": ["aaz yyz my"], "output": 3},
+      {"input": ["day yak"], "output": 1},
+      {"input": ["day fez"], "output": 2},
+      {"input": ["day:yak"], "output": 0},
+      {"input": ["y2bz"], "output": 1},
+      {"input": ["zxyx"], "output": 0},
+      {"input": ["DAY abc XYZ"], "output": 2},
+      {"input": ["fez day"], "output": 2},
+      {"input": ["!!day--yaz!!"], "output": 0}
+    ],
+    "endOther": [
+      {"input": ["abc", "abXabc"], "output": true},
+      {"input": ["Z", "12xz"], "output": true},
+      {"input": ["abcXYZ", "abcDEF"], "output": false},
+      {"input": ["Hiabc", "bc"], "output": true},
+      {"input": ["Hiabc", "abc"], "output": true},
+      {"input": ["Hiabcx", "bc"], "output": false},
+      {"input": ["abc", "abc"], "output": true},
+      {"input": ["ab", "ab12"], "output": false},
+      {"input": ["ab", "12ab"], "output": true},
+      {"input": ["AbC", "HiaBc"], "output": true},
+      {"input": ["Hiabc", "abcd"], "output": false},
+      {"input": ["yz", "12xz"], "output": false},
+      {"input": ["12", "12"], "output": true},
+      {"input": ["xyz", "12xyz"], "output": true}
+    ],
+    "starOut": [
+      {"input": ["a"], "output": "a"},
+      {"input": ["sm***eil*ly"], "output": "siy"},
+      {"input": ["abc"], "output": "abc"},
+      {"input": ["*str*in*gy"], "output": "ty"},
+      {"input": ["*a"], "output": ""},
+      {"input": ["*"], "output": ""},
+      {"input": ["ab**cd"], "output": "ad"},
+      {"input": ["a*b"], "output": ""},
+      {"input": ["ab"], "output": "ab"},
+      {"input": ["a*"], "output": ""},
+      {"input": ["sm*eil*ly"], "output": "siy"},
+      {"input": ["ab*cd"], "output": "ad"},
+      {"input": ["sm*eilly"], "output": "silly"},
+      {"input": [""], "output": ""},
+      {"input": ["stringy*"], "output": "string"},
+      {"input": ["sm**eil*ly"], "output": "siy"},
+      {"input": ["*stringy"], "output": "tringy"}
+    ],
+    "getSandwich": [
+      {"input": ["abcbreaz"], "output": ""},
+      {"input": ["xyz"], "output": ""},
+      {"input": ["breadbread"], "output": ""},
+      {"input": ["xxbreadyy"], "output": ""},
+      {"input": ["xxbreadbreadjambreadyy"], "output": "breadjam"},
+      {"input": ["breadbreaxbread"], "output": "breax"},
+      {"input": ["xxbreadjambreadyy"], "output": "jam"},
+      {"input": ["breadjambread"], "output": "jam"},
+      {"input": ["breadAbread"], "output": "A"},
+      {"input": ["breadbreadbreadbread"], "output": "breadbread"},
+      {"input": ["breaxbreadybread"], "output": "y"},
+      {"input": [""], "output": ""}
+    ],
+    "canBalance": [
+      {"input": [[1, 1, 1, 2, 1]], "output": true},
+      {"input": [[1, 1, 1, 1, 4]], "output": true},
+      {"input": [[1, 2, 3, 1, 0, 2, 3]], "output": true},
+      {"input": [[2, 1, 1, 2, 1]], "output": false},
+      {"input": [[1]], "output": false},
+      {"input": [[1, 2, 3, 1, 0, 1, 3]], "output": false},
+      {"input": [[10, 10]], "output": true},
+      {"input": [[2, 1, 1, 1, 4]], "output": false},
+      {"input": [[10, 0, 1, -1, 10]], "output": true},
+      {"input": [[2, 3, 4, 1, 2]], "output": false}
+    ],
+    "countClumps": [
+      {"input": [[1, 2, 3]], "output": 0},
+      {"input": [[1, 1, 2, 1, 1]], "output": 2},
+      {"input": [[1, 2, 2, 3, 4, 4]], "output": 2},
+      {"input": [[0, 2, 2, 1, 1, 1, 2, 1, 1, 2, 2]], "output": 4},
+      {"input": [[1, 1, 1, 1, 1]], "output": 1},
+      {"input": [[0, 0, 2, 2, 1, 1, 1, 2, 1, 1, 2, 2]], "output": 5},
+      {"input": [[0, 0, 0, 2, 2, 1, 1, 1, 2, 1, 1, 2, 2]], "output": 5},
+      {"input": [[2, 2, 1, 1, 1, 2, 1, 1, 2, 2]], "output": 4},
+      {"input": [[]], "output": 0}
+    ],
+    "sameEnds": [
+      {"input": ["xx"], "output": "x"},
+      {"input": ["javaXYZjava"], "output": "java"},
+      {"input": ["xxxx"], "output": "xx"},
+      {"input": ["xxx"], "output": "x"},
+      {"input": ["javajava"], "output": "java"},
+      {"input": ["Hello! and Hello!"], "output": "Hello!"},
+      {"input": ["x"], "output": ""},
+      {"input": ["abcb"], "output": ""},
+      {"input": ["mymmy"], "output": "my"},
+      {"input": [""], "output": ""},
+      {"input": ["xavaXYZjava"], "output": ""},
+      {"input": ["abXYab"], "output": "ab"}
+    ],
+    "countEvens": [
+      {"input": [[2, 5, 12]], "output": 2},
+      {"input": [[11, 9, 0, 1]], "output": 1},
+      {"input": [[2, 11, 9, 0]], "output": 2},
+      {"input": [[2, 1, 2, 3, 4]], "output": 3},
+      {"input": [[1, 3, 5]], "output": 0},
+      {"input": [[2, 2, 0]], "output": 3},
+      {"input": [[]], "output": 0},
+      {"input": [[2]], "output": 1}
+    ],
+    "countHi": [
+      {"input": ["hiAAhi12hi"], "output": 3},
+      {"input": ["abc hi ho"], "output": 1},
+      {"input": ["xhixhix"], "output": 2},
+      {"input": ["Hi is no HI on ahI"], "output": 0},
+      {"input": ["xhixhxihihhhih"], "output": 3},
+      {"input": ["h"], "output": 0},
+      {"input": ["ship"], "output": 1},
+      {"input": ["ihihihihih"], "output": 4},
+      {"input": ["hihi"], "output": 2},
+      {"input": ["hi"], "output": 1},
+      {"input": ["hihih"], "output": 2},
+      {"input": [""], "output": 0},
+      {"input": ["ABChi hi"], "output": 2},
+      {"input": ["xxhixx"], "output": 1},
+      {"input": ["ihihihihihi"], "output": 5},
+      {"input": ["hiHIhi"], "output": 2},
+      {"input": ["hiho not HOHIhi"], "output": 2}
+    ],
+    "no14": [
+      {"input": [[1, 2, 3, 4]], "output": false},
+      {"input": [[1]], "output": true},
+      {"input": [[1, 4]], "output": false},
+      {"input": [[1, 4, 4]], "output": false},
+      {"input": [[4, 2, 3, 5]], "output": true},
+      {"input": [[4, 2, 3, 1]], "output": false},
+      {"input": [[4, 4, 2]], "output": true},
+      {"input": [[9, 4, 4, 1]], "output": false},
+      {"input": [[]], "output": true},
+      {"input": [[2]], "output": true},
+      {"input": [[1, 2, 3]], "output": true},
+      {"input": [[2, 2, 4, 4]], "output": true},
+      {"input": [[1, 1, 4, 4]], "output": false},
+      {"input": [[4]], "output": true},
+      {"input": [[2, 3, 4]], "output": true},
+      {"input": [[2, 1]], "output": true},
+      {"input": [[2, 1, 1]], "output": true},
+      {"input": [[2, 3, 4, 1]], "output": false},
+      {"input": [[1, 1, 1, 1]], "output": true}
+    ],
+    "either24": [
+      {"input": [[1, 2, 3, 4]], "output": false},
+      {"input": [[2]], "output": false},
+      {"input": [[4, 4]], "output": true},
+      {"input": [[3, 5, 9]], "output": false},
+      {"input": [[4, 4, 1]], "output": true},
+      {"input": [[2, 2]], "output": true},
+      {"input": [[4, 4, 1, 2, 2]], "output": false},
+      {"input": [[2, 2, 3, 4]], "output": true},
+      {"input": [[1, 2, 3, 4, 4]], "output": true},
+      {"input": [[1, 2]], "output": false},
+      {"input": [[]], "output": false},
+      {"input": [[1, 2, 3, 2, 2, 4, 4]], "output": false},
+      {"input": [[1, 2, 2]], "output": true},
+      {"input": [[1, 2, 3, 2, 2, 4]], "output": true}
+    ],
+    "makeChocolate": [
+      {"input": [4, 1, 10], "output": -1},
+      {"input": [6, 1, 10], "output": 5},
+      {"input": [1, 2, 7], "output": -1},
+      {"input": [1, 2, 5], "output": 0},
+      {"input": [4, 1, 9], "output": 4},
+      {"input": [6, 1, 12], "output": -1},
+      {"input": [7, 1, 13], "output": -1},
+      {"input": [60, 100, 550], "output": 50},
+      {"input": [6, 2, 10], "output": 0},
+      {"input": [7, 2, 13], "output": 3},
+      {"input": [6, 2, 11], "output": 1},
+      {"input": [6, 2, 12], "output": 2},
+      {"input": [4, 1, 4], "output": 4},
+      {"input": [6, 1, 11], "output": 6},
+      {"input": [6, 1, 13], "output": -1},
+      {"input": [4, 1, 5], "output": 0},
+      {"input": [1, 2, 6], "output": 1},
+      {"input": [5, 4, 9], "output": 4},
+      {"input": [4, 1, 7], "output": 2},
+      {"input": [1000, 1000000, 5000006], "output": 6},
+      {"input": [6, 2, 7], "output": 2},
+      {"input": [9, 3, 18], "output": 3},
+      {"input": [3, 1, 9], "output": -1},
+      {"input": [7, 1, 12], "output": 7}
+    ],
+    "luckySum": [
+      {"input": [1, 13, 3], "output": 1},
+      {"input": [9, 4, 13], "output": 13},
+      {"input": [13, 2, 13], "output": 0},
+      {"input": [3, 3, 13], "output": 6},
+      {"input": [13, 13, 2], "output": 0},
+      {"input": [8, 13, 2], "output": 8},
+      {"input": [1, 13, 13], "output": 1},
+      {"input": [6, 5, 2], "output": 13},
+      {"input": [1, 2, 3], "output": 6},
+      {"input": [1, 2, 13], "output": 3},
+      {"input": [7, 2, 1], "output": 10},
+      {"input": [13, 2, 3], "output": 0}
+    ],
+    "maxBlock": [
+      {"input": ["XXBBBBbbxx"], "output": 4},
+      {"input": ["hoopla"], "output": 2},
+      {"input": ["XX2222BBBbbXX2222"], "output": 4},
+      {"input": ["abbbcbbbxbbbx"], "output": 3},
+      {"input": ["xxyz"], "output": 2},
+      {"input": [""], "output": 0},
+      {"input": ["abbCCCddBBBxx"], "output": 3},
+      {"input": ["XXBBBbbxxXXXX"], "output": 4},
+      {"input": ["XXBBBbbxx"], "output": 3},
+      {"input": ["xyzz"], "output": 2},
+      {"input": ["xyz"], "output": 1}
+    ],
+    "linearIn": [
+      {"input": [[1, 2, 4, 6], [2, 3, 4]], "output": false},
+      {"input": [[1, 2, 3], [-1]], "output": false},
+      {"input": [[-1, 0, 3, 3, 3, 10, 12], [-1, 10, 11]], "output": false},
+      {"input": [[1, 2, 4, 4, 6], [2, 4]], "output": true},
+      {"input": [[2, 2, 2, 2, 2], [2, 4]], "output": false},
+      {"input": [[2, 2, 2, 2, 4], [2, 4]], "output": true},
+      {"input": [[1, 2, 3], [2]], "output": true},
+      {"input": [[-1, 0, 3, 3, 3, 10, 12], [0, 3, 12, 14]], "output": false},
+      {"input": [[2, 2, 4, 4, 6, 6], [2, 4]], "output": true},
+      {"input": [[1, 2, 3], []], "output": true},
+      {"input": [[2, 2, 2, 2, 2], [2, 2]], "output": true},
+      {"input": [[-1, 0, 3, 3, 3, 10, 12], [-1, 0, 3, 12]], "output": true},
+      {"input": [[1, 2, 4, 6], [2, 4]], "output": true}
+    ],
+    "countTriple": [
+      {"input": ["abcXXXabc"], "output": 1},
+      {"input": ["XXXabc"], "output": 1},
+      {"input": ["122abhhh2"], "output": 1},
+      {"input": ["a"], "output": 0},
+      {"input": ["222abyyycdXXX"], "output": 3},
+      {"input": ["abYYXabXXYXXab"], "output": 0},
+      {"input": [""], "output": 0},
+      {"input": ["abYYYabXXXXXab"], "output": 4},
+      {"input": ["XXXXXabc"], "output": 3},
+      {"input": ["XXXXabc"], "output": 2},
+      {"input": ["xxxabyyyycd"], "output": 3}
+    ],
+    "eat_cake": [
+      {"input": ["abcabcabcabcabcabcabcabcabcabc"], "output": 10},
+      {"input": ["$#)$&#)#$)*@()"], "output": 1},
+      {"input": [""], "output": 1},
+      {"input": ["hi0hi0hi0"], "output": 3},
+      {"input": ["cakecakecakescakecakecakes"], "output": 2},
+      {"input": ["hihihi"], "output": 3},
+      {"input": ["ccccccccccccccccc"], "output": 17},
+      {"input": ["cakecakecakecakecake"], "output": 5},
+      {"input": ["hello"], "output": 1},
+      {"input": ["aprilmayjuneaprilmayjune"], "output": 2}
+    ],
+    "all_even": [
+      {"input": [[-2, 1, 3, 4, 5, 39, 42]], "output": [-2, 4, 42]}
+    ],
+    "no_space": [
+      {"input": [["hi", "foo", "what the"]], "output": [["hi", "foo"]]}
+    ],
+    "all_positive": [
+      {"input": [[[1, 3, 6], [2, 6, 8], [5, 8, 24]]], "output": [2, 6, 8]}
+    ],
+    "same_vowels": [
+      {"input": [["racecar", "amalgam", "oligopoly", "zoom"]], "output": ["amalgam", "zoom"]}
+    ],
+    "times_ten": [
+      {"input": [[2, 5, 9, 10]], "output": [20, 50, 90, 100]}
+    ],
+    "shift_right": [
+      {"input": [[{"name": ""}, 10, "left-side"]], "output": ["left-side", {"name": ""}, 10]}
+    ],
+    "no_vowels": [
+      {"input": [["average", "exceptional", "amazing"]], "output": ["aeae", "eeioa", "aai"]}
+    ],
+    "double_matrix": [
+      {"input": [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]], "output": [[2, 4, 6], [8, 10, 12], [14, 16, 18]]}
+    ],
+    "sum_nums": [
+      {"input": [[10, 15, 20, 25, 30, 35]], "output": 135}
+    ],
+    "product_matrix": [
+      {"input": [[[1, 2, 3], [4, 5], [6]]], "output": 720}
+    ],
+    "objectify": [
+      {"input": [[["Thundercats", "80s"], ["The Powerpuff Girls", "90s"], ["Sealab 2021", "00s"]]], "output": {"Thundercats": "80s", "The Powerpuff Girls": "90s", "Sealab 2021": "00s"}}
+    ],
+    "lucky_numbers": [
+      {"input": [[30, 48, 11, 5, 32]], "output": "Your lucky numbers are: 30, 48, 11, 5, and 32"}
+    ],
+    "triangle": [
+      {"input": [0], "output": 0},
+      {"input": [1], "output": 1},
+      {"input": [2], "output": 3},
+      {"input": [3], "output": 6},
+      {"input": [4], "output": 10},
+      {"input": [5], "output": 15},
+      {"input": [6], "output": 21},
+      {"input": [7], "output": 28}
+    ],
+    "fibonacci": [
+      {"input": [0], "output": 0},
+      {"input": [1], "output": 1},
+      {"input": [2], "output": 1},
+      {"input": [3], "output": 2},
+      {"input": [4], "output": 3},
+      {"input": [5], "output": 5},
+      {"input": [6], "output": 8},
+      {"input": [7], "output": 13}
+    ],
+    "sumDigits": [
+      {"input": [0], "output": 0},
+      {"input": [10110], "output": 3},
+      {"input": [10], "output": 1},
+      {"input": [11111], "output": 5},
+      {"input": [1111], "output": 4},
+      {"input": [126], "output": 9},
+      {"input": [12], "output": 3},
+      {"input": [1], "output": 1},
+      {"input": [235], "output": 10},
+      {"input": [49], "output": 13},
+      {"input": [730], "output": 10}
+    ]
+  }
+}

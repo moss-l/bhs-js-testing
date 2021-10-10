@@ -2,13 +2,12 @@
 
 import json
 
-with open("tests.json") as f:
-    tests = json.load(f)
-
-with open("problems.json") as f:
+with open("data.json") as f:
     data = json.load(f)
-    sets = set(data['sets'])
-    problems = data['problems']
+
+sets = set(data['sets'])
+problems = data['problems']
+tests = data['test_cases']
 
 
 have_problems = set(problems.keys())
