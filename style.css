@@ -31,6 +31,7 @@ h1, h2 { font-weight: 300; }
 #results h1 {
   padding: 0;
   margin: 0;
+  margin-bottom: 15px;
 }
 
 #results table {
@@ -43,7 +44,10 @@ col.functionCall { width: 40%; }
 col.got, col.expected { width: 25%; }
 col.result { width: 10%; }
 
-th { font-weight: 300; }
+th { 
+  font-weight: 300;
+  background: rgba(127, 127, 255, 0.1);
+}
 td, th { padding: 10px; }
 td, th { text-align: center; }
 td:first-child, th:first-child { text-align: left; }

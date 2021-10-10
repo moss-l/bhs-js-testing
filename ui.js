@@ -168,7 +168,12 @@ function displayTestResults(fn, results, container) {
 }
 
 function displayMissingFunction(name, container) {
-  const p = $("<p>", "You need to define a " + name + " function.");
+  const p = $("<p>");
+  p.append($("You need to define a "));
+  p.append($("<code>", name));
+  p.append($(" function in "));
+  p.append($("<code>", "script.js"));
+  p.append($("."));
   p.className = 'missing';
   container.append(p);
 }
@@ -191,7 +196,7 @@ function makeResultsTable() {
   tr.append($("<th>", "Invocation"));
   tr.append($("<th>", "Got"))
   tr.append($("<th>", "Expected"));
-  tr.append($("<th>", "Result"));
+  tr.append($("<th>", "Passed?"));
   thead.append(tr);
   table.append(thead);
   return table;
