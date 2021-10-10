@@ -6,6 +6,18 @@ body {
 
 h1, h2 { font-weight: 300; }
 
+#problem_sets { float: right; margin-bottom: 10px; }
+#problems {
+  clear: both;
+  padding: 10px 0;
+}
+
+#problems button {
+  margin: 4px;
+  padding: 2px;
+}
+
+
 #results div {
   margin: auto;
   width: 95%;
@@ -26,6 +38,8 @@ td { font-family: monospace; }
 
 tr.pass { background: rgba(100, 255, 100, 0.2); }
 tr.fail { background: rgba(255, 100, 100, 0.2); }
+
+
 
 .error {
   color: rgba(200, 64, 64, 1);

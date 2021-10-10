@@ -7,67 +7,72 @@
  */
 
 /*
- * The URL. We fetch the test cases rather than embed them in this code so that we can add new 
+ * We fetch the test cases rather than embed them in this code so that we can add new 
  * test cases after students have already started their projects and copied this code. Arguably
  * we could just serve this code up from elsewhere too and that would let us change the code too.
  * ¯\_(ツ)_/¯
- * 
- * N.B. When the last arg is true it produces a URL with a random string at the end to prevent
- * caching. This is only needed when updating the test cases to make sure we see the updates here.
  */
-const TEST_CASES_URL = gistURL("gigamonkey", "abf2b7252213f653f9990e071030c3ab", "tests.json", true);
+const BASE_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-testing/master/data/data.json";
 
-/*
- * Called from body.onload. For all the test cases we know about, if the function exists, test it.
- */
-function setup() {
-  const missing = [];
-  loadTestCases(TEST_CASES_URL, cases => {
+// When second arg is true, randomizes the URL to prevent caching.
+const TEST_CASES_URL = maybeRandomizeURL(BASE_URL, true)
 
-    if (window.workingOn && workingOn) {
-      const fn = workingOn instanceof Function ? workingOn.name : workingOn;
-      console.log(fn);
-      if (fn in cases) {
-        runTests(fn, cases[fn]);
-      } else {
-        reportError(["No test cases for workingOn function " + fn]);
-      }
+let casesData;
+
+// Load the test case data from the internet.
+//
+// Basic flow: when working on a particular problem, show information about that problem: the definition if
+// we have it and the table of test results. This allows us to re-run the repl and stay on the same problem.
+// We can close the current problem whenever we want to get back to the list of all problems. Perhaps even when
+// working on a specific problem we can display stats about the total state of the world: number of problems
+// started (i.e. function is defined at least), number completed (all tests passing), and number not started.
+// (On the other hand, we might not want to run all tests all the time since some of them may be slow or
+// even sufficiently buggy as to break things. If we only try to execute the tests for the current problem then
+// the bar is just to keep script.js in a state that it can be loaded and the current problem function can be run.)
+// 
+// If there is a current problem set in local storage, run the tests and display the results for that function.
+//
+// Otherwse, collect the state of all the functions in the test case data: is the function defined
+// and if so the test results. Then render the names of the test cases, distinguishing between names for
+// which there is no function defined, those that have a definition but are not passing all their tests,
+// and those that are passing all tests.
+//
+// Clicking on the name of a defined function should show the test results and make it the current problem.
+// There should be a way to X out of the current problem and get back to the list of functions.
+// Clicking the name of an undefined function should give the definition of the function and/or a snippet
+// of code to paste into script.js.
+
+
+
+
+function allResults(cases) {
+  const state = {};
+  for (const fn in cases) {
+    state[fn] = {
+      defined: fn in window
+    };
+    if (state[fn].defined) {
+      const results = testResults(fn, cases[fn]);
+      state[fn].outcome = {
+        results: results,
+        cases: results.length,
+        passing: results.map(r => r.passed ? 1 : 0).reduce((a, b) => a + b),
+        done: results.every(r => r.passed),
+      };
     } else {
-      for (const fn in cases) {
-        if (fn in window) {
-          runTests(fn, cases[fn]);
-        } else {
-          missing.push(fn);
-        }
-      }
-
-      if (missing.length > 0) {
-        missing.sort();
-        $("#missing").append($("<p>", "Test cases available for these unimplemented functions"));
-        const ul = $("<ul>");
-        $("#missing").append(ul);
-        for (const fn of missing) {
-          ul.append($("<li>", fn));
-        }
-      } else {
-        $("#missing").append($("<p>", "All functions implemented!"));
-      }
+      state[fn].outcome = undefined;
     }
+  }
+  return state;
+}
 
-    // Extract test cases
-    const collection = {};
-    for (let i = 0; i < 50; i++) {
-      const name = "test_" + i;
-      if (name in window) {
-        collection[name] = {
-          "cases": window[name],
-          "answers": window["answer_" + i]
-        };
-      }
-    }
-    console.log(JSON.stringify(collection));
 
-  });
+function setCurrentProblem(name) {
+  localStorage.setItem('currentProblem', name);
+}
+
+function currentProblem() {
+  return localStorage.getItem('currentProblem');
 }
 
 /*
@@ -89,110 +94,39 @@ function loadTestCases(url, testRunner) {
   r.send(null);
 }
 
-function reportError(messages) {
-  const div = $("<div>");
-  div.className = "error";
-  for (let m of messages) {
-    div.append($("<p>", m));
-  }
-  $("#results").append(div);
-}
-
-/*
- * Poor man's jQuery.
- */
-function $(s, t) {
-  if (s[0] == "#") {
-    return document.getElementById(s.substring(1));
-  } else if (s[0] == "<") {
-    const e = document.createElement(s.substring(1, s.length - 1));
-    if (t != undefined) {
-      e.append($(t));
-    }
-    return e;
-  } else {
-    return document.createTextNode(s);
-  }
-}
 
 /*
  * Run the test cases for a given function.
  */
 function runTests(fn, cases) {
-  const table = makeResultsTable();
-  const tbody = $("<tbody>");
-  table.append(tbody);
+  displayTestResults(fn, testResults(fn, cases));
+}
 
-  let number = 0;
-  let passed = 0;
-  for (const c of cases) {
-    const result = window[fn].apply(null, c.input);
-    number++;
-    if (addResultRow(tbody, fn, c.input, result, c.output)) {
-      passed++;
+/*
+ * Compute test results for a single function given its test cases.
+ */
+function testResults(fn, cases) {
+  // Comparing the stringified got and expected is kind of a hack to compare 
+  // values other than numbers and strings. Should work for arrays and dicts
+  return cases.map(c => {
+    const got = window[fn].apply(null, c.input);
+    return {
+      input: c.input,
+      got: got,
+      expected: c.output,
+      passed: JSON.stringify(got) == JSON.stringify(c.output),
     }
-  }
-  $("#results").append($("<h1>", "Function " + fn));
-  const div = $("<div>");
-  div.append(table);
-  div.append($("<p>", passed + " of " + number + " test cases passed."));
-  $("#results").append(div);
+  });
 }
 
-/*
- * Make a table to told the results of running the tests for one function.
- */
-function makeResultsTable() {
-  const table = $("<table>");
-  const colgroup = $("<colgroup>");
-  colgroup.append($("<col>", "functionCall"));
-  colgroup.append($("<col>", "got"));
-  colgroup.append($("<col>", "expected"));
-  colgroup.append($("<col>", "result"));
-  table.append(colgroup);
 
-  const thead = $("<thead>");
-  const tr = $("<tr>");
-  tr.append($("<th>", "Invocation"));
-  tr.append($("<th>", "Got"))
-  tr.append($("<th>", "Expected"));
-  tr.append($("<th>", "Result"));
-  thead.append(tr);
-  table.append(thead);
-  return table;
+/*
+ * Possibly randomize a URL to prevent caching.
+ */
+function maybeRandomizeURL(base, randomize) {
+  return base + (randomize ? "?" + randomness() : "");
 }
 
-/*
- * Given the results of invoking the function on a given input, check
- * whether it produced the correct result and add a row to the given tbody.
- */
-function addResultRow(tbody, fn, input, got, expected) {
-  // Kind of a hack to compare values other than numbers and strings. Should work for arrays and dicts
-  const passed = JSON.stringify(got) == JSON.stringify(expected);
-  const row = tbody.insertRow();
-  row.className = passed ? "pass" : "fail";
-  row.insertCell().append($(stringifyCall(fn, input)));
-  row.insertCell().append($(JSON.stringify(got)));
-  row.insertCell().append($(JSON.stringify(expected)));
-  row.insertCell().append($(passed ? "✅" : "❌"));
-  return passed;
-}
-
-/*
- * Render a function call with it's array of arguments as a call.
- */
-function stringifyCall(fn, input) {
-  return fn + "(" + input.map(JSON.stringify).join(", ") + ")";
-}
-
-/*
- * Return the permalink URL for a gist, possibly randomizing to prevent caching.
- */
-function gistURL(user, gistID, fileName, randomize = true) {
-  const base = "https://gist.githubusercontent.com/" + user + "/" + gistID + "/raw/" + fileName;
-  if (randomize) {
-    return base + "?" + new Date().getTime() + "" + Math.floor(Math.random() * 1000000);
-  } else {
-    return base;
-  }
+function randomness() {
+  return new Date().getTime() + "" + Math.floor(Math.random() * 1000000);
 }
