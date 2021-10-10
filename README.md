@@ -1,6 +1,6 @@
 # bhs-js-testing
 
-Use this project to check your Javascript implementations of the TK problems. The only file you need to worry about is `script.js` which is where you will write your code.
+Use this project to check your Javascript implementations of the functions in the problem sets SL 1-10, SL 11-20, SL 21-30, Eat Cake!, HL F/M/R, and HL Recursion. The only file you need to worry about is `script.js` which is where you will write your code.
 
 When you click Run it will render a web page that will test any functions you have defined for which we have defined test cases and will tell you the names of the functions that there are test cases for that you have not yet implemented.
 
