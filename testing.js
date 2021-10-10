@@ -15,7 +15,7 @@
 const BASE_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-testing/master/data/data.json";
 
 // When second arg is true, randomizes the URL to prevent caching.
-const TEST_CASES_URL = maybeRandomizeURL(BASE_URL, true)
+const TEST_CASES_URL = maybeRandomizeURL(BASE_URL, false);
 
 function allResults(cases) {
   const state = {};

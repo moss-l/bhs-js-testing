@@ -2,6 +2,7 @@
  * UI: code to deal with the HTML page.
  */
 
+
 let testData = null;
 
 /*
@@ -83,15 +84,13 @@ function showFunctions() {
 }
 
 function showFunction(name, currentState) {
+  $("#results").append($("<h1>", name));
   if (name in window) {
     displayTestResults(name, testResults(name, testData.test_cases[name]));
   } else {
     displayMissingFunction(name);
   }
 }
-
-
-
 
 function populateProblemSets(data) {
   const menu = $("#problem_sets");
@@ -121,8 +120,6 @@ function selectProblemSet(menu, setName, data) {
   localStorage.setItem('currentSet', setName);
 }
 
-
-
 function populateProblems(problems) {
   const div = clear($("#problems"));
   for (const p of problems) {
@@ -137,7 +134,6 @@ function populateProblems(problems) {
 }
 
 function selectProblem(name) {
-  console.log("here " + name);
   if (name === currentProblem()) {
     currentProblem(null);
   } else {
@@ -149,16 +145,6 @@ function selectProblem(name) {
   }
   showFunctions();
 }
-
-
-
-
-// Drawing
-
-function displayMissingFunction(name) {
-  $("#results").append($("<p>", "No function definition for " + name));
-}
-
 
 function displayTestResults(fn, results) {
   const table = makeResultsTable();
@@ -172,12 +158,18 @@ function displayTestResults(fn, results) {
     if (c.passed) passed++;
     addResultRow(tbody, fn, c.input, c.got, c.expected, c.passed);
   }
-  $("#results").append($("<h1>", "Function " + fn));
   const div = $("<div>");
   div.append(table);
   div.append($("<p>", passed + " of " + number + " test cases passed."));
   $("#results").append(div);
 }
+
+function displayMissingFunction(name) {
+  const p = $("<p>", "You need to define a " + name + " function.");
+  p.className = 'missing';
+  $("#results").append(p);
+}
+
 
 /*
  * Make a table to told the results of running the tests for one function.
@@ -185,10 +177,10 @@ function displayTestResults(fn, results) {
 function makeResultsTable() {
   const table = $("<table>");
   const colgroup = $("<colgroup>");
-  colgroup.append($("<col>", "functionCall"));
-  colgroup.append($("<col>", "got"));
-  colgroup.append($("<col>", "expected"));
-  colgroup.append($("<col>", "result"));
+  colgroup.append(col("functionCall"));
+  colgroup.append(col("got"));
+  colgroup.append(col("expected"));
+  colgroup.append(col("result"));
   table.append(colgroup);
 
   const thead = $("<thead>");
@@ -200,6 +192,12 @@ function makeResultsTable() {
   thead.append(tr);
   table.append(thead);
   return table;
+}
+
+function col(className) {
+  const c = $("<col>");
+  c.className = className;
+  return c;
 }
 
 /*

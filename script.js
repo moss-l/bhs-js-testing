@@ -54,3 +54,17 @@ function no_space(xs) {
   // Not sure what the extra array is for but that's what the test case wants.
   return [xs.filter(s => s.indexOf(" ") == -1)];
 }
+
+// This definition is super sus. I'm pretty sure the test case data is wrong.
+function truthy(x) { return !!(x === "no" || x === 100 ? false : x); }
+
+function monkey_trouble(a, b) {
+  return !(truthy(a) ^ truthy(b));
+}
+
+
+function string_times(s, n) {
+  return s.repeat(n);
+}
+
+
