@@ -83,15 +83,6 @@ function showFunctions() {
   }
 }
 
-function showFunction(name, currentState) {
-  $("#results").append($("<h1>", name));
-  if (name in window) {
-    displayTestResults(name, testResults(name, testData.test_cases[name]));
-  } else {
-    displayMissingFunction(name);
-  }
-}
-
 function populateProblemSets(data) {
   const menu = $("#problem_sets");
 
@@ -146,7 +137,20 @@ function selectProblem(name) {
   showFunctions();
 }
 
-function displayTestResults(fn, results) {
+
+function showFunction(name, currentState) {
+  const container = $("<div>");
+  container.className = 'container';
+  container.append($("<h1>", name));
+  if (name in window) {
+    displayTestResults(name, testResults(name, testData.test_cases[name]), container);
+  } else {
+    displayMissingFunction(name, container);
+  }
+  $("#results").append(container);
+}
+
+function displayTestResults(fn, results, container) {
   const table = makeResultsTable();
   const tbody = $("<tbody>");
   table.append(tbody);
@@ -158,16 +162,15 @@ function displayTestResults(fn, results) {
     if (c.passed) passed++;
     addResultRow(tbody, fn, c.input, c.got, c.expected, c.passed);
   }
-  const div = $("<div>");
-  div.append(table);
-  div.append($("<p>", passed + " of " + number + " test cases passed."));
-  $("#results").append(div);
+  container.append(table);
+  const stop = passed == number ? "!" : ".";
+  container.append($("<p>", passed + " of " + number + " test cases passed" + stop));
 }
 
-function displayMissingFunction(name) {
+function displayMissingFunction(name, container) {
   const p = $("<p>", "You need to define a " + name + " function.");
   p.className = 'missing';
-  $("#results").append(p);
+  container.append(p);
 }
 
 
