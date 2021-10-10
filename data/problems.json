@@ -1,0 +1,71 @@
+{
+  "sets": [
+    "SL 1-10",
+    "SL 11-20",
+    "SL 21-30",
+    "Eat Cake!",
+    "HL F/M/R",
+    "HL Recursion"
+  ],
+  "problems": {
+    "SL 1-10": [
+      "sleep_in",
+      "monkey_trouble",
+      "string_times",
+      "front_times",
+      "string_bits",
+      "caughtSpeeding",
+      "fizz_buzz",
+      "specialEleven",
+      "withoutDoubles",
+      "left2"
+    ],
+    "SL 11-20": [
+      "firstLast6",
+      "has23",
+      "fix23",
+      "countYZ",
+      "endOther",
+      "starOut",
+      "getSandwich",
+      "canBalance",
+      "countClumps",
+      "sameEnds"
+    ],
+    "SL 21-30": [
+      "countEvens",
+      "countHi",
+      "no14",
+      "either24",
+      "makeChocolate",
+      "luckySum",
+      "maxBlock",
+      "linearIn",
+      "countTriple",
+      "sameEnds"
+    ],
+    "Eat Cake!": [
+      "eat_cake"
+    ],
+    "HL F/M/R": [
+      "all_even",
+      "no_space",
+      "all_positive",
+      "same_vowels",
+      "times_ten",
+      "shift_right",
+      "no_vowels",
+      "double_matrix",
+      "sum_nums",
+      "product_matrix",
+      "objectify",
+      "lucky_numbers"
+    ],
+    "HL Recursion": [
+      "triangle",
+      "fibonacci",
+      "countHi",
+      "sumDigits"
+    ]
+  }
+}
