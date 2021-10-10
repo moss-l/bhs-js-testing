@@ -12,60 +12,36 @@
  * we could just serve this code up from elsewhere too and that would let us change the code too.
  * ¯\_(ツ)_/¯
  */
-const BASE_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-testing/master/data/data.json";
+const TEST_CASES_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-testing/master/data/data.json";
 
-// When second arg is true, randomizes the URL to prevent caching.
-const TEST_CASES_URL = maybeRandomizeURL(BASE_URL, false);
-
-function allResults(cases) {
-  const state = {};
-  for (const fn in cases) {
-    state[fn] = {
-      defined: fn in window
-    };
-    if (state[fn].defined) {
-      const results = testResults(fn, cases[fn]);
-      state[fn].outcome = {
-        results: results,
-        cases: results.length,
-        passing: results.map(r => r.passed ? 1 : 0).reduce((a, b) => a + b),
-        done: results.every(r => r.passed),
-      };
-    } else {
-      state[fn].outcome = undefined;
-    }
-  }
-  return state;
-}
+// Set this to true to make sure we always fetch the absolute latest test data.
+const PREVENT_CACHING = false;
 
 /*
  * Load test case data via XMLHttpRequest.
  */
-function loadTestCases(url, testRunner) {
+function loadTestCases(url, callback, errorCallback) {
   const r = new XMLHttpRequest();
-  r.open('GET', url, true);
+  r.open('GET', maybeRandomizeURL(url, PREVENT_CACHING), true);
   r.onload = function () {
     if (this.status == 200) {
-      testRunner(JSON.parse(this.responseText));
+      callback(JSON.parse(this.responseText));
     } else {
-      reportError([
-        "Oh no! Couldn't fetch test cases",
-        this.status + " (" + this.statusText + ")"
-      ]);
+      if (errorCallback) {
+        errorCallback(this);
+      }
     }
   };
   r.send(null);
 }
-
-
-
 
 /*
  * Compute test results for a single function given its test cases.
  */
 function testResults(fn, cases) {
   // Comparing the stringified got and expected is kind of a hack to compare 
-  // values other than numbers and strings. Should work for arrays and dicts
+  // values other than numbers and strings. But works for arrays and dicts
+  // which is probably sufficient for our needs.
   return cases.map(c => {
     const got = window[fn].apply(null, c.input);
     return {
@@ -76,7 +52,6 @@ function testResults(fn, cases) {
     }
   });
 }
-
 
 /*
  * Possibly randomize a URL to prevent caching.

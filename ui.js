@@ -47,11 +47,18 @@ function reportError(messages) {
  * Called from body.onload
  */
 function setup() {
-  loadTestCases(TEST_CASES_URL, data => {
-    testData = data;
-    populateProblemSets(data);
-    showFunctions();
-  });
+  loadTestCases(TEST_CASES_URL,
+    data => {
+      testData = data;
+      populateProblemSets(data);
+      showFunctions();
+    },
+    resp => {
+      reportError([
+        "Oh no! Couldn't fetch test cases",
+        resp.status + " (" + resp.statusText + ")"
+      ])
+    });
 }
 
 function defineLocalStorage(name) {
