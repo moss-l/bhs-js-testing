@@ -6,6 +6,23 @@ body {
 
 h1, h2 { font-weight: 300; }
 
+#help {
+  float: right;
+}
+
+#instructions {
+  line-height: 1.5em;
+  border: thin solid rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  padding: 10px;
+}
+#instructions b {
+  font-weight: 400;
+  color: green;
+  background: rgba(0,0,0,0.05);
+  padding: 2px;
+}
+
 #problems {
   padding: 10px 0;
 }

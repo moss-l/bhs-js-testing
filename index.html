@@ -9,16 +9,28 @@
 </head>
 
 <body onload="setup()">
+  <button id="help" onclick="toggleInstructions()">?</button>
   <p>Pick a problem set: 
     <select id="problem_sets">
       <option disabled selected value>Pick a problem set.</option>
     </select>
   </p>
-  <p>Click a button below to focus on just one function:</p>
-  <div id="problems"></div>
-  <pre id="cookies"></pre>
-  <div id="results"></div>
-  <div id="missing"></div>
+  <div id="instructions">
+    <p>To start, pick a problem set from the menu above. You will implement the functions needed in the problem 
+      set in <code>script.js</code> and then use the ReplIt <b class=run>Run ▶</b> button to re-evaluate your code. Once you have picked a problem set, this web page will run the tests for one or more of the functions you have defined in <code>script.js</code>. It will also tell you which functions you still need to define to complete the problem set.</p>
+    <p>You can focus on one problem at a time by clicking the buttons that will appear once you pick a problem set. Click the selected problem again to go back to seeing the results for all functions or pick another 
+      problem by clicking on a different button.</p>
+
+    <p>Note also that the ReplIt console tab below will have your code loaded so you can invoke functions there 
+      to try things out. Just remember that whenever you make changes to your code, you have to hit the <b class=run>Run ▶</b> button before the new definitions will be available in the console. In the console the  up and down arrow keys will walk through the history of expressions you have typed previously so you don't have to retype them.</p>
+  </div>
+  <div id="action">
+    <p>Click a button below to focus on just one function:</p>
+    <div id="problems"></div>
+    <pre id="cookies"></pre>
+    <div id="results"></div>
+    <div id="missing"></div>
+  </div>
 </body>
 
 <script src="script.js"></script>

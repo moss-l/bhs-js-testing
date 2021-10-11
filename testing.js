@@ -162,6 +162,9 @@ function showFunctions() {
     for (const p of testData.problems[problemSet]) {
       showFunction(p);
     }
+  } else {
+    $("#instructions").style.display = 'block';
+    $("#action").style.display = 'none';
   }
 }
 
@@ -191,6 +194,8 @@ function selectProblemSet(menu, setName, data) {
   menu.value = setName;
   populateProblems(data.problems[setName]);
   currentSet(setName);
+  $("#instructions").style.display = 'none';
+  $("#action").style.display = 'block';
 }
 
 function populateProblems(problems) {
@@ -290,4 +295,10 @@ function addResultRow(tbody, fn, input, got, expected, passed) {
   row.insertCell().append($(JSON.stringify(expected)));
   row.insertCell().append($(passed ? "✅" : "❌"));
   return passed;
+}
+
+function toggleInstructions () {
+  const current = $("#instructions").style.display;
+  const next = current === "none" ? "block" : "none";
+  $("#instructions").style.display = next;
 }
