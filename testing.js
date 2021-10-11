@@ -1,15 +1,19 @@
 /*
- * Testing infrastructure. You do not need to look at this code (though you are, of course,
- * free to do so.) This code fetches a set of test cases from a URL and then uses them to test
- * any functions you have defined. So if there are test cases for a function named fib and in
- * script.js you write a function named fib it will test your function with the test cases it
- * has fetched.
+ * Testing infrastructure. You do not need to look at this code
+ * (though you are, of course, free to do so.) This code fetches a set
+ * of test cases from a URL and then uses them to test any functions
+ * you have defined. So if there are test cases for a function named
+ * fib and in script.js you write a function named fib it will test
+ * your function with the test cases it has fetched.
  */
 
 /*
- * We fetch the test cases rather than embed them in this code so that we can add new 
- * test cases after students have already started their projects and copied this code. Arguably
- * we could just serve this code up from elsewhere too and that would let us change the code too.
+ * We fetch the test cases rather than embed them in this code so that
+ * we can add new test cases after students have already started their
+ * projects and copied this code. Arguably we could just serve this
+ * code up from elsewhere too and that would let us change the code
+ * too.
+ *
  * ¯\_(ツ)_/¯
  */
 const TEST_CASES_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-testing/master/data/data.json";
@@ -41,19 +45,19 @@ function setup() {
 }
 
 /*
- * The actual test running: computes test results for a single function.
+ * The actual test running: computes test results for a single
+ * function. Comparing the stringified got and expected is kind of a
+ * hack to compare values other than numbers and strings. But works
+ * for arrays and dicts which is probably sufficient for our needs.
  */
 function testResults(fn) {
-  // Comparing the stringified got and expected is kind of a hack to compare 
-  // values other than numbers and strings. But works for arrays and dicts
-  // which is probably sufficient for our needs.
   return testData.test_cases[fn].map(c => {
     const got = window[fn].apply(null, c.input);
     return {
       input: c.input,
       got: got,
       expected: c.output,
-      passed: JSON.stringify(got) == JSON.stringify(c.output),
+      passed: JSON.stringify(got) === JSON.stringify(c.output),
     }
   });
 }
@@ -65,7 +69,7 @@ function loadTestCases(url, callback, errorCallback) {
   const r = new XMLHttpRequest();
   r.open('GET', maybeRandomizeURL(url, PREVENT_CACHING), true);
   r.onload = function () {
-    if (this.status == 200) {
+    if (this.status === 200) {
       callback(JSON.parse(this.responseText));
     } else {
       if (errorCallback) {
@@ -93,9 +97,9 @@ function randomness() {
 function $(s, t) {
   if (s === undefined) {
     return $("<i>", "undefined")
-  } else if (s[0] == "#") {
+  } else if (s[0] === "#") {
     return document.getElementById(s.substring(1));
-  } else if (s[0] == "<") {
+  } else if (s[0] === "<") {
     const e = document.createElement(s.substring(1, s.length - 1));
     if (t != undefined) {
       e.append($(t));
@@ -116,9 +120,13 @@ function clear(e) {
   return e;
 }
 
+function withClass(className, e) {
+  e.className = className;
+  return e;
+}
+
 function reportError(messages) {
-  const div = $("<div>");
-  div.className = "error";
+  const div = withClass("error", $("<div>"));
   for (const m of messages) {
     div.append($("<p>", m));
   }
@@ -192,7 +200,7 @@ function populateProblems(problems) {
     const b = $("<button>", p);
     b.value = p;
     b.onclick = e => selectProblem(p);
-    if (p == selected) {
+    if (p === selected) {
       b.className = 'selected';
     }
     div.append(b);
@@ -214,8 +222,7 @@ function selectProblem(name) {
 
 
 function showFunction(name, currentState) {
-  const container = $("<div>");
-  container.className = 'container';
+  const container = withClass("container", $("<div>"));
   container.append($("<h1>", name));
   if (name in window) {
     displayTestResults(name, testResults(name), container);
@@ -238,18 +245,17 @@ function displayTestResults(fn, results, container) {
     addResultRow(tbody, fn, c.input, c.got, c.expected, c.passed);
   }
   container.append(table);
-  const stop = passed == number ? "!" : ".";
+  const stop = passed === number ? "!" : ".";
   container.append($("<p>", passed + " of " + number + " test cases passed" + stop));
 }
 
 function displayMissingFunction(name, container) {
-  const p = $("<p>");
+  const p = withClass("missing", $("<p>"));
   p.append($("You need to define a "));
   p.append($("<code>", name));
   p.append($(" function in "));
   p.append($("<code>", "script.js"));
   p.append($("."));
-  p.className = 'missing';
   container.append(p);
 }
 
@@ -259,10 +265,10 @@ function displayMissingFunction(name, container) {
 function makeResultsTable() {
   const table = $("<table>");
   const colgroup = $("<colgroup>");
-  colgroup.append(col("functionCall"));
-  colgroup.append(col("got"));
-  colgroup.append(col("expected"));
-  colgroup.append(col("result"));
+  colgroup.append(withClass("functionCall", $("<col>")));
+  colgroup.append(withClass("got", $("<col>")));
+  colgroup.append(withClass("expected", $("<col>")));
+  colgroup.append(withClass("result", $("<col>")));
   table.append(colgroup);
 
   const thead = $("<thead>");
@@ -274,12 +280,6 @@ function makeResultsTable() {
   thead.append(tr);
   table.append(thead);
   return table;
-}
-
-function col(className) {
-  const c = $("<col>");
-  c.className = className;
-  return c;
 }
 
 function addResultRow(tbody, fn, input, got, expected, passed) {
