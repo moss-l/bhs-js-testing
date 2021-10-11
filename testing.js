@@ -18,7 +18,48 @@ const TEST_CASES_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-test
 const PREVENT_CACHING = false;
 
 /*
- * Load test case data via XMLHttpRequest.
+ * Where we stash the test data we fetch.
+ */
+let testData = null;
+
+/*
+ * Called from body.onload
+ */
+function setup() {
+  loadTestCases(TEST_CASES_URL,
+    data => {
+      testData = data;
+      populateProblemSets(data);
+      showFunctions();
+    },
+    resp => {
+      reportError([
+        "Oh no! Couldn't fetch test cases",
+        resp.status + " (" + resp.statusText + ")"
+      ])
+    });
+}
+
+/*
+ * The actual test running: computes test results for a single function.
+ */
+function testResults(fn) {
+  // Comparing the stringified got and expected is kind of a hack to compare 
+  // values other than numbers and strings. But works for arrays and dicts
+  // which is probably sufficient for our needs.
+  return testData.test_cases[fn].map(c => {
+    const got = window[fn].apply(null, c.input);
+    return {
+      input: c.input,
+      got: got,
+      expected: c.output,
+      passed: JSON.stringify(got) == JSON.stringify(c.output),
+    }
+  });
+}
+
+/*
+ * Load problem set data via XMLHttpRequest.
  */
 function loadTestCases(url, callback, errorCallback) {
   const r = new XMLHttpRequest();
@@ -36,24 +77,6 @@ function loadTestCases(url, callback, errorCallback) {
 }
 
 /*
- * Compute test results for a single function given its test cases.
- */
-function testResults(fn, cases) {
-  // Comparing the stringified got and expected is kind of a hack to compare 
-  // values other than numbers and strings. But works for arrays and dicts
-  // which is probably sufficient for our needs.
-  return cases.map(c => {
-    const got = window[fn].apply(null, c.input);
-    return {
-      input: c.input,
-      got: got,
-      expected: c.output,
-      passed: JSON.stringify(got) == JSON.stringify(c.output),
-    }
-  });
-}
-
-/*
  * Possibly randomize a URL to prevent caching.
  */
 function maybeRandomizeURL(base, randomize) {
@@ -62,4 +85,209 @@ function maybeRandomizeURL(base, randomize) {
 
 function randomness() {
   return new Date().getTime() + "" + Math.floor(Math.random() * 1000000);
+}
+
+/*
+ * Poor man's jQuery.
+ */
+function $(s, t) {
+  if (s === undefined) {
+    return $("<i>", "undefined")
+  } else if (s[0] == "#") {
+    return document.getElementById(s.substring(1));
+  } else if (s[0] == "<") {
+    const e = document.createElement(s.substring(1, s.length - 1));
+    if (t != undefined) {
+      e.append($(t));
+    }
+    return e;
+  } else {
+    return document.createTextNode(s);
+  }
+}
+
+/*
+ * Remove all the children from the given DOM element.
+ */
+function clear(e) {
+  while (e.firstChild) {
+    e.removeChild(e.lastChild);
+  }
+  return e;
+}
+
+function reportError(messages) {
+  const div = $("<div>");
+  div.className = "error";
+  for (const m of messages) {
+    div.append($("<p>", m));
+  }
+  $("#results").append(div);
+}
+
+/*
+ * Utility for defining functions for acccessing localStorage.
+ */
+function defineLocalStorage(name) {
+  return function (value) {
+    if (value) {
+      localStorage.setItem(name, value);
+    } else if (value === null) {
+      localStorage.removeItem(name);
+    }
+    return localStorage.getItem(name);
+  }
+}
+
+const currentSet = defineLocalStorage('currentSet');
+const currentProblem = defineLocalStorage('currentProblem');
+
+function showFunctions() {
+  const problemSet = currentSet();
+  const problem = currentProblem();
+
+  clear($("#results"));
+
+  if (problem) {
+    showFunction(problem);
+  } else if (problemSet) {
+    for (const p of testData.problems[problemSet]) {
+      showFunction(p);
+    }
+  }
+}
+
+function populateProblemSets(data) {
+  const menu = $("#problem_sets");
+
+  function onChange(e) {
+    currentProblem(null);
+    selectProblemSet(menu, e.target.value, data);
+    showFunctions();
+  }
+
+  menu.onchange = onChange;
+
+  for (const s of data.sets) {
+    const opt = $("<option>", s);
+    opt.value = s;
+    menu.append(opt);
+  }
+  const currentProblemSet = currentSet();
+  if (currentProblemSet != null) {
+    selectProblemSet(menu, currentProblemSet, data);
+  }
+}
+
+function selectProblemSet(menu, setName, data) {
+  menu.value = setName;
+  populateProblems(data.problems[setName]);
+  currentSet(setName);
+}
+
+function populateProblems(problems) {
+  const div = clear($("#problems"));
+  const selected = currentProblem();
+  for (const p of problems) {
+    const b = $("<button>", p);
+    b.value = p;
+    b.onclick = e => selectProblem(p);
+    if (p == selected) {
+      b.className = 'selected';
+    }
+    div.append(b);
+  }
+}
+
+function selectProblem(name) {
+  if (name === currentProblem()) {
+    currentProblem(null);
+  } else {
+    currentProblem(name);
+  }
+  const selected = currentProblem();
+  for (const b of $("#problems").children) {
+    b.className = b.value === selected ? 'selected' : '';
+  }
+  showFunctions();
+}
+
+
+function showFunction(name, currentState) {
+  const container = $("<div>");
+  container.className = 'container';
+  container.append($("<h1>", name));
+  if (name in window) {
+    displayTestResults(name, testResults(name), container);
+  } else {
+    displayMissingFunction(name, container);
+  }
+  $("#results").append(container);
+}
+
+function displayTestResults(fn, results, container) {
+  const table = makeResultsTable();
+  const tbody = $("<tbody>");
+  table.append(tbody);
+
+  let number = 0;
+  let passed = 0;
+  for (const c of results) {
+    number++;
+    if (c.passed) passed++;
+    addResultRow(tbody, fn, c.input, c.got, c.expected, c.passed);
+  }
+  container.append(table);
+  const stop = passed == number ? "!" : ".";
+  container.append($("<p>", passed + " of " + number + " test cases passed" + stop));
+}
+
+function displayMissingFunction(name, container) {
+  const p = $("<p>");
+  p.append($("You need to define a "));
+  p.append($("<code>", name));
+  p.append($(" function in "));
+  p.append($("<code>", "script.js"));
+  p.append($("."));
+  p.className = 'missing';
+  container.append(p);
+}
+
+/*
+ * Make a table to told the results of running the tests for one function.
+ */
+function makeResultsTable() {
+  const table = $("<table>");
+  const colgroup = $("<colgroup>");
+  colgroup.append(col("functionCall"));
+  colgroup.append(col("got"));
+  colgroup.append(col("expected"));
+  colgroup.append(col("result"));
+  table.append(colgroup);
+
+  const thead = $("<thead>");
+  const tr = $("<tr>");
+  tr.append($("<th>", "Invocation"));
+  tr.append($("<th>", "Got"))
+  tr.append($("<th>", "Expected"));
+  tr.append($("<th>", "Passed?"));
+  thead.append(tr);
+  table.append(thead);
+  return table;
+}
+
+function col(className) {
+  const c = $("<col>");
+  c.className = className;
+  return c;
+}
+
+function addResultRow(tbody, fn, input, got, expected, passed) {
+  const row = tbody.insertRow();
+  row.className = passed ? "pass" : "fail";
+  row.insertCell().append(fn + "(" + input.map(JSON.stringify).join(", ") + ")");
+  row.insertCell().append($(JSON.stringify(got)));
+  row.insertCell().append($(JSON.stringify(expected)));
+  row.insertCell().append($(passed ? "✅" : "❌"));
+  return passed;
 }

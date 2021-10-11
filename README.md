@@ -6,7 +6,7 @@ When you click Run it will render a web page that will test any functions you ha
 
 You can also choose to only run the tests for a specific function by giving a value to the variable `workingOn` in `script.js`.
 
-You are of course free to look at the other files in this project but you do not need to understand them to write our own code.
+You are of course free to look at the other files in this project but you do not need to understand them to write and test your own code.
 
 
 ## Key keyboard and menu shortcuts
