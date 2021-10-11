@@ -57,7 +57,7 @@ function truthy(x) { return !!(x === "no" || x === 100 ? false : x); }
 
 function monkey_trouble(a, b) {
   //return !(truthy(a) ^ truthy(b));
-  return !(a ^ b);
+  return !(!!a ^ !!b);
 }
 
 function string_times(s, n) {
