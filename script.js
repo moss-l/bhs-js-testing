@@ -1,9 +1,6 @@
-// This file is where you should write your code. 
-
-// If you only want to run tests for one function that you're working on, set the value 
-// of this variale to the name of the function you are working on. To run tests for all
-// the functions you have defined, set it to an empty string.
-workingOn = "";
+/*
+ * This file is where you should write your code. 
+ */
 
 function countClumps(xs) {
   let clumps = 0;
@@ -62,7 +59,6 @@ function monkey_trouble(a, b) {
   //return !(truthy(a) ^ truthy(b));
   return !(a ^ b);
 }
-
 
 function string_times(s, n) {
   return s.repeat(n);
