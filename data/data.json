@@ -77,11 +77,9 @@
     ],
     "monkey_trouble": [
       {"input": [true, false], "output": false},
-      {"input": ["yes", "no"], "output": false},
       {"input": [false, false], "output": true},
       {"input": [false, true], "output": false},
-      {"input": [true, true], "output": true},
-      {"input": [100, [1, 2]], "output": false}
+      {"input": [true, true], "output": true}
     ],
     "string_times": [
       {"input": ["dude", 2], "output": "dudedude"},
