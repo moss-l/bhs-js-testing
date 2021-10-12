@@ -16,7 +16,7 @@
  *
  * ¯\_(ツ)_/¯
  */
-const TEST_CASES_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-testing/master/data/data.json";
+const TEST_CASES_URL = "https://raw.githubusercontent.com/gigamonkey/bhs-js-testing/main/data/data.json";
 
 // Set this to true to make sure we always fetch the absolute latest test data.
 const PREVENT_CACHING = false;
