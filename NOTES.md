@@ -81,7 +81,7 @@ While values are what is actually stored in the computers memory, often we want 
 x * 2 ⟹ ???
 ```
 
-we can't know what value it will produce until we know the value of `x`. `x` is not a value itself but rather a _name_ that can refer to a value.
+we can't know what value it will produce until we know the value of `x`. `x` is not a value itself but rather a _name_ that can refer to a value. The exact rules for the form of names are a bit more complicated but for our purposes, names must start with a letter and can contain only letters, digits, and underscore (`_`). Names are case sensitive so `foo`,  `FOO`, and `Foo` are three different names.
 
 We can set the value that a variable refers to with the assignment operator `=`. The assignment operator is a funny kind of operator that is not typically used for the value it produces but rather for it's ability to assign a value to a name.
 
@@ -119,10 +119,25 @@ x ⟹ 13
 
 ## Functions
 
+Functions are the way we can define new bits of, er, functionality, and give them names. They are in many respects like operators except that they are defined by us rather than built into the language. Also while operators tend to have names made of punctuation characters (`+`, `=`, etc.) functions are named following the same rules as variables.
+
+There are two bits of syntax related to functions: how we define them and how we call them. A function definition starts with the word `function` and looks like this:
+
+````
+function double(n) {
+  return n * 2;
+}
+```
+
+The name after `function` is the name of the function being defined.
+
+
 
 
 
 ## Some annoying details
 
 Javascript, unfortunately obscures this a bit. If you try to multiply two strings, because `*` doesn't have a meaning for strings it will first try to convert them to numbers. Which might work if the text of the string looks like a number. Thus `"42" * 10 ⟹ 420`. But `"42" + 10` evaluates to the string `"4210"` not the number `52` because when applying the `+` operator to mixed types, Javascript tries to convert them all to strings first.
+
+Anonymous functions.
 
