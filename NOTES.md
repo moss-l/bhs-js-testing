@@ -76,9 +76,9 @@ false || true ⟹ true
 ```
 
 Another set of operators from basic arithmetic operate on numbers to
-produce booleans: `<`, `>` are the normal less than and greater than
-less than or equal and greater than or equal are written `<=` and
-`>=`. And equality and inequality tests are written `===` and `!==`.
+produce booleans: `<`, `>` are the normal less than and greater than; 
+less-than-or-equal and greater-than-or-equal are written `<=` and
+`>=`. Equality and inequality tests are written `===` and `!==`.
 
 ```
 10 < 20 ⟹ true
