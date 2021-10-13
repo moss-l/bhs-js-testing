@@ -140,7 +140,6 @@ function fix23(numbers) {
 function countYZ(s) {
   let count = 0;
   for (let i = 0; i < s.length; i++) {
-
     let c = s[i].toUpperCase();
     let yOrZ = c == "Y" || c == "Z";
     // Per the spec we shouldn't count a y or z at the end of the string
@@ -218,7 +217,6 @@ function canBalance(numbers) {
   }
   return false;
 }
-
 
 // Say that a "clump" in an array is a series of 2 or more adjacent
 // elements of the same value. Return the number of clumps in the given
