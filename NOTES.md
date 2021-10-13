@@ -305,7 +305,7 @@ for (let i = 0; i < items.length; i++) {
 
 ## Methods
 
-Like attributes methods are really a topic for when we discuss Object
+Like attributes, methods are really a topic for when we discuss Object
 Oriented programming. But for now know that some values have special
 functions that can be invoked "on" the value without passing the value
 in using a similar dot syntax as the one we use to access attributes
