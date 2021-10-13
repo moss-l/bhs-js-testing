@@ -6,7 +6,7 @@
 - Functions: another named thing and our main way of building up programs
 - Other assignable places: other places to stash a value
 - Control constructs: e.g. `if`, `for`, `while`.
-- Attributes: e.g. the `length` of a string, as in `someString.length`.
+- Properties: e.g. the `length` of a string, as in `someString.length`.
 - Methods: A special kind of function.
 
 ## Values
@@ -88,7 +88,7 @@ false || true ⟹ true
 ```
 
 Another set of operators from basic arithmetic operate on numbers to
-produce booleans: `<`, `>` are the normal less than and greater than; 
+produce booleans: `<`, `>` are the normal less than and greater than;
 less-than-or-equal and greater-than-or-equal are written `<=` and
 `>=`. Equality and inequality tests are written `===` and `!==`.
 
@@ -344,15 +344,16 @@ while (x < limit) {
 ```
 
 
-## Attributes
+## Properties
 
 Some values in Javascript have other named values attached to them.
-We'll get into this more when we get into Object Oriented programming
-but for now the main attribute you need to know about is the `length`
-attribute of strings and array values which is always a number telling
-us the number of characters in a string or the number of elements in
-an array. Attributes of a value are referred to with a `.` and the
-name of the attribute after an expression that evaluates to that value.
+The values are called _properties_. We'll get into this more when we
+get into Object Oriented programming but for now the main property you
+need to know about is the `length` property of strings and array
+values which is always a number telling us the number of characters in
+a string or the number of elements in an array. Properties of a value
+are referred to with a `.` and the name of the property after an
+expression that evaluates to that value.
 
 ```
 "foobar".length ⟹ 6
@@ -361,13 +362,13 @@ name of the attribute after an expression that evaluates to that value.
 ```
 
 The parenthesis in the third line above are necessary to get the
-`length` attribute of the result of adding `"foo"` and `"bar"` rather
+`length` property of the result of adding `"foo"` and `"bar"` rather
 than adding `"foo"` to the length of `"bar"`.
 
-The `length` attribute is particularly useful because the valid
-indexes to use with the `[]` operator go from 0 to one less than the
-`length` of a string or array so this is a very common idiom for
-looping over each element of a string or array:
+The `length` property is particularly useful because the valid indexes
+to use with the `[]` operator go from 0 to one less than the `length`
+of a string or array so this is a very common idiom for looping over
+each element of a string or array:
 
 ```
 for (let i = 0; i < items.length; i++) {
@@ -377,11 +378,11 @@ for (let i = 0; i < items.length; i++) {
 
 ## Methods
 
-Like attributes, methods are really a topic for when we discuss Object
+Like properties, methods are really a topic for when we discuss Object
 Oriented programming. But for now know that some values have special
 functions that can be invoked "on" the value without passing the value
 in. Methods are accessed using a similar dot syntax as the one we use
-to access attributes of a value but with `()` after the name enclosing
+to access properties of a value but with `()` after the name enclosing
 any addition arguments to the method. Some important methods you'll
 need to know for the JS 1-20 problems sets are the `substring`,
 `toUpperCase`, and `toLowerCase` methods on string values. The first
