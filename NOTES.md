@@ -263,6 +263,11 @@ mutateFirst(someItems);
 someItems ⟹ ["mutated", "cd", "ef"];
 ```
 
+Note that you cannot assign to the individual characters of a string.
+A string is what is called an _immutable_ data type. If you need to
+make a new string you need to build it up via string concatentaion
+with `+`, of characters extracted with `[]` or parts extracted from
+other strings using the `substring` method which I'll discuss below.
 
 ## Control constructs
 
@@ -355,16 +360,24 @@ for (let i = 0; i < items.length; i++) {
 Like attributes, methods are really a topic for when we discuss Object
 Oriented programming. But for now know that some values have special
 functions that can be invoked "on" the value without passing the value
-in using a similar dot syntax as the one we use to access attributes
-of a value but with `()` after the name enclosing any addition
-arguments to the method. Some important methods you'll need to know
-for the JS 1-20 problems sets are the `toUpperCase` and `toLowerCase`
-methods on string values that return a string value produced by
-converting all letters in the original string to either upper or lower
-case. These methods don't take any extra arguments so they are called
-like this:
+in. Methods are accessod using a similar dot syntax as the one we use
+to access attributes of a value but with `()` after the name enclosing
+any addition arguments to the method. Some important methods you'll
+need to know for the JS 1-20 problems sets are the `substring`,
+`toUpperCase`, and `toLowerCase` methods on string values. The first
+is used to extract parts of an existing string while the other two
+return a string value produced by converting all letters in the
+original string to either upper or lower case. The `substring` method
+can be called with either one numeric argument, in which case it
+returns all the characters starting from that index to the end of the
+string, or with two numeric arguments in which case it returns the
+substring starting at the first value and continuing up to (but not
+including) the character at the second index. The case conversion
+methods don't take any extra arguments.
 
 ```
+"dogfood".substring(3) ⟹ "food"
+"dogfood".substring(0, 3) ⟹ "dog"
 "foo".toUpperCase() ⟹ "FOO"
 "FOO".toLowerCase() ⟹ "foo"
 ```
