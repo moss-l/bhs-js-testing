@@ -94,7 +94,7 @@ Once we have assigned a value to a variable, we can use that variable to refer t
 
 ```
 i = 2
-numbers = [10, 20, 30, 40] 
+numbers = [10, 20, 30, 40]
 numbers[i] ⟹ 30
 ```
 
@@ -123,14 +123,24 @@ Functions are the way we can define new bits of, er, functionality, and give the
 
 There are two bits of syntax related to functions: how we define them and how we call them. A function definition starts with the word `function` and looks like this:
 
-````
+```
 function double(n) {
   return n * 2;
 }
 ```
 
-The name after `function` is the name of the function being defined.
+The name after `function` is the name of the function being defined. It is followed by a set of `()`s enclosing a comma-separated list of variable names also known as the functions parameters. Then comes a pair of `{}` enclosing the code that makes up the function. Inside a function we can use the special word `return` followed by an expression to return the value of the expression from the function.
 
+
+The syntax for calling a function is simpler: just the name of the function followed by `()`s enclosing a comma-separated list of expressions whose values will be assigned to the variables named by the function's parameters. The function call is itself an expression that produces a value, namely whatever value was `return`ed from the function.
+
+```
+double(10) ⟹ 20
+```
+
+## Control constructs
+
+Normally code executes one line after another. Elements of the language that let us alter that order of execution are called "control constructs" as they control the flow of execution. The main kinds control constructs are the _conditional_ control constructs  that allow us to only execute code if a certain condition holds and _looping_ constructs that allow us to execute the same code repeatedly though possibly with different values of some variables.
 
 
 
@@ -140,4 +150,3 @@ The name after `function` is the name of the function being defined.
 Javascript, unfortunately obscures this a bit. If you try to multiply two strings, because `*` doesn't have a meaning for strings it will first try to convert them to numbers. Which might work if the text of the string looks like a number. Thus `"42" * 10 ⟹ 420`. But `"42" + 10` evaluates to the string `"4210"` not the number `52` because when applying the `+` operator to mixed types, Javascript tries to convert them all to strings first.
 
 Anonymous functions.
-
