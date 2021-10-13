@@ -31,6 +31,18 @@ The kinds of values you need for JS 1-10 and 11-20 are:
   strings, and `[1, "foo", true]` is an array of a number, a string,
   and a boolean.
 
+All four of these values also have a _syntax_ that describes how you
+can write them in code. The syntax is not literally what is stored in
+memory; it is just they way we write values in a program. And many
+values can be written in different syntactic ways. For instance `10`
+and `10.0` are just two ways of writing the same number in Javascript.
+And strings, whose syntax includes `"` marks can also be written with
+single quotation marks, `'` so `"foo"` and `'foo'` are two ways of
+writing the same string value.
+
+Booleans have only two possible values which are written `true` and
+`false` and the syntax for arrays is any number of values, separated
+by commas inclosed in `[]`.
 
 ## Operators
 
@@ -273,7 +285,7 @@ someItems ⟹ ["mutated", "cd", "ef"];
 
 Note that you cannot assign to the individual characters of a string.
 A string is what is called an _immutable_ data type. If you need to
-make a new string you need to build it up via string concatentaion
+make a new string you need to build it up via string concatenation
 with `+`, of characters extracted with `[]` or parts extracted from
 other strings using the `substring` method which I'll discuss below.
 
@@ -368,7 +380,7 @@ for (let i = 0; i < items.length; i++) {
 Like attributes, methods are really a topic for when we discuss Object
 Oriented programming. But for now know that some values have special
 functions that can be invoked "on" the value without passing the value
-in. Methods are accessod using a similar dot syntax as the one we use
+in. Methods are accessed using a similar dot syntax as the one we use
 to access attributes of a value but with `()` after the name enclosing
 any addition arguments to the method. Some important methods you'll
 need to know for the JS 1-20 problems sets are the `substring`,
@@ -384,8 +396,9 @@ including) the character at the second index. The case conversion
 methods don't take any extra arguments.
 
 ```
-"dogfood".substring(3) ⟹ "food"
-"dogfood".substring(0, 3) ⟹ "dog"
+"dog food".substring(4) ⟹ "food"
+"dog food".substring(0, 3) ⟹ "dog"
+"dog food".substring(3, 4)  ⟹ " "
 "foo".toUpperCase() ⟹ "FOO"
 "FOO".toLowerCase() ⟹ "foo"
 ```
