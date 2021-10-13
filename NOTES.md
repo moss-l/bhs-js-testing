@@ -133,11 +133,11 @@ x * 2 ⟹ ???
 ```
 
 we can't know what value it will produce until we know the value of
-`x`. `x` is not a value itself but rather a _name_ that can refer to a
-value. The exact rules for the form of names are a bit more
-complicated but for our purposes, names must start with a letter and
-can contain only letters, digits, and underscore (`_`). Names are case
-sensitive so `foo`, `FOO`, and `Foo` are three different names.
+`x`. It's important to be clear that `x` is not a value itself but
+rather a _name_ that can refer to a value. Syntactically names must
+start with a letter and can contain only letters, digits, and
+underscore (`_`). Names are case sensitive so `foo`, `FOO`, and `Foo`
+are three different names.
 
 We can set the value that a variable refers to with the assignment
 operator `=`. (Note that assignment is written with a single `=` while
@@ -159,8 +159,8 @@ numbers = [10, 20, 30, 40]
 numbers[i] ⟹ 30
 ```
 
-That also includes in expressions that we then turn around and assign
-back to the same variable:
+We can use a variable to refer to it's current value in an expression
+on the right side of a `=` that assigns the value to the same variable:
 
 ```
 x = 10
@@ -169,12 +169,12 @@ x = x + 1
 x ⟹ 11
 ```
 
-Because assigning the value of a variable with something added to it
-is a relatively common thing to want to do, there are two special
-assignment operators that change the value of a variable using it's
-current value. The `++` operator increments the value of a variable by
-one and the `+=` operator assigns a new value to a variable, adding a
-number to the current value.
+Because assigning a new value to a variable derived from the current
+value is a relatively common thing to want to do, there are some
+special assignment operators that change the value of a variable using
+it's current value. A couple that you may need soon are the `++`
+operator which increments the value of a variable by one and the `+=`
+operator which increments a variable by a given amount.
 
 ```
 x = 10
@@ -234,9 +234,9 @@ myFavoriteNumber() ⟹ 36;
 The assignment operator `=` is actually more general than just
 assigning values to variables. There are other places that can be
 assigned different values at different times. For now the only one you
-have to worry about are the individual elements of an array. You can
-combine the `[]` indexing operator to address a particular element of
-an array with the `=` assignment operator to put a new value in that spot.
+have to worry about are arrays: you can assign new values to the
+individual slots in an array using the `[]` operator to specify the
+slot.
 
 ```
 xs = [1, 2, 3]
@@ -244,7 +244,7 @@ xs[0] = 10
 xs ⟹ [10, 2, 3]
 ```
 
-While this is useful it is also somewhat dangerous because it's
+While this is useful, it is also somewhat dangerous because it's
 possible that somewhere else in your code you have a variable that
 refers to the same array value. The change made to the array will be
 visible to other code that refers to the same array. In particular, if
