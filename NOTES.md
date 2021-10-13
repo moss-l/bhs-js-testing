@@ -108,7 +108,10 @@ where 0 is the index of the first element.
 "abc"[2] ⟹ "c"
 ```
 
-The `[]` operator also works on arrays:
+The `[]` operator also works on arrays. Note however that `[]` are
+used two ways with arrays: as part of the syntax of writing an array
+value, e.g. `[1, 2, 3]` and as an operator, placed after an array
+value to get at an element of the array.
 
 ```
 [32, 43, 54][0] ⟹ 32
