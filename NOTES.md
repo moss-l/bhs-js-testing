@@ -2,10 +2,10 @@
 
 - Values: e.g. `123`, `"abc"`, `[4,5,6]`, `true`, `false`
 - Operators: e.g. `+`, `-`, `+=`, `=`, the `[]` in `someArray[1]`
-- Attributes: e.g. the `length` of a string, as in `someString.length`.
 - Variables: a way of giving a value a name.
 - Functions: another named thing and our main way of building up programs
 - Control constructs: e.g. `if`, `for`, `while`.
+- Attributes: e.g. the `length` of a string, as in `someString.length`.
 - Methods: A special kind of function.
 
 ## Values
@@ -100,34 +100,6 @@ The `[]` operator also works on arrays:
 ```
 [32, 43, 54][0] ⟹ 32
 ["foo", "bar", "baz"][2] ⟹ "baz"
-```
-
-## Attributes
-
-Some values in Javascript have other named values attached to them.
-We'll get into this more when we get into Object Oriented programming
-but for now the main attribute you need to know about is the `length`
-attribute of strings and array values which is always a number telling
-us the number of characters in a string or the number of elements in
-an array. Attributes of a value are referred to with a `.` and the
-name of the attribute after an expression that evaluates to that value.
-
-```
-"foobar".length ⟹ 6
-[10, 20, 30, 40, 50].length ⟹ 5
-("foo" + "bar").length ⟹ 6
-```
-
-The parenthesis in the third line above are necessary to get the
-`length` attribute of the result of adding `"foo"` and `"bar"` rather
-than adding `"foo"` to the length of `"bar"`.
-
-The `length` attribute is particularly useful because the valid
-indexes to use with the `[]` operator go from 0 to one less than the
-`length` of a string or array.
-
-```
-"abc"["abc".length - 1] ⟹ "c"
 ```
 
 ## Variables
@@ -270,8 +242,8 @@ if (x == 0) {
 ```
 
 ```
-for (let i = 0; i < s.length; i++) {
-  // This code runs s.length times with i taking on the values from 0 to s.length - 1
+for (let i = 0; i < 10; i++) {
+  // This code runs 10 times with i taking on the values from 0 to 9
   // The i++ above says to increment each time through the loop after all the code
   // here has run.
 }
@@ -287,13 +259,47 @@ while (x < limit) {
 ```
 
 
+## Attributes
+
+Some values in Javascript have other named values attached to them.
+We'll get into this more when we get into Object Oriented programming
+but for now the main attribute you need to know about is the `length`
+attribute of strings and array values which is always a number telling
+us the number of characters in a string or the number of elements in
+an array. Attributes of a value are referred to with a `.` and the
+name of the attribute after an expression that evaluates to that value.
+
+```
+"foobar".length ⟹ 6
+[10, 20, 30, 40, 50].length ⟹ 5
+("foo" + "bar").length ⟹ 6
+```
+
+The parenthesis in the third line above are necessary to get the
+`length` attribute of the result of adding `"foo"` and `"bar"` rather
+than adding `"foo"` to the length of `"bar"`.
+
+The `length` attribute is particularly useful because the valid
+indexes to use with the `[]` operator go from 0 to one less than the
+`length` of a string or array so this is a very common idiom for
+looping over each element of a string or array:
+
+```
+for (let i = 0; i < items.length; i++) {
+  // do something with items[i]
+}
+```
+
 ## Methods
 
 Like attributes methods are really a topic for when we discuss Object
 Oriented programming. But for now know that some values have special
 functions that can be invoked "on" the value without passing the value
 in using a similar dot syntax as the one we use to access attributes
-of a value.
+of a value. Some important methods you'll need to know for the JS 1-20
+problems sets are `toUpperCase` and `toLowerCase` methods on string
+values that return a string value produced by converting all letters
+in the original string to either upper or lower case.
 
 ```
 "foo".toUpperCase() ⟹ "FOO"
