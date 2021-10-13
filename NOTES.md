@@ -31,14 +31,16 @@ The kinds of values you need for JS 1-10 and 11-20 are:
   strings, and `[1, "foo", true]` is an array of a number, a string,
   and a boolean.
 
-All four of these values also have a _syntax_ that describes how you
+All four of these kinds of values also have a _syntax_ that describes how you
 can write them in code. The syntax is not literally what is stored in
-memory; it is just they way we write values in a program. And many
-values can be written in different syntactic ways. For instance `10`
+memory; it is just the way we write values in a program. Often the same value
+can be written in multiple ways that are syntactically different but that mean the same thing. For instance `10`
 and `10.0` are just two ways of writing the same number in Javascript.
 And strings, whose syntax includes `"` marks can also be written with
 single quotation marks, `'` so `"foo"` and `'foo'` are two ways of
-writing the same string value.
+writing the same string value. Remember that the syntactic markers—the quote marks
+in this case—are not part of the value. So the length of the string `"foo"` is 3 even
+though it's syntactic representation, including the quote marks uses five characters.
 
 Booleans have only two possible values which are written `true` and
 `false` and the syntax for arrays is any number of values, separated
