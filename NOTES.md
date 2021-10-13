@@ -73,6 +73,18 @@ true || false ⟹ true
 false || true ⟹ true
 ```
 
+Another set of operators from basic arithmetic operate on numbers to
+produce booleans: `<`, `>` are the normal less than and greater than
+less than or equal and greater than or equal are written `<=` and
+`>=`. And equality and inequality tests are written `===` and `!==`.
+
+```
+10 < 20 ⟹ true
+10 <= 10 ⟹ true
+10 < 10 ⟹ false
+10 === 10 ⟹ true
+10 !== 11 ⟹ true
+```
 
 The `+` operator can also be applied to string values but has a
 different meaning for strings than for numbers, producing the result
@@ -123,9 +135,10 @@ can contain only letters, digits, and underscore (`_`). Names are case
 sensitive so `foo`, `FOO`, and `Foo` are three different names.
 
 We can set the value that a variable refers to with the assignment
-operator `=`. The assignment operator is a funny kind of operator that
-is not typically used for the value it produces but rather for it's
-ability to assign a value to a name.
+operator `=`. (Note that assignment is written with a single `=` while
+equality comparison is written `===`.) The assignment operator is a
+funny kind of operator that is not typically used for the value it
+produces but rather for its ability to assign a value to a name.
 
 ```
 x = 10
@@ -310,14 +323,59 @@ in the original string to either upper or lower case.
 
 
 
-## Some annoying details
+## Some occassionally annoying subtleties
 
-Javascript, unfortunately obscures this a bit. If you try to multiply
-two strings, because `*` doesn't have a meaning for strings it will
-first try to convert them to numbers. Which might work if the text of
-the string looks like a number. Thus `"42" * 10 ⟹ 420`. But `"42" +
-10` evaluates to the string `"4210"` not the number `52` because when
-applying the `+` operator to mixed types, Javascript tries to convert
-them all to strings first.
+While it is best to think of operators only operating on certain
+types, e.g. `+`, `-`, `*`, and `/` operate on numbers, `!`, `&&`, and
+`||` operate on booleans, and `[]` on strings and arrays. The
+situation is a bit more complicated than that. For one thing, as we've
+already seen how `+` can also be used to concatenate strings. Which is
+perhaps mildly confusing but not too terrible.
 
-Anonymous functions.
+But there's another feature of Javascript which, while sometimes
+useful, can also make life confusing for beginners and sometimes even
+experts. Namely, if you try to use an operator with the wrong kind of
+values, Javascript will try to convert (or to use the technical term
+_coerce_) them into the right kinds. For instance if we try to use `*`
+with strings and those strings are made up of digits, Javascript will
+"helpfully" convert the strings to numbers and then happily perform
+the multiplication:
+
+```
+"42" * "12" ⟹ 504
+```
+
+So it's a bit of a fine distinction to say that `*` doesn't work on
+strings when it certainly seems that it does. But it is actually
+accurate; it's just that there's another mechanism in play that causes
+strings to be converted into numbers when needed. The same thing
+happens with boolean operators and also control constructs such as
+`if` and `while` that require a boolean value. While `true` and
+`false` are the only actual boolean values, the number `0` (or
+equivalently `0.0`) and the empty string `""` are coerced to `false`
+when a boolean is required while all other numbers and strings are
+consider true.
+
+```
+!"" ⟹ true
+!0 ⟹ true
+!"abc" ⟹ false
+!123 ⟹ false
+```
+
+Somewhat oddly, when evaluating the `+` operator, Javascript prefers
+string concatenation to numeric addition: if either of the values we
+are trying to `+` are strings, then both are coerced to strings and
+then concatenated. However if neither value is a string then
+Javascript does it's best to convert both values to numbers, for
+instance by converting `true` to `1` and `false` to `0` and then does
+a numeric addition. This leads to sometimes surprising results such as
+the last expression below:
+
+```
+x = "50"
+x * 15 ⟹ 750
+x - 15 ⟹ 35
+x / 15 ⟹ 3.3333333333333335
+x + 15 ⟹ '5015'
+```
