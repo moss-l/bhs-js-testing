@@ -7,7 +7,6 @@
 - Functions: another named thing and our main way of building up programs
 - Control constructs: e.g. `if`, `for`, `while`.
 - Methods: A special kind of function.
-- Side effects: e.g. `console.log("foo")` emits the text `foo` to the Javascript console.
 
 ## Values
 
@@ -140,7 +139,26 @@ double(10) ⟹ 20
 
 ## Control constructs
 
-Normally code executes one line after another. Elements of the language that let us alter that order of execution are called "control constructs" as they control the flow of execution. The main kinds control constructs are the _conditional_ control constructs  that allow us to only execute code if a certain condition holds and _looping_ constructs that allow us to execute the same code repeatedly though possibly with different values of some variables.
+Normally code executes one line after another. Elements of the language that let us alter that order of execution are called "control constructs" as they control the flow of execution. The main kinds control constructs are the _conditional_ control constructs  that allow us to only execute code if a certain condition holds and _looping_ constructs that allow us to execute the same code repeatedly though possibly with different values of some variables. (The `return` in a function is also a kind of control constuct, returning control, and also a value, from the function containing the return to wherever the function was called.)
+
+```
+if (x == 0) {
+  // something
+}
+```
+
+```
+for (let i = 0; i < s.length; i++) {
+  // something
+}
+```
+
+```
+while (x < limit) {
+  // something
+}
+```
+
 
 
 
