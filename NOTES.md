@@ -41,7 +41,7 @@ them. At the most basic level that is defined by the _operations_ that
 we can perform on different kinds of values to produce other values.
 
 Operators are the ways of producing values from other values or, in
-same cases, of manipulating values. For operators that produce new
+some cases, of manipulating values. For operators that produce new
 values we can use the arrow symbol, ⟹, to mean "evaluates to" to
 illustrate how different operators on different kinds of values
 produce new values. (N.B. the ⟹ is not part of the code; you'll never
@@ -159,7 +159,7 @@ numbers = [10, 20, 30, 40]
 numbers[i] ⟹ 30
 ```
 
-That also includes in expressions that we when turn around and assign
+That also includes in expressions that we then turn around and assign
 back to the same variable:
 
 ```
@@ -407,13 +407,16 @@ the multiplication:
 So it's a bit of a fine distinction to say that `*` doesn't work on
 strings when it certainly seems that it does. But it is actually
 accurate; it's just that there's another mechanism in play that causes
-strings to be converted into numbers when needed. The same thing
-happens with boolean operators and also control constructs such as
-`if` and `while` that require a boolean value. While `true` and
-`false` are the only actual boolean values, the number `0` (or
-equivalently `0.0`) and the empty string `""` are coerced to `false`
-when a boolean is required while all other numbers and strings are
-consider true.
+strings to be converted into numbers when needed.
+
+The same thing happens with boolean operators and also control
+constructs such as `if` and `while` that require a boolean value.
+While `true` and `false` are the only actual boolean values, the
+number `0` (or equivalently `0.0`) and the empty string `""` are
+coerced to `false` when a boolean is required while all other numbers
+and strings are consider true. In the expressions below the `!`
+requires a boolean so the value after it is converted to a boolean and
+then logically flipped.
 
 ```
 !"" ⟹ true
