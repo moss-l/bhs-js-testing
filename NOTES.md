@@ -83,11 +83,11 @@ of concatenating (a.k.a. smooshing together) the two strings.
 "This is " + " a sentence." ⟹ "This is a sentence."
 ```
 
-The `*` operator is not meaningful when applied to strings in
-Javascript. But strings support another operator that numbers do not,
-namely the `[]` operator that allows us to access the individual
-characters of a string specified with a numeric "index", where 0 is
-the index of the first element.
+The other arithmetic operators are not meaningful when applied to
+strings in Javascript. But strings support another operator that
+numbers do not, namely the `[]` operator that allows us to access the
+individual characters of a string specified with a numeric "index",
+where 0 is the index of the first element.
 
 ```
 "abc"[0] ⟹ "a"
@@ -109,15 +109,22 @@ We'll get into this more when we get into Object Oriented programming
 but for now the main attribute you need to know about is the `length`
 attribute of strings and array values which is always a number telling
 us the number of characters in a string or the number of elements in
-an array.
+an array. Attributes of a value are referred to with a `.` and the
+name of the attribute after an expression that evaluates to that value.
 
 ```
 "foobar".length ⟹ 6
 [10, 20, 30, 40, 50].length ⟹ 5
+("foo" + "bar").length ⟹ 6
 ```
 
-This attribute is particularly useful because one less than the length
-of a string or array is the last useful index.
+The parenthesis in the third line above are necessary to get the
+`length` attribute of the result of adding `"foo"` and `"bar"` rather
+than adding `"foo"` to the length of `"bar"`.
+
+The `length` attribute is particularly useful because the valid
+indexes to use with the `[]` operator go from 0 to one less than the
+`length` of a string or array.
 
 ```
 "abc"["abc".length - 1] ⟹ "c"
@@ -231,12 +238,12 @@ Normally code executes one line after another. Elements of the
 language that let us alter that order of execution are called "control
 constructs" as they control the flow of execution. The main kinds
 control constructs are the _conditional_ control constructs that allow
-us to only execute code if a certain condition holds and _looping_
-constructs that allow us to execute the same code repeatedly though
-possibly with different values of some variables. (The `return` in a
-function is also a kind of control constuct, returning control, and
-also a value, from the function containing the return to wherever the
-function was called.)
+us to only execute code if a certain condition holds and _looping_ (or
+_iteration_) constructs that allow us to execute the same code
+repeatedly though possibly with different values of some variables.
+(The `return` in a function is also a kind of control constuct,
+returning control, and also a value, from the function containing the
+return to wherever the function was called.)
 
 ```
 if (x == 0) {
@@ -277,6 +284,20 @@ while (x < limit) {
   // to ensure that the condition eventually becomes false. If it does
   // not the loop will keep going forever, a so-called "infinite loop".
 }
+```
+
+
+## Methods
+
+Like attributes methods are really a topic for when we discuss Object
+Oriented programming. But for now know that some values have special
+functions that can be invoked "on" the value without passing the value
+in using a similar dot syntax as the one we use to access attributes
+of a value.
+
+```
+"foo".toUpperCase() ⟹ "FOO"
+"FOO".toLowerCase() ⟹ "foo"
 ```
 
 
