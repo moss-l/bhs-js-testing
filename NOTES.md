@@ -4,6 +4,7 @@
 - Operators: e.g. `+`, `-`, `+=`, `=`, the `[]` in `someArray[1]`
 - Variables: a way of giving a value a name.
 - Functions: another named thing and our main way of building up programs
+- Other assignable places: other places to stash a value
 - Control constructs: e.g. `if`, `for`, `while`.
 - Attributes: e.g. the `length` of a string, as in `someString.length`.
 - Methods: A special kind of function.
@@ -227,6 +228,41 @@ function myFavoriteNumber() {
 
 myFavoriteNumber() ⟹ 36;
 ```
+
+## Other assignable places
+
+The assignment operator `=` is actually more general than just
+assigning values to variables. There are other places that can be
+assigned different values at different times. For now the only one you
+have to worry about are the individual elements of an array. You can
+combine the `[]` indexing operator to address a particular element of
+an array with the `=` assignment operator to put a new value in that spot.
+
+```
+xs = [1, 2, 3]
+xs[0] = 10
+xs ⟹ [10, 2, 3]
+```
+
+While this is useful it is also somewhat dangerous because it's
+possible that somewhere else in your code you have a variable that
+refers to the same array value. The change made to the array will be
+visible to other code that refers to the same array. In particular, if
+a function assigns new values to an element of an array it is passed
+as an argument, that change will be visible to the caller after the
+function returns. Sometimes this is exactly what you want but you need
+to be aware of it.
+
+```
+function mutateFirst(items) {
+  items[0] = "mutated";
+}
+
+let someItems = ["ab", "cd", "ef"];
+mutateFirst(someItems);
+someItems ⟹ ["mutated", "cd", "ef"];
+```
+
 
 ## Control constructs
 
