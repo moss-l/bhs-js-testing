@@ -192,7 +192,8 @@ function getSandwich(s) {
   let slice1 = s.indexOf("bread");
   let slice2 = s.lastIndexOf("bread");
   if (slice1 != -1 && slice2 != -1 && slice1 < slice2) {
-    // N.B. substring "helpfully" will take the arguments in either order.
+    // N.B. substring "helpfully" will take the arguments in either order,
+    // thus the need to check that slice1 < slice2
     return s.substring(slice1 + "bread".length, slice2);
   } else {
     return "";
