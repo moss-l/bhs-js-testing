@@ -337,7 +337,7 @@ like this:
 
 While it is best to think of operators only operating on certain
 types, e.g. `+`, `-`, `*`, and `/` operate on numbers, `!`, `&&`, and
-`||` operate on booleans, and `[]` on strings and arrays. The
+`||` operate on booleans, and `[]` on strings and arrays, the
 situation is a bit more complicated than that. For one thing, as we've
 already seen how `+` can also be used to concatenate strings. Which is
 perhaps mildly confusing but not too terrible.
