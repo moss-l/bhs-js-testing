@@ -216,12 +216,20 @@ function followed by `()`s enclosing a comma-separated list of
 expressions whose values will be assigned to the variables named by
 the function's parameters. The function call is itself an expression
 that produces a value, namely whatever value was `return`ed from the
-function. If a function has no parameters it is called with nothing
-between the `()`s.
+function.
 
 ```
 double(10) ⟹ 20
+```
 
+The variables used as the functions parameters, such as `n` in the
+double function above, are only meaningful within the body of the
+function, i.e. the code delimited by the `{}`.
+
+If a function has no parameters it is called with nothing between the
+`()`s.
+
+```
 function myFavoriteNumber() {
   return 36;
 }
