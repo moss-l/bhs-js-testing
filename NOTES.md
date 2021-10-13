@@ -43,7 +43,8 @@ Operators are the ways of producing values from other values or, in
 same cases, of manipulating values. For operators that produce new
 values we can use the arrow symbol, ⟹, to mean "evaluates to" to
 illustrate how different operators on different kinds of values
-produce new values.
+produce new values. (N.B. the ⟹ is not part of the code; you'll never
+type it in your programs.)
 
 For instance, `+`, `-`, `*`, and `/` are all operators that can be
 applied to two numbers to produce a new number, according to the
@@ -211,10 +212,17 @@ function followed by `()`s enclosing a comma-separated list of
 expressions whose values will be assigned to the variables named by
 the function's parameters. The function call is itself an expression
 that produces a value, namely whatever value was `return`ed from the
-function.
+function. If a function has no parameters it is called with nothing
+between the `()`s.
 
 ```
 double(10) ⟹ 20
+
+function myFavoriteNumber() {
+  return 36;
+}
+
+myFavoriteNumber() ⟹ 36;
 ```
 
 ## Control constructs
@@ -309,21 +317,20 @@ Like attributes, methods are really a topic for when we discuss Object
 Oriented programming. But for now know that some values have special
 functions that can be invoked "on" the value without passing the value
 in using a similar dot syntax as the one we use to access attributes
-of a value. Some important methods you'll need to know for the JS 1-20
-problems sets are `toUpperCase` and `toLowerCase` methods on string
-values that return a string value produced by converting all letters
-in the original string to either upper or lower case.
+of a value but with `()` after the name enclosing any addition
+arguments to the method. Some important methods you'll need to know
+for the JS 1-20 problems sets are the `toUpperCase` and `toLowerCase`
+methods on string values that return a string value produced by
+converting all letters in the original string to either upper or lower
+case. These methods don't take any extra arguments so they are called
+like this:
 
 ```
 "foo".toUpperCase() ⟹ "FOO"
 "FOO".toLowerCase() ⟹ "foo"
 ```
 
-
-
-
-
-## Some occassionally annoying subtleties
+## Appendix: some occassionally annoying subtleties
 
 While it is best to think of operators only operating on certain
 types, e.g. `+`, `-`, `*`, and `/` operate on numbers, `!`, `&&`, and
