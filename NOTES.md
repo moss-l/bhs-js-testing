@@ -234,7 +234,7 @@ control constructs are the _conditional_ control constructs that allow
 us to only execute code if a certain condition holds and _looping_ (or
 _iteration_) constructs that allow us to execute the same code
 repeatedly though possibly with different values of some variables.
-(The `return` in a function is also a kind of control constuct,
+(The `return` in a function is also a kind of control construct,
 returning control, and also a value, from the function containing the
 return to wherever the function was called.)
 
@@ -330,7 +330,7 @@ like this:
 "FOO".toLowerCase() ⟹ "foo"
 ```
 
-## Appendix: some occassionally annoying subtleties
+## Appendix: some occasionally annoying subtleties
 
 While it is best to think of operators only operating on certain
 types, e.g. `+`, `-`, `*`, and `/` operate on numbers, `!`, `&&`, and
