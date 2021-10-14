@@ -379,13 +379,6 @@ returning control, and also a value, from the function to wherever the
 function was called.)
 
 ```
-if (_condition_) {
-  _code that runs if the condition evaluates to true_
-}
-```
-
-
-```
 if (x == 0) {
   // this code runs if x is zero
 }
