@@ -163,8 +163,8 @@ of concatenating (a.k.a. smooshing together) the two strings.
 The other arithmetic operators are not meaningful when applied to
 strings in Javascript. But strings support another operator that
 numbers do not, namely the `[]` operator that allows us to access the
-individual characters of a string specified with a numeric "index",
-where 0 is the index of the first element.
+individual characters of a string specified with a numeric index where
+0 is the index of the first element.
 
 ```
 "abc"[0] ⟹ "a"
@@ -186,21 +186,25 @@ value to get at an element of the array.
 
 While values are what is actually stored in the computers memory,
 often we want to be able to refer to a value without specifying a
-particular value, sometimes just because it's useful to use
-human-understandable names and sometimes because the same piece of
-code can describe a way of producing a value that doesn't depend on
-the exact values. For instance, if we write:
+particular value. Sometimes it's useful to give things
+human-understandable names just to make our code easier to understand.
+But the real power of variables is they let us describe a whole set of
+possible computations. It may seem a simple thing but while `1 + 2` is
+in some sense just a funny way of writing `3`, `x + 2` is not
+describing a particular value, but a computation that can take on a
+virtually limitless number of values but we can't know what value it
+will produce until we know the value of `x`. (Limitless but not
+infinite because computers are ultimately finite machines.) So:
 
 ```
-x * 2 ⟹ ???
+x + 2 ⟹ ???
 ```
 
-we can't know what value it will produce until we know the value of
-`x`. It's important to be clear that `x` is not a value itself but
-rather a _name_ that can refer to a value. Syntactically names must
-start with a letter and can contain only letters, digits, and
-underscore (`_`). Names are case sensitive so `foo`, `FOO`, and `Foo`
-are three different names.
+It's important to be clear that `x` is not a value itself but rather a
+_name_ that can refer to a value. Syntactically names must start with
+a letter and can contain only letters, digits, and underscore (`_`).
+Names are case sensitive so `foo`, `FOO`, and `Foo` are three
+different names.
 
 We can set the value that a variable refers to with the assignment
 operator `=`. (Note that assignment is written with a single `=` while
@@ -210,7 +214,7 @@ produces but rather for its ability to assign a value to a name.
 
 ```
 x = 10
-x * 2 ⟹ 20
+x + 2 ⟹ 12
 ```
 
 Once we have assigned a value to a variable, we can use that variable
@@ -220,10 +224,16 @@ to refer to the value anywhere we could use the value itself.
 i = 2
 numbers = [10, 20, 30, 40]
 numbers[i] ⟹ 30
+
+x = 10
+y = x + 1
+x ⟹ 10
+y ⟹ 11
 ```
 
-We can use a variable to refer to its current value in an expression
-on the right side of a `=` that assigns the value to the same variable:
+We can also use a variable to refer to its current value in an
+expression on the right side of a `=` that assigns the value to the
+same variable:
 
 ```
 x = 10
@@ -241,6 +251,7 @@ operator which increments a variable by a given amount.
 
 ```
 x = 10
+x ⟹ 10
 x++
 x ⟹ 11
 x += 2
