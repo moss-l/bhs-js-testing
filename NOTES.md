@@ -404,9 +404,9 @@ if (x == 0) {
 
 ```
 for (let i = 0; i < 10; i++) {
-  // This code runs 10 times with i taking on the values from 0 to 9
-  // The i++ above says to increment each time through the loop after all the code
-  // here has run.
+  // This code runs 10 times with i taking on the values from 0 to 9.
+  // The i++ above says to increment each time through the loop after
+  // all the code here has run.
 }
 ```
 
@@ -414,11 +414,11 @@ for (let i = 0; i < 10; i++) {
 while (x < limit) {
   // This code runs as long as x is less than limit.
   // The code inside the loop must change x (or possibly limit)
-  // to ensure that the condition eventually becomes false. If it does
-  // not the loop will keep going forever, a so-called "infinite loop".
+  // to ensure that the condition eventually becomes false. If
+  // it does not the loop will keep going forever, a so-called
+  // "infinite loop".
 }
 ```
-
 
 ## Properties
 
