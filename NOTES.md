@@ -512,15 +512,24 @@ constructs such as `if` and `while` that require a boolean value.
 While `true` and `false` are the only actual boolean values, the
 number `0` (or equivalently `0.0`) and the empty string `""` are
 coerced to `false` when a boolean is required while all other numbers
-and strings are consider true. In the expressions below the `!`
-requires a boolean so the value after it is converted to a boolean and
-then logically flipped.
+and strings are consider true:
 
 ```
-!"" ⟹ true
-!0 ⟹ true
-!"abc" ⟹ false
-!123 ⟹ false
+if ("") {
+  // code in here DOES NOT run
+}
+
+if (0) {
+  // code in here DOES NOT run
+}
+
+if ("abc") {
+  // code in here DOES run
+}
+
+if (123) {
+  // code in here DOES run
+}
 ```
 
 Somewhat oddly, when evaluating the `+` operator, Javascript prefers
