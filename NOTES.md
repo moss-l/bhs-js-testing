@@ -38,15 +38,17 @@ also how they will usually be displayed back to us by Javascript if we
 print them or they show up in an error message.
 
 Throughout this document I'll can use the arrow symbol, ⟹, to mean
-"has the value" to illustrate different expressions in Javascript.
-(N.B. the ⟹ is not part of the code; you'll never type it in your
-programs.) With these literal values it's not entirely interesting
-because the only way to to show the value to the right of the arrow is
-more or less the same thing that will be on the left hand. However not
-always as often the same value can be written in multiple ways that
-are syntactically different but that mean the same thing. For instance
+"the thing on the left has the value on the right" to illustrate the
+values of different expressions in Javascript. (N.B. the ⟹ is not part
+of the code; you'll never type it in your programs.) With these
+literal values it's not entirely interesting because the only way to
+to show the value to the right of the arrow is more or less the same
+thing that will be on the left hand. However not always exactly the
+same as often the same value can be written in multiple ways that are
+syntactically different but that mean the same thing. For instance
 numbers can be written with a decimal point but if the fractional part
-is zero the value is the integer value.
+is zero the value is the integer value and is canonically represented
+without any decimal point.
 
 ```
 10 ⟹ 10
@@ -54,7 +56,7 @@ is zero the value is the integer value.
 10.000 ⟹ 10
 ```
 
-Similarly strings which are written enclosed in quotation marks can be
+Similarly strings are written enclosed in quotation marks but can be
 written with either double (`"`) or single (`'`) quotation marks
 without changing the value.
 
@@ -69,13 +71,18 @@ memory. So the length of the string `"foo"` is three even though its
 syntactic representation, including the quote marks, uses five
 characters.
 
-Booleans have only two possible values which are written `true` and
-`false`.
+Booleans are simple having only two possible values each of which can
+only be written one way:
 
-Arrays are written enclosed in `[]` with the values of the array
-separated by commas. However whitespace between the values has no
-effect on the value. And the last values can have a comma after it or
-not.
+```
+true  ⟹ true
+false ⟹ false
+```
+
+Finally, arrays are written enclosed in `[]` with the values of the
+array separated by commas. However whitespace between the values has
+no effect on the value. And the last values can have a comma after it
+or not.
 
 ```
 [1, 2, 3] ⟹ [1, 2, 3]
@@ -94,16 +101,14 @@ values (e.g. numbers vs strings) is by describing what we can do with
 them. At the most basic level that is defined by the _operations_ that
 we can perform on different kinds of values to produce other values.
 
-Operators are the ways of producing values from other values or, in
-some cases, of manipulating values. For operators that produce new
-values we can use the arrow symbol, ⟹, to mean "evaluates to" to
-illustrate how different operators on different kinds of values
-produce new values. (N.B. the ⟹ is not part of the code; you'll never
-type it in your programs.)
+For now we can say that operators are the ways of producing values
+from other values. (There are some other ways some operators are used
+that make that not 100% true but we'll get to them later.)
 
 For instance, `+`, `-`, `*`, and `/` are all operators that can be
 applied to two numbers to produce a new number, according to the
-normal mathematical definition.
+normal mathematical definition. Now we can use the ⟹ more usefully to
+show the values produced by expressions involving these operators.
 
 ```
 1 + 2 ⟹ 3
