@@ -107,22 +107,26 @@ that make that not 100% true but we'll get to them later.)
 
 For instance, `+`, `-`, `*`, and `/` are all operators that can be
 applied to two numbers to produce a new number, according to the
-normal mathematical definition. Now we can use the ⟹ more usefully to
-show the values produced by expressions involving these operators.
+normal mathematical definition. Another operator you'll need for some
+of the exercises is `%`, called modulus, which divides one number by
+another and returns the integer remainder. Here are some examples of
+expressions using those operators:
 
 ```
 1 + 2 ⟹ 3
 7 - 3 ⟹ 4
 4 * 10 ⟹ 40
 50.3 / 13.2 ⟹ 3.8106060606060606
+6 % 3 ⟹ 0
+23 % 10 ⟹ 3
 ```
 
 Boolean values, which represent logical true/false values, really show
-how the meaning of a value can be largely determined by the operators
-on the type. The main operators are `!` which flips the meaning of a
-single boolean value (`true` to `false` and `false` to `true`), `&&`
-which evaluates to the logical “and” of two booleans, `||` which
-evaluates to the logical “or” of two booleans. Here are some examples.
+how the meaning of a value is determined by the operators on the type.
+The main operators are `!` which flips the meaning of a single boolean
+value (`true` to `false` and `false` to `true`), `&&` which evaluates
+to the logical “and” of two booleans, `||` which evaluates to the
+logical “or” of two booleans. Here are some examples.
 
 ```
 !true ⟹ false
@@ -522,4 +526,40 @@ x * 15 ⟹ 750
 x - 15 ⟹ 35
 x / 15 ⟹ 3.3333333333333335
 x + 15 ⟹ "5015"
+```
+
+Type coercion is also the reason that Javascript has two flavors of
+equality operator: `===`, which I recommend you always use, and `==`
+which you will also see. (There are also the corresponding inequality
+operators, `!==` and `!==`.) The difference is that `==` does a much
+more permisive comparison, making lots of attempts to coerce the two
+values into the same type before it gives up and says they are not
+equal. So for instance:
+
+```
+123 == "123" ⟹ true
+0 == "0" ⟹ true
+0 == "" ⟹ true
+true == 1 ⟹ true
+true == "1" ⟹ true
+false == 0  ⟹ true
+```
+
+Yet somewhat weirdly:
+
+```
+true == "true" ⟹ false
+```
+
+The `===` operator is called "strict equality" and does essentially no
+coercion. If the values aren't actually already the same type and
+value it considers them unequal.
+
+```
+123 === "123" ⟹ false
+0 === "0" ⟹ false
+0 === "" ⟹ false
+true === 1 ⟹ false
+true === "1" ⟹ false
+false === 0  ⟹ false
 ```
