@@ -185,17 +185,18 @@ value to get at an element of the array.
 
 ## Variables
 
-While values are what is actually stored in the computers memory,
-often we want to be able to refer to a value without specifying a
-particular value. Sometimes it's useful to give things
-human-understandable names just to make our code easier to understand.
-But the real power of variables is they let us describe a whole set of
-possible computations. It may seem a simple thing but while `1 + 2` is
-in some sense just a funny way of writing `3`, `x + 2` is not
-describing a particular value, but a computation that can take on a
-virtually limitless number of values but we can't know what value it
-will produce until we know the value of `x`. (Limitless but not
-infinite because computers are ultimately finite machines.) So:
+While values are what are actually stored in the computer's memory, in
+order to be operated on by operators, often we want to be able to
+refer to a value without specifying a particular value. Sometimes it's
+useful to give things human-understandable names just to make our code
+easier to understand. But the real power of variables is they let us
+describe a whole set of possible computations rather than a single
+(computed) value. It may seem a simple thing but while `1 + 2` is in
+some sense just a funny way of writing `3`, `x + 2` is not describing
+a particular value, but a computation that can take on a virtually
+limitless number of values but we can't know what value it will
+produce until we know the value of `x`. (Limitless but not infinite
+because computers are ultimately finite machines.) So:
 
 ```
 x + 2 ⟹ ???
@@ -275,7 +276,6 @@ and how we call them. A function definition starts with the word
 ```
 function double(n) {
   return n * 2;
-}
 ```
 
 The name after `function` is the name of the function being defined.
@@ -285,6 +285,15 @@ pair of `{}` enclosing the code that makes up the function. Inside a
 function we can use the special word `return` followed by an
 expression to return the value of the expression from the function.
 
+Here's another function that takes two arguments. It calls another
+function, `Math.sqrt`, which computes the square root of its argument.
+Don't worry for now why its name has `Math.` in it.
+
+```
+function pythagoras(a, b) {
+  return Math.sqrt(a*a + b*b);
+}
+```
 
 The syntax for calling a function is simpler: just the name of the
 function followed by `()`s enclosing a comma-separated list of
@@ -295,13 +304,15 @@ function.
 
 ```
 double(10) ⟹ 20
+pythagoras(3, 4) ⟹ 5
 ```
 
-Anywhere you can use another value you can call a function that
-returns a value. For instance using operators on the values returned
-by a function, passing the result of calling a function as an argument
-to another function, and assigning the value of calling a function to
-a variable:
+A function call is just another kind of expression that returns a
+value so you can use it anywhere you would use a variable on an
+expression made out of values and operators. You can apply operators
+to the values returned by a function; you can pass the result of
+calling a function as an argument to another function; and you can
+assign the value of calling a function to a variable:
 
 ```
 double(2) + double(3) ⟹ 10
@@ -310,9 +321,10 @@ x = double(2)
 x ⟹ 4
 ```
 
-The variables used as the functions parameters, such as `n` in the
-double function above, are only meaningful within the body of the
-function, i.e. the code delimited by the `{}`.
+The variables used as a function's parameters, such as `n` in the
+`double` function above, and `a` and `b` in `pythagoras`, are only
+meaningful within the body of the function, i.e. the code delimited by
+the `{}`.
 
 If a function has no parameters it is called with nothing between the
 `()`s.
