@@ -279,13 +279,13 @@ function double(n) {
 ```
 
 The name after `function` is the name of the function being defined.
-It is followed by a set of `()`s enclosing a comma-separated list of
+It is followed by a set of `()` enclosing a comma-separated list of
 variable names also known as the functions parameters. Then comes a
 pair of `{}` enclosing the code that makes up the function. Inside a
 function we can use the special word `return` followed by an
 expression to return the value of the expression from the function.
 
-Here's another function that takes two arguments. It calls another
+Here's another function that takes two arguments. It calls yet another
 function, `Math.sqrt`, which computes the square root of its argument.
 Don't worry for now why its name has `Math.` in it.
 
@@ -296,7 +296,7 @@ function pythagoras(a, b) {
 ```
 
 The syntax for calling a function is simpler: just the name of the
-function followed by `()`s enclosing a comma-separated list of
+function followed by `()` enclosing a comma-separated list of
 expressions whose values will be assigned to the variables named by
 the function's parameters. The function call is itself an expression
 that produces a value, namely whatever value was `return`ed from the
@@ -307,12 +307,12 @@ double(10) ⟹ 20
 pythagoras(3, 4) ⟹ 5
 ```
 
-A function call is just another kind of expression that returns a
-value so you can use it anywhere you would use a variable on an
-expression made out of values and operators. You can apply operators
-to the values returned by a function; you can pass the result of
-calling a function as an argument to another function; and you can
-assign the value of calling a function to a variable:
+As an expression, a function call can be used anywhere you would use a
+variable on an expression made out of values and operators. For
+instance, you can apply operators to the values returned by a
+function; you can pass the result of calling a function as an argument
+to another function; and you can assign the value of calling a
+function to a variable:
 
 ```
 double(2) + double(3) ⟹ 10
@@ -327,7 +327,7 @@ meaningful within the body of the function, i.e. the code delimited by
 the `{}`.
 
 If a function has no parameters it is called with nothing between the
-`()`s.
+`()`.
 
 ```
 function myFavoriteNumber() {
