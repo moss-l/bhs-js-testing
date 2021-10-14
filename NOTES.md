@@ -185,17 +185,18 @@ value to get at an element of the array.
 
 ## Variables
 
-While values are what is actually stored in the computers memory,
-often we want to be able to refer to a value without specifying a
-particular value. Sometimes it's useful to give things
-human-understandable names just to make our code easier to understand.
-But the real power of variables is they let us describe a whole set of
-possible computations. It may seem a simple thing but while `1 + 2` is
-in some sense just a funny way of writing `3`, `x + 2` is not
-describing a particular value, but a computation that can take on a
-virtually limitless number of values but we can't know what value it
-will produce until we know the value of `x`. (Limitless but not
-infinite because computers are ultimately finite machines.) So:
+While values are what are actually stored in the computer's memory, in
+order to be operated on by operators, often we want to be able to
+refer to a value without specifying a particular value. Sometimes it's
+useful to give things human-understandable names just to make our code
+easier to understand. But the real power of variables is they let us
+describe a whole set of possible computations rather than a single
+(computed) value. It may seem a simple thing but while `1 + 2` is in
+some sense just a funny way of writing `3`, `x + 2` is not describing
+a particular value, but a computation that can take on a virtually
+limitless number of values but we can't know what value it will
+produce until we know the value of `x`. (Limitless but not infinite
+because computers are ultimately finite machines.) So:
 
 ```
 x + 2 ⟹ ???
