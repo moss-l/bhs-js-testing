@@ -41,7 +41,7 @@ Javascript. And strings, whose syntax includes `"` marks can also be
 written with single quotation marks, `'` so `"foo"` and `'foo'` are
 two ways of writing the same string value. Remember that the syntactic
 markers—the quote marks in this case—are not part of the value. So the
-length of the string `"foo"` is 3 even though it's syntactic
+length of the string `"foo"` is 3 even though its syntactic
 representation, including the quote marks uses five characters.
 
 Booleans have only two possible values which are written `true` and
@@ -175,7 +175,7 @@ numbers = [10, 20, 30, 40]
 numbers[i] ⟹ 30
 ```
 
-We can use a variable to refer to it's current value in an expression
+We can use a variable to refer to its current value in an expression
 on the right side of a `=` that assigns the value to the same variable:
 
 ```
@@ -188,7 +188,7 @@ x ⟹ 11
 Because assigning a new value to a variable derived from the current
 value is a relatively common thing to want to do, there are some
 special assignment operators that change the value of a variable using
-it's current value. A couple that you may need soon are the `++`
+its current value. A couple that you may need soon are the `++`
 operator which increments the value of a variable by one and the `+=`
 operator which increments a variable by a given amount.
 
