@@ -33,20 +33,58 @@ The kinds of values you need for JS 1-10 and 11-20 are:
 
 All four of these kinds of values also have a _syntax_ that describes
 how you can write them in code. The syntax is not literally what is
-stored in memory; it is just the way we write values in a program.
-Often the same value can be written in multiple ways that are
-syntactically different but that mean the same thing. For instance
-`10` and `10.0` are just two ways of writing the same number in
-Javascript. And strings, whose syntax includes `"` marks can also be
-written with single quotation marks, `'` so `"foo"` and `'foo'` are
-two ways of writing the same string value. Remember that the syntactic
-markers—the quote marks in this case—are not part of the value. So the
-length of the string `"foo"` is 3 even though its syntactic
-representation, including the quote marks uses five characters.
+stored in memory; it is just the way we write values in a program and
+also how they will usually be displayed back to us by Javascript if we
+print them or they show up in an error message.
+
+Throughout this document I'll can use the arrow symbol, ⟹, to mean
+"has the value" to illustrate different expressions in Javascript.
+(N.B. the ⟹ is not part of the code; you'll never type it in your
+programs.) With these literal values it's not entirely interesting
+because the only way to to show the value to the right of the arrow is
+more or less the same thing that will be on the left hand. However not
+always as often the same value can be written in multiple ways that
+are syntactically different but that mean the same thing. For instance
+numbers can be written with a decimal point but if the fractional part
+is zero the value is the integer value.
+
+```
+10 ⟹ 10
+10.0 ⟹ 10
+10.000 ⟹ 10
+```
+
+Similarly strings which are written enclosed in quotation marks can be
+written with either double (`"`) or single (`'`) quotation marks
+without changing the value.
+
+```
+"foo" ⟹ "foo"
+'foo' ⟹ "foo"
+```
+
+Also it's important to remember that the syntactic markers—the quote
+marks in this case—are not part of the value when it is stored in
+memory. So the length of the string `"foo"` is three even though its
+syntactic representation, including the quote marks, uses five
+characters.
 
 Booleans have only two possible values which are written `true` and
-`false` and the syntax for arrays is any number of values, separated
-by commas inclosed in `[]`.
+`false`.
+
+Arrays are written enclosed in `[]` with the values of the array
+separated by commas. However whitespace between the values has no
+effect on the value. And the last values can have a comma after it or
+not.
+
+```
+[1, 2, 3] ⟹ [1, 2, 3]
+[1,2,3] ⟹ [1, 2, 3]
+[1, 2, 3,] ⟹ [1, 2, 3]
+[1,
+ 2,
+ 3] ⟹ [1, 2, 3]
+ ```
 
 ## Operators
 
