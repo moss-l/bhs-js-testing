@@ -81,7 +81,7 @@ false ⟹ false
 ```
 
 Finally, arrays are written enclosed in `[]` with the values of the
-array separated by commas. However whitespace between the values has
+array separated by commas. However white space between the values has
 no effect on the value. And the last values can have a comma after it
 or not.
 
@@ -553,7 +553,7 @@ Type coercion is also the reason that Javascript has two flavors of
 equality operator: `===`, which I recommend you always use, and `==`
 which you will also see. (There are also the corresponding inequality
 operators, `!==` and `!==`.) The difference is that `==` does a much
-more permisive comparison, making lots of attempts to coerce the two
+more permissive comparison, making lots of attempts to coerce the two
 values into the same type before it gives up and says they are not
 equal. So for instance:
 
