@@ -39,16 +39,17 @@ print them or they show up in an error message.
 
 Throughout this document I'll can use the arrow symbol, ⟹, to mean
 "the thing on the left has the value on the right" to illustrate the
-values of different expressions in Javascript. (N.B. the ⟹ is not part
-of the code; you'll never type it in your programs.) With these
-literal values it's not entirely interesting because the only way to
-to show the value to the right of the arrow is more or less the same
-thing that will be on the left hand. However not always exactly the
-same as often the same value can be written in multiple ways that are
-syntactically different but that mean the same thing. For instance
-numbers can be written with a decimal point but if the fractional part
-is zero the value is the integer value and is canonically represented
-without any decimal point.
+values of different expressions in Javascript. Note: the ⟹ is not part
+of the code; you'll never type it in your programs. With literal
+values it's not entirely interesting to show their value because the
+only way to to show the value to the right of the arrow is more or
+less the same thing that will be on the left. However not always—the
+syntax for some types is loose enough that the same value can be
+written in multiple ways that are syntactically different but that
+mean the same thing. For instance numbers can be written with a
+decimal point but if the fractional part is zero the value is the
+integer value and is canonically represented without any decimal
+point.
 
 ```
 10 ⟹ 10
@@ -67,7 +68,7 @@ without changing the value.
 
 Also it's important to remember that the syntactic markers—the quote
 marks in this case—are not part of the value when it is stored in
-memory. So the length of the string `"foo"` is three even though its
+memory. The length of the string `"foo"` is three even though its
 syntactic representation, including the quote marks, uses five
 characters.
 
@@ -374,8 +375,15 @@ us to only execute code if a certain condition holds and _looping_ (or
 _iteration_) constructs that allow us to execute the same code
 repeatedly though possibly with different values of some variables.
 (The `return` in a function is also a kind of control construct,
-returning control, and also a value, from the function containing the
-return to wherever the function was called.)
+returning control, and also a value, from the function to wherever the
+function was called.)
+
+```
+if (_condition_) {
+  _code that runs if the condition evaluates to true_
+}
+```
+
 
 ```
 if (x == 0) {
