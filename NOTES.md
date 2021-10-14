@@ -238,6 +238,19 @@ function.
 double(10) ⟹ 20
 ```
 
+Anywhere you can use another value you can call a function that
+returns a value. For instance using operators on the values returned
+by a function, passing the result of calling a function as an argument
+to another function, and assigning the value of calling a function to
+a variable:
+
+```
+double(2) + double(3) ⟹ 10
+double(double(3)) ⟹ 12
+x = double(2)
+x ⟹ 4
+```
+
 The variables used as the functions parameters, such as `n` in the
 double function above, are only meaningful within the body of the
 function, i.e. the code delimited by the `{}`.
