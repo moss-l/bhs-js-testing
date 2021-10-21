@@ -19,6 +19,7 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
+```javascript
 function sleep_in(weekday, vacation) {
   if (weekday && vacation){
     return true;
@@ -33,6 +34,7 @@ function sleep_in(weekday, vacation) {
     return true;
   }
 }
+``````javascript
 
 
 function sleep_in(weekday, vacation) {
@@ -47,7 +49,7 @@ function sleep_in(weekday, vacation) {
   }
   if (!weekday && !vacation){
     return true;
-  }
+  }```
 }
 
 
