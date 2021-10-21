@@ -34,9 +34,10 @@ function sleep_in(weekday, vacation) {
     return true;
   }
 }
-``````javascript
+```
 
 
+```javascript
 function sleep_in(weekday, vacation) {
   if (weekday && vacation) {
     return true;
@@ -49,10 +50,13 @@ function sleep_in(weekday, vacation) {
   }
   if (!weekday && !vacation){
     return true;
-  }```
+  }
 }
+```
 
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (weekday && vacation) {
     return true;
@@ -67,10 +71,13 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
 
 
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (weekday && vacation) {
     return true;
@@ -82,8 +89,11 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if ((weekday && vacation) || (!weekday && vacation) || (!weekday && !vacation)) {
     return true;
@@ -91,8 +101,11 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || (!weekday && !vacation)) {
     return true;
@@ -100,8 +113,11 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || (!weekday && !false)) {
     return true;
@@ -109,8 +125,11 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || (!weekday && true)) {
     return true;
@@ -118,7 +137,10 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || !weekday) {
     return true;
@@ -126,8 +148,11 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || !weekday) {
     return true;
@@ -135,7 +160,10 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || !weekday) {
     return true;
@@ -143,7 +171,10 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || !weekday) {
     return true;
@@ -151,7 +182,10 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || !weekday) {
     return true;
@@ -159,7 +193,10 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || !weekday) {
     return true;
@@ -167,8 +204,12 @@ function sleep_in(weekday, vacation) {
     return false;
   }
 }
+```
 
 
+
+```javascript
 function sleep_in(weekday, vacation) {
   return vacation || !weekday;
 }
+```
