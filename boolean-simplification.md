@@ -81,7 +81,7 @@ step rerun the tests and make sure it’s still correct.
 
 The very first simplification is one of my favorites:
 
-**Replace all comparisons to literal boolean values with just the thing or `!` the thing.**
+## Replace all comparisons to literal `true` and `false` values with just the thing or `!` the thing.
 
 There are lots of expressions that evaluate to a boolean value
 including variables like `vacation` and `weekday` whose values are
@@ -161,51 +161,163 @@ Notice how this is starting to be almost readable as English: `if
 (weekday && vacation) …` can be read as “if it’s a weekday and it’s a
 vacation” and `if (weekday && !vacation) …` can be “if it’s a weekday
 and it’s not a vacation” without having to mentally translate a bunch
-of `== true` and `== false` cruft.
+of `== true` and `== false` cruft. (Think of it this way: you almost
+certainly say, “I’m hungry” not “It is true that I am hungry.”)
 
 
 The next simplification isn’t strictly about Booleans but has to do
 with how we use `if` statements.
 
-*Chain mutually exclusive `if` statements with `else` clauses.*
+## Chain mutually exclusive `if` statements with `else` clauses.
+
+By itself an `if` statement just controls whether the code inside its
+`{}`s executes. Sometimes of course we want to do something else when
+the tested condition is not true. We could write that with another
+`if` clause with a condition that is true when the the first `if`’s
+condition is false and vice versa:
+
+```javascript
+if (timeForBed) {
+  brushTeeth();
+}
+
+if (!timeForBed) {
+  eatSnacks();
+}
+```
+
+However this is unnecessarily complicated. To understand the code we
+have to mentally parse two separate conditions and notice that only
+one of them can be true at a time and therefore that it’s impossible
+that we will end up eating snacks after we’ve brushed our teeth. In
+this case because one condition is `!` the other that’s not too hard
+to see but it would be even more clear if we used an `else` clause:
+
+```javascript
+if (timeForBed) {
+  brushTeeth();
+} else {
+  eatSnacks();
+}
+```
+
+Sometimes there might be more than just two cases. For instance, we
+probably shouldn’t *always* eat just because it’s not bedtime. So
+let’s add another condition `hungry`. If it’s bedtime, it doesn’t
+matter if we’re hungry—we have to brush our teeth. But if it’s not
+bedtime then we can choose whether to eat snacks or read:
+
+```javascript
+if (timeForBed) {
+  brushTeeth();
+}
+else {
+  if (hungry) {
+    eatSnacks();
+  } else {
+    read();
+  }
+}
+```
+
+Since deeply nested code like this gets hard to read in its own way,
+it’s traditional to write something like that like this instead:
+
+```javascript
+if (timeForBed) {
+  brushTeeth();
+} else if (hungry) {
+  eatSnacks();
+} else {
+  read();
+}
+```
+
+The meaning is the same but it makes it a bit more clear that there
+are three branches: the time for bed branch, the not time for bed and
+hungry branch, and the neither time for bed nor hungry branch. To
+express the same thing as a series of independent `if` clauses we
+would need to `&&` in the the negation of all the previous conditions
+like this:
+
+```javascript
+if (timeForBed) {
+  brushTeeth();
+}
+if (!timeForBed && hungry) {
+  eatSnacks();
+}
+if (!timeForBed && !hungry) {
+  read();
+}
+```
+
+Which is starting to look like our `sleep_in` function. So lets
+convert `sleep_in` to `if/else` clauses:
 
 
 ```javascript
 function sleep_in(weekday, vacation) {
   if (weekday && vacation) {
     return true;
-  }
-  if (!weekday && vacation){
-    return true;
-  }
-  if (!weekday && !vacation){
-    return true;
-  }
-  if (weekday && !vacation){
+  } else if (weekday && !vacation) {
     return false;
+  } else if (!weekday && vacation) {
+    return true;
+  } else if (!weekday && !vacation) {
+    return true;
   }
 }
 ```
 
+This doesn’t change the behavior of the function at all. This is
+especially true in this case because the code each `if` statement
+contains a `return` clause which means as soon as one of the
+conditions is true we will return from the function and the other `if`
+statements will not get a chance to execute. But it’s still a good
+idea to express what we mean and in this case the idea is these four
+branches represent for mutually exclusive possibilities.
 
-
-
+Since they’re mutually exclusive it doesn’t matter what order they
+appear in so let’s reorder so all the branches that return `true` are
+together:
 
 ```javascript
 function sleep_in(weekday, vacation) {
   if (weekday && vacation) {
     return true;
-  } else if (!weekday && vacation){
+  } else if (!weekday && vacation) {
     return true;
-  } else if (!weekday && !vacation){
+  } else if (!weekday && !vacation) {
     return true;
-  } else if (weekday && !vacation){
+  } else if (weekday && !vacation) {
     return false;
   }
 }
 ```
 
+Notice that we don’t have a plain `else` clause. That’s fine though it
+should raise the question, do these four branches cover all the
+possible cases? If they do we could take the condition off the last
+`else if` like this:
 
+```javascript
+function sleep_in(weekday, vacation) {
+  if (weekday && vacation) {
+    return true;
+  } else if (!weekday && vacation) {
+    return true;
+  } else if (!weekday && !vacation) {
+    return true;
+  } else {
+    return false;
+  }
+}
+```
+
+However, let’s leave it with the test for now and see if after some
+other simplifications we can’t prove to ourselves that we have
+captured all the possibilities.
 
 ```javascript
 function sleep_in(weekday, vacation) {
