@@ -349,8 +349,8 @@ simplifying uses of Booleans but it’s useful here.
 
 ## Remove duplicate code
 
-It is almost always a good idea to try to remove duplicated code.
-Duplicated code, i.e. the same code occuring more than one place in
+It is almost always a good idea to try to remove duplicate code.
+Duplicate code, i.e. the same code occuring more than one place in
 your program, makes a program harder to read and harder to change.
 Harder to read because you have to read very carefully to make sure
 that what looks like duplicate code is actually the same as other
@@ -415,11 +415,9 @@ condition:
 It seems weird that it takes three `&&`, two `||`, and a couple of `!`
 operators to reduce the two values, `weekday` and `vacation` down to a
 single Boolean value. Surely there must be a simpler way to write that
-expression.
-
-And indeed there is. The process of simplifying Boolean expressions is
-just like simplifying arithmetic expressions except with slightly
-different rules. With numbers we’re used to rules like:
+expression. And indeed there is. The process of simplifying Boolean
+expressions is just like simplifying arithmetic expressions except
+with slightly different rules. With numbers we’re used to rules like:
 
 ```
 1 × x ⟹ x
@@ -445,11 +443,12 @@ false || x ⟹ x
 ```
 
 If you squint you can think of the Boolean values `true` and `false`
-as analogous 1 and 0 and the operators `&&` and `||` as anologs to
+as analogous 1 and 0 and the operators `&&` and `||` as analogs to
 multiplication and addition in which case `true && x ⟹ x` is similar
 to `1 × x ⟹ x` and `false || x ⟹ x` is like `0 + x ⟹ x`.
 
-Two other rules came from basic logic—given any x:
+Two other rules came from basic logic, what Aristotle called the law
+of the excluded middle:
 
 ```
 x && !x ⟹ false // i.e. you can’t be both hungry and not hungry.
@@ -459,13 +458,13 @@ x || !x ⟹ true  // i.e. you are always either hungry or not hungry.
 And just like in math where we can factor out the `b` in:
 
 ```
-(a * b) + (c * b)
+(a × b) + (c × b)
 ```
 
 to get:
 
 ```
-b * (a + c)
+b × (a + c)
 ```
 
 with Booleans the common elements of `&&` expressions `||`’d together
@@ -478,7 +477,7 @@ can be factored out, so:
 is equivalent to:
 
 ```
-b && (a + c)
+b && (a || c)
 ```
 
 With those rules in mind let’s tackle the big Boolean expression from
@@ -547,20 +546,23 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-I mentioned earlier on that we’d want to make sure that our four
-branches were in fact exhaustive, covering all the possible
-combinations of arguments we could get. We’re pretty sure they are
-because that’s how we constructed the very first version of the
-function. However we can also use a similar kind of logic as we just
-used in the last few steps of simplifying the `if ` test condition to
-further simplify the test in the `else if` branch: We know that we
-only end up in the `else if` branch if the test condition in the `if`
-branch was false. And we know that in order for `vacation || !weekday`
-to be false both sides of the `||` need to be false which means
-`vacation` would have to be false and `!weekday` would have to be
-false which means `weekday` would have to be true. Therefore in the
-`else if` test condition we can replace `weekday` and `vacation` with
-the values we know they must have if we got there:
+Now we’re at the point where we can double check that our four
+original conditions were in fact exhaustive, covering all the possible
+combinations of arguments we could get. We think they are because
+that’s how we built the original function but if that’s correct then
+we should be able to simplify the test condition in the `else if`
+clause down to just `true`.
+
+We can also use a similar kind of logic as we just used in the last
+few steps of simplifying the `if ` test condition to further simplify
+the test in the `else if` branch: We know that we only end up in the
+`else if` branch if the test condition in the `if` branch was false.
+And we know that in order for `vacation || !weekday` to be false both
+sides of the `||` need to be false which means `vacation` would have
+to be false and `!weekday` would have to be false which means
+`weekday` would have to be true. Therefore in the `else if` test
+condition we can replace `weekday` and `vacation` with the values we
+know they must have if we got there:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -585,7 +587,7 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-which is equivalent to:
+And since the branch guarded by `if (true)` always executes, that’s equivalent to:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -597,7 +599,8 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-And now we’re ready for the final Boolean related simplification.
+Looking pretty darn simple! But wait, there’s one last step we can
+take.
 
 ## If you need to return a Boolean and you have one, just return it.
 
