@@ -277,7 +277,7 @@ if (speed > 80) {
 The idea is to return 0 if the speed is less than 61 mph, 1 if it’s
 between 61 and 80, and 2 if it’s over 80. The code is correct but a
 little tricky to read with four different comparisons and a logical
-`&&` that all need to line up together to work right. In this case we
+`&&` that all need to line up perfectly to work right. In this case we
 don’t actually have to make sure that the test conditions are mutually
 exclusive because the first `if` whose test condition is true will
 `return`, but we do need to make sure that the test conditions are
@@ -317,22 +317,13 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-Assuming the code was right before, this doesn’t change its behavior
-at all. And because each `if` statement contained a `return` clause,
-we know for certain that as soon as one of the test conditions was
-true it would return from the function and the other `if` statements
-would not get a chance to execute. So this is certainly logically
-equivalent.
-
 You might also notice that we don’t have a plain `else` clause here.
 That’s fine—if none of the test conditions are true then we will fall
 out after the last clause and then rather than returning a value
-explicitly from `sleep_in` it will implicitly return `undefined`.
-Which should raise the question, do these four branches cover all the
-possible cases so this function is in fact defined for all possible
-inputs? If they do (and we constructed this function in the first
-place so they would), then logically we could take the test condition
-off the last `else if` like this:
+explicitly it will implicitly return `undefined`. Since we’re pretty
+certain these four branches cover all the possible cases and thus we
+will never return `undefined` we could take the test condition off the
+last `else if` like this without changing the behavior of the function:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -348,9 +339,10 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-However, let’s leave it with the test condition for now and see if
+If we were going to stop here in our simplification, I’d recommend
+doing that. But let’s leave the test condition on for now and see if
 after some other simplifications we can’t prove to ourselves that we
-have captured all the possibilities.
+have indeed captured all the possibilities.
 
 The next simplification is one that is applicable to far more than
 simplifying uses of Booleans but it’s useful here.
