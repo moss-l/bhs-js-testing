@@ -106,7 +106,8 @@ as the value we are comparing to `true`. So anywhere we have an
 expression of the form `x == true` we can replace it with just `x`.
 (If you really want to write `x == true` why not be extra sure and
 write `x == true == true` or triple (quadruple?) check with `x == true
-== true == true`?)
+== true == true`? Or yet another way to think about it: you almost
+certainly say, “I’m hungry” not “It is true that I am hungry.”)
 
 So let’s do that everywhere we compare to literal `true` in this
 function:
@@ -169,12 +170,10 @@ Notice how this is starting to be almost readable as English: `if
 (weekday && vacation) …` can be read as “if it’s a weekday and a
 vacation” and `if (weekday && !vacation) …` can be “if it’s a weekday
 and not a vacation” without having to mentally translate a bunch of
-`== true` and `== false` cruft. (Another way to think about it: you
-almost certainly say, “I’m hungry” not “It is true that I am hungry.”)
+`== true` and `== false` cruft.
 
-
-The next simplification isn’t strictly about Booleans but has to do
-with how we use `if` statements.
+The next simplification isn’t strictly about Booleans expressions but
+has to do with how we use `if` statements which is closely related.
 
 ## Chain mutually exclusive `if` statements with `else` clauses.
 
@@ -263,10 +262,10 @@ if (!timeForBed && !hungry) {
 If we had code like this and we converted it to chained `if/else`
 style we could immediately simplify the test conditions back to what
 they were before. However if the test conditions are more complicated,
-as they are in our current version of `sleep_in` it may not be obvious
-how to simplify them right away. But it’s still worth converting if
-only to make our intent—that the four branches be mutually
-exclusive—more clear:
+as they are in our current version of `sleep_in`, it may not be
+obvious how to simplify them right away. But it’s still worth
+converting if only to make our intent—that the four branches be
+mutually exclusive—more clear:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -284,27 +283,9 @@ function sleep_in(weekday, vacation) {
 
 Assuming the code was right before, this doesn’t change it’s behavior
 all. And because each `if` statement contained a `return` clause, we
-know for certain that as one of the test conditions is true we will
-return from the function and the other `if` statements will not get a
-chance to execute. So this is certainly logically equivalent.
-
-Since they’re mutually exclusive it doesn’t matter what order they
-appear in so let’s reorder so all the branches in which we return
-`true` are together:
-
-```javascript
-function sleep_in(weekday, vacation) {
-  if (weekday && vacation) {
-    return true;
-  } else if (!weekday && vacation) {
-    return true;
-  } else if (!weekday && !vacation) {
-    return true;
-  } else if (weekday && !vacation) {
-    return false;
-  }
-}
-```
+know for certain that as soon as one of the test conditions is true we
+will return from the function and the other `if` statements will not
+get a chance to execute. So this is certainly logically equivalent.
 
 You might also notice that we don’t have a plain `else` clause here.
 That’s fine—if none of the test conditions are true then we will fall
@@ -320,12 +301,12 @@ off the last `else if` like this:
 function sleep_in(weekday, vacation) {
   if (weekday && vacation) {
     return true;
+  } else if (weekday && !vacation) {
+    return false;
   } else if (!weekday && vacation) {
     return true;
-  } else if (!weekday && !vacation) {
-    return true;
   } else {
-    return false;
+    return true;
   }
 }
 ```
@@ -349,13 +330,31 @@ all the copies. In this case those reasons don’t really apply but it’s
 still worth seeing how we can get rid of the duplication and it will
 move us into a position where we can further simplify things.
 
-Since the duplication occurs in different branches of the `if/else`
-structure it’s essentially saying, “return `true` if the first test
-condition is true or the second test condition is true or the third
-test condition is true.” Well, we have a Boolean operator that can
-combine Boolean values with a logical “or”: `||`. So we can rewrite
-with one test condition that or’s together the three conditions under
-which we return `true`:
+First off, since the branches of or `if/else` construct are mutually
+exclusive their ordering doesn’t matter so let’s reorder them so all
+the branches in which we return `true` are together:
+
+```javascript
+function sleep_in(weekday, vacation) {
+  if (weekday && vacation) {
+    return true;
+  } else if (!weekday && vacation) {
+    return true;
+  } else if (!weekday && !vacation) {
+    return true;
+  } else if (weekday && !vacation) {
+    return false;
+  }
+}
+```
+
+If you think about just the first three branches, which contain the
+duplicate `return true` code we can now read those first three
+branches as, “return `true` if the first test condition is true or the
+second test condition is true or the third test condition is true.”
+Well, we have a Boolean operator that can combine Boolean values with
+a logical “or”: `||`. So we can rewrite with one test condition that
+or’s together the three conditions under which we return `true`:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -376,10 +375,16 @@ we’ve got something to work with. Consider this this gnarly expression:
 
 Now we can get down to simplifying actual Boolean expressions. This
 process is just like simplifying mathematical expressions except with
-slightly different rules. With numbers we’re used to rules like for “1
-times *x* is *x* for all *x*” and “0 + *x* is *x* for all *x*” and
-“*x* / *x* is 1 for all *x* except zero”. Because you know those rules
-you presumably understand the following simplification:
+slightly different rules. With numbers we’re used to rules like:
+
+```
+1 × x ⟹ x
+0 + x ⟹ x
+x / x ⟹ 1 (assuming x ≠ 0)
+```
+
+Because you already know those rules from math class you presumably
+understand the following simplification:
 
 ```
 (32 - 32) + x * (50 / 50)
@@ -397,8 +402,8 @@ false || x ⟹ x
 
 If you squint you can think of Boolean `&&` as multiplication and `||`
 as addition and `true` as 1 and `false` as 0 in which case `true && x
-⟹ x` is similar to `1 × n ⟹ n` and `false || x ⟹ x` is like `0 + n ⟹
-n`.
+⟹ x` is similar to `1 × x ⟹ x` and `false || x ⟹ x` is like `0 + x ⟹
+x`.
 
 Two other rules came from basic logic—given any x:
 
