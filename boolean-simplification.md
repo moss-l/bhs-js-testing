@@ -4,11 +4,11 @@ We're all familiar with the idea of truth and falsity and most of us
 are perfectly capable of reasoning about simple logical expressions:
 if I tell you that I only eat when I have food and am hungry and then
 I tell you I have a bunch of bananas but am not hungry, you can
-probably correctly predict that I will not eat because you understand
-that the *and* in “have food and am hungry” means both facts have to
-be true for me to eat. On the other hand, if I told you that I eat
-whenever I'm hungry or bored you can probably predict that even if I'm
-not hungry but I'm bored, I'm probably eating.
+probably predict that I will not eat because you understand that the
+*and* in “have food and am hungry” means both facts have to be true
+for me to eat. On the other hand, if I told you that I eat whenever
+I'm hungry or bored you can probably predict that even if I'm not
+hungry but I'm bored, I'm probably eating.
 
 In computers we call this kind of logic “Boolean logic”, after George
 Boole who discussed what he called “Boolean algebra” in his books *The
@@ -27,9 +27,9 @@ statement: “if it is not a weekday or we're on vacation” and otherwise
 
 But despite our intuitive familiarity with practical logic when it
 comes time to render these statements in code, many new programmers
-get lost in a maze of `if` statements and complicated expressions that
-seem way more complex than ought to be needed to answer a simple
-question like whether we can sleep in.
+get lost in a maze of `if` statements and expressions that seem way
+more complex than ought to be needed to answer a simple question like
+whether we can sleep in.
 
 Luckily there are a few simple techniques for simplifying Boolean
 expressions that will let us tame this complexity.
@@ -321,7 +321,7 @@ simplifying uses of Booleans but it’s useful here.
 ## Remove duplicate code
 
 It may not be obvious what code is duplicated here as it’s a pretty
-small amount but there are three copies of `return true`, one in each
+small amount. But there are three copies of `return true`, one in each
 of the first three branches of our `if/else`. Usually we want to
 remove duplicate code because it’s hard to read and hard to change:
 you have to read carefully to ensure that it’s actually doing the same
@@ -330,7 +330,7 @@ all the copies. In this case those reasons don’t really apply but it’s
 still worth seeing how we can get rid of the duplication and it will
 move us into a position where we can further simplify things.
 
-First off, since the branches of or `if/else` construct are mutually
+First off, since the branches of our `if/else` construct are mutually
 exclusive their ordering doesn’t matter so let’s reorder them to put
 all the branches in which we return `true` together:
 
