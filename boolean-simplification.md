@@ -11,11 +11,10 @@ I'm hungry or bored you can probably predict that even if I'm not
 hungry but I'm bored, I'm probably eating.
 
 In computers we call this kind of logic “Boolean logic”, after George
-Boole who discussed what he called “Boolean algebra” in his books *The
-Mathematical Analysis of Logic* and *An Investigation of the Laws of
-Thought* in the mid-1800s. In Javascript, in particular, we call the
-two values `true` and `false` Booleans and expressions that evaluate
-to those values, Boolean expressions.
+Boole who discussed it in a couple of books he wrote in the mid-1800s.
+In Javascript—and many other languages—we call the two values `true`
+and `false` Booleans and expressions that evaluate to those values,
+Boolean expressions.
 
 Several of the problems in the JS 1-10 problem set involve Boolean
 expressions. The very first, as you may recall, asks for a function,
@@ -258,13 +257,49 @@ if (!timeForBed && !hungry) {
 }
 ```
 
-If we had code like this and we converted it to chained `if/else`
-style we could immediately simplify the test conditions back to what
-they were before. However if the test conditions are more complicated,
-as they are in our current version of `sleep_in`, it may not be
-obvious how to simplify them right away. But it’s still worth
-converting if only to make our intent—that the four branches are
-mutually exclusive—more clear:
+To see a real example of how converting from a sequence of `if`s to
+chained `if/else`s can simplify code, consider this set of `if`
+statements, similar to what many of you wrote for the `caughtSpeeding`
+problem.
+
+```javascript
+if (speed < 61) {
+  return 0;
+}
+if (speed > 60 && speed < 81) {
+  return 1;
+}
+if (speed > 80) {
+  return 2;
+}
+```
+
+The idea here is to return 0 if the speed 60 mph or less, 1 if it’s
+between 61 and 80, and 2 if it’s 81 or higher. The code captures that
+but it’s a little tricky to read. In this case we don’t actually have
+to make sure that the test conditions are mutually exclusive because
+the first `if` whose test condition is true will `return`. But we do
+need to make sure that the test conditions are comprehensive, meaning
+that every number satisfies at least one of them. We can make the
+latter much easier to ensure if we chain the if statements like this,
+removing the parts of the test conditions that are handled by earlier
+cases:
+
+```javascript
+if (speed < 61) {
+  return 0;
+} else if (speed < 81) {
+  return 1;
+} else {
+  return 2;
+}
+```
+
+However if the test conditions are more complicated, as they are in
+our current version of `sleep_in`, it may not be obvious how to
+simplify them right away. But it’s still worth converting if only to
+make our intent—that the four branches are mutually exclusive—more
+clear:
 
 ```javascript
 function sleep_in(weekday, vacation) {
