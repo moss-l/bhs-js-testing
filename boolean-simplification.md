@@ -408,15 +408,26 @@ function sleep_in(weekday, vacation) {
 ```
 
 It’s not clear that that’s a huge improvement in readability but now
-we’ve got something to work with. Consider this this gnarly expression:
+we’ve got something to work with and can move on to the meat of
+simplifying Boolean expressions.
+
+## Simplifing complicated Boolean expressions
+
+Consider the gnarly expression we just wrote as our first test
+condition:
 
 ```javascript
 (weekday && vacation) || (!weekday && vacation) || (!weekday && !vacation)
 ```
 
-Now we can get down to simplifying actual Boolean expressions. This
-process is just like simplifying mathematical expressions except with
-slightly different rules. With numbers we’re used to rules like:
+It seems weird that it takes three `&&`, two `||`, and a couple of `!`
+operators to reduce the two values, `weekday` and `vacation` down to a
+single Boolean value. Surely there must be a simpler way to write that
+expression.
+
+And indeed there is. The process of simplifying Boolean expressions is
+just like simplifying arithmetic expressions except with slightly
+different rules. With numbers we’re used to rules like:
 
 ```
 1 × x ⟹ x
@@ -441,10 +452,10 @@ true && x ⟹ x
 false || x ⟹ x
 ```
 
-If you squint you can think of Boolean `&&` as multiplication and `||`
-as addition and `true` as 1 and `false` as 0 in which case `true && x
-⟹ x` is similar to `1 × x ⟹ x` and `false || x ⟹ x` is like `0 + x ⟹
-x`.
+If you squint you can think of the Boolean values `true` and `false`
+as analogous 1 and 0 and the operators `&&` and `||` as anologs to
+multiplication and addition in which case `true && x ⟹ x` is similar
+to `1 × x ⟹ x` and `false || x ⟹ x` is like `0 + x ⟹ x`.
 
 Two other rules came from basic logic—given any x:
 
