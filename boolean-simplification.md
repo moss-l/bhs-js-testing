@@ -16,14 +16,6 @@ In Javascript—and many other languages—we call the two values `true`
 and `false` Booleans and expressions that evaluate to those values,
 Boolean expressions.
 
-Several of the problems in the JS 1-10 problem set involve Boolean
-expressions. The very first, as you may recall, asks for a function,
-`sleep_in`, that given two Boolean values, one saying whether it’s a
-weekday and the other saying whether we're on vacation, returns `true`
-if we can sleep in which we can do, according to the problem
-statement: “if it is not a weekday or we're on vacation” and otherwise
-`false`.
-
 But despite our intuitive familiarity with practical logic when it
 comes time to render these statements in code, many new programmers
 get lost in a maze of `if` statements and expressions that seem way
@@ -34,13 +26,22 @@ Luckily there are a few simple techniques for simplifying Boolean
 expressions that will let us tame this complexity.
 
 To illustrate them, let’s take a look at one way to implement the
-`sleep_in` function. Since there are only two arguments (`weekday` and
-`vacation`) and they can each only take one of two values (`true` and
-`false`) there are exactly four possible cases. So if we didn’t have
-any other clever ideas, we could just write a series of `if`
-statements to cover all four possible combinations of the two
-arguments: (`true`, `true`), (`true`, `false`), (`false`, `true`), and
-(`false`, `false`), giving us something like this skeleton:
+`sleep_in` function, the first problem the the JS 1-20 problem set.
+
+As you may recall, `sleep_in` is supposed to be a function that called
+with two Boolean values, one saying whether it’s a weekday and the
+other saying whether we're on vacation, returns `true` if we are
+allowed to sleep which and `false` otherwise. According to the
+problem, we are allowed to sleep in “if it is not a weekday or we're
+on vacation”.
+
+Since there are only two arguments (`weekday` and `vacation`) and they
+can each only take one of two values (`true` and `false`) there are
+exactly four possible cases. So if we didn’t have any other clever
+ideas, we could just write a series of `if` statements to cover all
+four possible combinations of the two arguments: (`true`, `true`),
+(`true`, `false`), (`false`, `true`), and (`false`, `false`), giving
+us something like this skeleton:
 
 ```javascript
 function sleep_in(weekday, vacation) {
