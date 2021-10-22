@@ -84,7 +84,7 @@ This is not exactly how I’d would recommend writing this function but
 it is indeed how many new programmers would write it. And it is a
 correct definition of the requested function which is great news,
 because now we can simplify things in careful steps and after each
-step rerun the tests and make sure it’s still correct. In these notes
+step rerun the tests to make sure we haven’t broken it. In these notes
 I’m going to discuss how I’d go about simplifying code like this.
 
 The very first simplification is one of my favorites.
@@ -107,10 +107,6 @@ false == true ⟹ false
 Notice that the value of the expression as a whole is always the same
 as the value we are comparing to `true`. So anywhere we have an
 expression of the form `x == true` we can replace it with just `x`.
-(If you really want to write `x == true` why not be extra sure and
-write `x == true == true` or triple (quadruple?) check with `x == true
-== true == true`? Or yet another way to think about it: you almost
-certainly say, “I’m hungry” not “It is true that I am hungry.”)
 
 So let’s do that everywhere we compare to literal `true` in this
 function:
@@ -285,10 +281,11 @@ function sleep_in(weekday, vacation) {
 ```
 
 Assuming the code was right before, this doesn’t change it’s behavior
-all. And because each `if` statement contained a `return` clause, we
-know for certain that as soon as one of the test conditions is true we
-will return from the function and the other `if` statements will not
-get a chance to execute. So this is certainly logically equivalent.
+at all. And because each `if` statement contained a `return` clause,
+we know for certain that as soon as one of the test conditions was
+true it would return from the function and the other `if` statements
+would not get a chance to execute. So this is certainly logically
+equivalent.
 
 You might also notice that we don’t have a plain `else` clause here.
 That’s fine—if none of the test conditions are true then we will fall
@@ -334,8 +331,8 @@ still worth seeing how we can get rid of the duplication and it will
 move us into a position where we can further simplify things.
 
 First off, since the branches of or `if/else` construct are mutually
-exclusive their ordering doesn’t matter so let’s reorder them so all
-the branches in which we return `true` are together:
+exclusive their ordering doesn’t matter so let’s reorder them to put
+all the branches in which we return `true` together:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -351,13 +348,12 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-If you think about just the first three branches, which contain the
-duplicate `return true` code we can now read those first three
-branches as, “return `true` if the first test condition is true or the
-second test condition is true or the third test condition is true.”
-Well, we have a Boolean operator that can combine Boolean values with
-a logical “or”: `||`. So we can rewrite with one test condition that
-or’s together the three conditions under which we return `true`:
+We can now read the first three branches together as, “return `true`
+if the first test condition is true or the second test condition is
+true or the third test condition is true.” Well, we have a Boolean
+operator that can combine Boolean values with a logical “or”: `||`. So
+we can rewrite with one test condition that `||`’s together the three
+conditions under which we return `true`:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -447,7 +443,7 @@ the first branch of our `if` statement:
 (weekday && vacation) || (!weekday && vacation) || (!weekday && !vacation)
 ```
 
-Group the first two expressions to tackle them first:
+Group the first two expressions to deal with them first:
 
 ```
 ((weekday && vacation) || (!weekday && vacation)) || (!weekday && !vacation)
@@ -465,7 +461,7 @@ Simplify `(weekday || !weekday)` via the `x || !x ⟹ true` rule:
 (vacation && true) || (!weekday && !vacation)
 ```
 
-Simplify `(vacation && true)` via the `x && true ⟹ x` rule:
+And then simplify `(vacation && true)` via the `x && true ⟹ x` rule:
 
 ```
 vacation || (!weekday && !vacation)
@@ -516,9 +512,10 @@ further simplify the test in the `else if` branch: We know that we
 only end up in the `else if` branch if the test condition in the `if`
 branch was false. And we know that in order for `vacation || !weekday`
 to be false both sides of the `||` need to be false which means
-`vacation` would have to be false and `weekday` would have to be true.
-Therefore in the `else if` test condition we can replace `weekday` and
-`vacation` with the values we know they must have if we got there:
+`vacation` would have to be false and `!weekday` would have to be
+false which means `weekday` would have to be true. Therefore in the
+`else if` test condition we can replace `weekday` and `vacation` with
+the values we know they must have if we got there:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -559,13 +556,15 @@ And now we’re ready for the final Boolean related simplification.
 
 ## If you need to return a Boolean and you have one, just return it.
 
-Look carefully at the version of the function just above. Just the
-same way you don’t need to compare a Boolean value with `== true` to
-determine whether it is true—it already is either true or false—you
-don’t need to use an `if` on a Boolean value to decide whether to
-return `true` or `false`. If you have an expression to put in the `if`
-test, and you’re going to return `true` if it’s true and `false` if
-it’s false, just return it:
+Look carefully at the version of the function just above. When does it
+return `true`? When the test condition, `vacation || !weekday` is
+true. And when does it return `false`? When the test condition is
+false. Just the same way you don’t need to compare a Boolean value
+with `== true` to determine whether it is true—it’s already either
+true or false—you don’t need to use an `if` on a Boolean value to
+decide whether to return `true` or `false`. If you have an expression
+to put in the `if` test, and you’re going to return `true` if it’s
+true and `false` if it’s false, just return it:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -574,7 +573,7 @@ function sleep_in(weekday, vacation) {
 ```
 
 
-## Okay cool, but this seems really tedious
+## Okay cool, but this seems really tedious.
 
 We’ve come a long way from our original
 
