@@ -8,12 +8,14 @@ probably correctly predict that I will not eat because you understand
 that the *and* in “have food and am hungry” means both facts have to
 be true for me to eat. On the other hand, if I told you that I eat
 whenever I'm hungry or bored you can probably predict that even if I'm
-not hungry but I'm bored, I'm probably eating. In computers we call
-this kind of logic “Boolean logic”, originally after George Boole who
-discussed what he called “Boolean algebra” in his books *The
+not hungry but I'm bored, I'm probably eating.
+
+In computers we call this kind of logic “Boolean logic”, after George
+Boole who discussed what he called “Boolean algebra” in his books *The
 Mathematical Analysis of Logic* and *An Investigation of the Laws of
-Thought*. (In Javascript in we talk about Boolean expressions that
-evaluate to one of the two Boolean values, `true` or `false`.)
+Thought* in the mid-1800s. In Javascript, in particular, we call the
+two values `true` and `false` Booleans and expressions that evaluate
+to those values, Boolean expressions.
 
 Several of the problems in the JS 1-10 problem set involve Boolean
 expressions. The very first, as you may recall, asks for a function,
@@ -24,10 +26,10 @@ statement: “if it is not a weekday or we're on vacation” and otherwise
 `false`.
 
 But despite our intuitive familiarity with practical logic when it
-comes time to render these statements in code, it’s many new
-programmers get lost in a maze of if statements and complicated
-expressions that seem way more complex than ought to be needed to
-answer a simple question like whether we can sleep in.
+comes time to render these statements in code, many new programmers
+get lost in a maze of if statements and complicated expressions that
+seem way more complex than ought to be needed to answer a simple
+question like whether we can sleep in.
 
 Luckily there are a few simple techniques for simplifying Boolean
 expressions, that will let us tame this complexity.
@@ -39,7 +41,7 @@ To illustrate them, let’s take a look at one way to implement the
 any other clever ideas, we could just write a series of `if`
 statements to cover all four possible combinations of the two
 arguments: (`true`, `true`), (`true`, `false`), (`false`, `true`), and
-(`false`, `false`), givinh us something like this skeleton:
+(`false`, `false`), giving us something like this skeleton:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -64,16 +66,16 @@ something that returns the right value for each case, like this:
 ```javascript
 function sleep_in(weekday, vacation) {
   if (weekday == true && vacation == true) {
-    return true;
+    return true; // We can sleep in because we’re on vacation
   }
   if (weekday == true && vacation == false) {
-    return false;
+    return false; // Can’t sleep in because it’s a regular week day.
   }
   if (weekday == false && vacation == true) {
-    return true;
+    return true; // We can sleeep in because we’re on vacation. Also it’s the weekend
   }
   if (weekday == false && vacation == false) {
-    return true;
+    return true; // We can sleep in because it’s the weekend.
   }
 }
 ```
