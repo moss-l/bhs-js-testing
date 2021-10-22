@@ -27,12 +27,12 @@ statement: “if it is not a weekday or we're on vacation” and otherwise
 
 But despite our intuitive familiarity with practical logic when it
 comes time to render these statements in code, many new programmers
-get lost in a maze of if statements and complicated expressions that
+get lost in a maze of `if` statements and complicated expressions that
 seem way more complex than ought to be needed to answer a simple
 question like whether we can sleep in.
 
 Luckily there are a few simple techniques for simplifying Boolean
-expressions, that will let us tame this complexity.
+expressions that will let us tame this complexity.
 
 To illustrate them, let’s take a look at one way to implement the
 `sleep_in` function. Since there are only two arguments (`weekday` and
