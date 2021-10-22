@@ -24,23 +24,22 @@ statement: “if it is not a weekday or we're on vacation” and otherwise
 `false`.
 
 But despite our intuitive familiarity with practical logic when it
-comes time to render these statements in code, it’s not uncommon to
-get lost in a maze of if statements and complicated expressions that
-seem way more complex than ought to be needed to answer a simple
-question like whether we can sleep in.
+comes time to render these statements in code, it’s many new
+programmers get lost in a maze of if statements and complicated
+expressions that seem way more complex than ought to be needed to
+answer a simple question like whether we can sleep in.
 
 Luckily there are a few simple techniques for simplifying Boolean
 expressions, that will let us tame this complexity.
 
-To illustrate them, lets take a look at one way to implement the
-`sleep_in` function that many students start with. Since there are
-only two arguments (`weekday` and `vacation`) and they can each only
-take one of two values (`true` and `false`) there are exactly four
-possible cases. So if we didn’t have any other clever ideas, we could
-just write a series of `if` statements to cover all four possible
-combinations of the two arguments: (`true`, `true`), (`true`,
-`false`), (`false`, `true`), and (`false`, `false`), For instance,
-something like this skeleton:
+To illustrate them, let’s take a look at one way to implement the
+`sleep_in` function. Since there are only two arguments (`weekday` and
+`vacation`) and they can each only take one of two values (`true` and
+`false`) there are exactly four possible cases. So if we didn’t have
+any other clever ideas, we could just write a series of `if`
+statements to cover all four possible combinations of the two
+arguments: (`true`, `true`), (`true`, `false`), (`false`, `true`), and
+(`false`, `false`), givinh us something like this skeleton:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -80,13 +79,13 @@ function sleep_in(weekday, vacation) {
 ```
 
 This is not exactly how I’d would recommend writing this function but
-it is indeed very like what some students have written. And it is a
+it is indeed how many new programmers would write it. And it is a
 correct definition of the requested function which is great news,
 because now we can simplify things in careful steps and after each
 step rerun the tests and make sure it’s still correct. In these notes
 I’m going to discuss how I’d go about simplifying code like this.
 
-The very first simplification is one of my favorites:
+The very first simplification is one of my favorites.
 
 ## Replace all comparisons to literal `true` and `false` with just the thing or `!` the thing.
 
