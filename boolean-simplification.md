@@ -33,10 +33,12 @@ expressions, similar to the way we simplify mathematical expressions.
 To illustrate them, lets take a look at one way to implement the
 `sleep_in` function. Since there are only two arguments (`weekday` and
 `vacation`) and they can each only take one of two values (`true` and
-`false`) there are exactly four possible cases. So we could just write
-a series of `if` statements to cover all four possible combinations of
-the two arguments being `true` and `false`. For instance, one could
-write this skeleton:
+`false`) there are exactly four possible cases. So if we didn’t have
+any other clever ideas, we could just write a series of `if`
+statements to cover all four possible combinations of the two
+arguments being `true` and `false`: (`true`, `true`), (`true`,
+`false`), (`false`, `true`), and (`false`, `false`), For instance, one
+could write this skeleton:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -75,9 +77,12 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-This is a correct definition of the requested function which is great
-news! Because now we can step by step simplify things and after each
-step rerun the tests and make sure it’s still correct.
+This is not exactly how I’d would recommend writing this function but
+it is indeed very like what some students have written. And it is a
+correct definition of the requested function which is great news,
+because now we can simplify things in careful steps and after each
+step rerun the tests and make sure it’s still correct. In these notes
+I’m going to discuss how I’d go about simplifying code like this.
 
 The very first simplification is one of my favorites:
 
