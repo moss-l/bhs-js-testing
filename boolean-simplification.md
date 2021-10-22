@@ -18,7 +18,7 @@ Boolean expressions.
 
 Several of the problems in the JS 1-10 problem set involve Boolean
 expressions. The very first, as you may recall, asks for a function,
-`sleep_in`, that given two Boolean values, one saying whether it's a
+`sleep_in`, that given two Boolean values, one saying whether it’s a
 weekday and the other saying whether we're on vacation, returns `true`
 if we can sleep in which we can do, according to the problem
 statement: “if it is not a weekday or we're on vacation” and otherwise
@@ -225,8 +225,8 @@ if (timeForBed) {
 }
 ```
 
-Since nested code like this gets hard to read in its own way, it’s
-traditional to write something like that like this instead:
+Since nested code like this can be hard to read in its own way, it’s
+traditional to write the chain like this instead:
 
 ```javascript
 if (timeForBed) {
@@ -274,15 +274,17 @@ if (speed > 80) {
 }
 ```
 
-The idea here is to return 0 if the speed 60 mph or less, 1 if it’s
-between 61 and 80, and 2 if it’s 81 or higher. The code captures that
-but it’s a little tricky to read. In this case we don’t actually have
-to make sure that the test conditions are mutually exclusive because
-the first `if` whose test condition is true will `return`. But we do
-need to make sure that the test conditions are comprehensive, meaning
-that every number satisfies at least one of them. We can make the
-latter much easier to ensure if we chain the if statements like this,
-removing the parts of the test conditions that are handled by earlier
+The idea is to return 0 if the speed is less than 61 mph, 1 if it’s
+between 61 and 80, and 2 if it’s over 80. The code is correct but a
+little tricky to read with four different comparisons and a logical
+`&&` that all need to line up together to work right. In this case we
+don’t actually have to make sure that the test conditions are mutually
+exclusive because the first `if` whose test condition is true will
+`return`, but we do need to make sure that the test conditions are
+comprehensive, meaning that every value of `speed` will satisfy one of
+them. We can make the latter much easier to see, and halve the number
+of comparisons we need to do, if we chain the `if` statements and
+remove the parts of the test conditions that are handled by earlier
 cases:
 
 ```javascript
@@ -295,11 +297,11 @@ if (speed < 61) {
 }
 ```
 
-However if the test conditions are more complicated, as they are in
-our current version of `sleep_in`, it may not be obvious how to
-simplify them right away. But it’s still worth converting if only to
-make our intent—that the four branches are mutually exclusive—more
-clear:
+Back at our evolving version of `sleep_in`, however, the test
+conditions are a bit more complicated so it’s not obvious how we can
+simplify them after they are chained together. But it’s still worth
+converting to the chained `if/else` style if only to make it clear
+that the branches are supposed to be mutually exclusive:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -315,7 +317,7 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-Assuming the code was right before, this doesn’t change it’s behavior
+Assuming the code was right before, this doesn’t change its behavior
 at all. And because each `if` statement contained a `return` clause,
 we know for certain that as soon as one of the test conditions was
 true it would return from the function and the other `if` statements
@@ -606,7 +608,6 @@ function sleep_in(weekday, vacation) {
   return vacation || !weekday;
 }
 ```
-
 
 ## Okay cool, but this seems really tedious.
 
