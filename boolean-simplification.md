@@ -1,17 +1,17 @@
 # Boolean simplification
 
-One of the seemingly simplest concepts in programming but which is
-probably new to you (unless you've studied formal logic) is the idea
-of Boolean values. On the other hand, we're all actually quite
-familiar with the idea of true and false and are good at reasoning
-about simple Boolean expressions: if I tell you that I only eat when I
-have food and am hungry and then I tell you I have a bunch of bananas
-but am not hungry, you can probably correctly predict that I will not
-eat because you understand that the *and* in “have food and am hungry”
-means both facts have to be true for me to eat. On the other hand, if
-I told you that I eat whenever I'm hungry or when I'm bored you can
-probably predict that even if I'm not hungry but I'm bored, I'm
-probably eating.
+One of the seemingly simplest concepts in programming but which may be
+new to you (unless you've studied logic) is the idea of Boolean
+values. On the other hand, we're all actually quite familiar with the
+idea of true and false and are good at reasoning about simple Boolean
+expressions: if I tell you that I only eat when I have food and am
+hungry and then I tell you I have a bunch of bananas but am not
+hungry, you can probably correctly predict that I will not eat because
+you understand that the *and* in “have food and am hungry” means both
+facts have to be true for me to eat. On the other hand, if I told you
+that I eat whenever I'm hungry or when I'm bored you can probably
+predict that even if I'm not hungry but I'm bored, I'm probably
+eating.
 
 Several of the problems in the JS 1-10 problem set involve these kinds
 of Boolean expressions. The very first asks for a function,
@@ -22,12 +22,12 @@ vacation” and otherwise `false`.
 
 However despite our intuitive familiarity with practical Boolean logic
 (I eat when I’m hungry and have food) when it comes time to render
-these statements in code using boolean values, it’s easy to get lost
+these statements in code using Boolean values, it’s easy to get lost
 in a maze of true/false branches and write something that seems quite
 complex for a relatively simple question such as, can I sleep in
 today?
 
-Luckily there are a few simple techniques for simplifying boolean
+Luckily there are a few simple techniques for simplifying Boolean
 expressions, similar to the way we simplify mathematical expressions.
 
 To illustrate them, lets take a look at one way to implement the
@@ -83,10 +83,10 @@ The very first simplification is one of my favorites:
 
 ## Replace all comparisons to literal `true` and `false` with just the thing or `!` the thing.
 
-There are lots of expressions that evaluate to a boolean value
+There are lots of expressions that evaluate to a Boolean value
 including variables like `vacation` and `weekday` as well as more
 complex expressions involving `&&`, `||`, and `!`. But there are only
-two literal booleans: `true` and `false`. While occasionally you will
+two literal Booleans: `true` and `false`. While occasionally you will
 need to use literal `true` and `false` in your code, you should never
 compare to either of them. Look at what comparing to the literal
 `true` does:
@@ -338,12 +338,13 @@ all the copies. In this case those reasons don’t really apply but it’s
 still worth seeing how we can get rid of the duplication and it will
 move us into a position where we can further simplify things.
 
-Since the duplication occurs in different branches if the `if/else`
-structure it’s essentially saying, “return `true` if the first condition
-is true or the second condition is true or the third condition is
-true.” Well, we have a boolean operator that can combine boolean
-values with a logical “or”: `||`. So we can rewrite with one condition
-that or’s together the three conditions under which we return `true`:
+Since the duplication occurs in different branches of the `if/else`
+structure it’s essentially saying, “return `true` if the first
+condition is true or the second condition is true or the third
+condition is true.” Well, we have a Boolean operator that can combine
+Boolean values with a logical “or”: `||`. So we can rewrite with one
+condition that or’s together the three conditions under which we
+return `true`:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -362,12 +363,12 @@ we’ve got something to work with. Consider this this gnarly expression:
 (weekday && vacation) || (!weekday && vacation) || (!weekday && !vacation)
 ```
 
-Now we can get down to simplifying actual expressions. This process is
-just like simplifying mathematical expressions except with slightly
-different rules. With numbers we’re used to rules like for all *x* “1
-times *x* is *x*” and “0 + *x* is *x*” and “*x* / *x* is 1” (except
-when *x* is zero on the last one. Thus you could simplify the
-following expression via the following steps, keeping in mind PEMDAS.
+Now we can get down to simplifying actual Boolean expressions. This
+process is just like simplifying mathematical expressions except with
+slightly different rules. With numbers we’re used to rules like for “1
+times *x* is *x* for all *x*” and “0 + *x* is *x* for all *x*” and
+“*x* / *x* is 1 for all *x* except zero”. Thus you could simplify the
+following expression via the following steps, keeping in mind PEMDAS:
 
 ```
 (32 - 32) + x * (50 / 50)
@@ -380,12 +381,13 @@ In Boolean logic the rules are actually quite similar:
 
 ```
 x && true ⟹ x
-x || false ⟹ y
+x || false ⟹ x
 ```
 
-If you squint you can think of boolean `&&` as multiplication and
-`||` as addition and `true` as 1 and `false` as 0 in which case `x &&
-true` is similar to `n * 1` and `x || false` is like `n + 0`.
+If you squint you can think of Boolean `&&` as multiplication and `||`
+as addition and `true` as 1 and `false` as 0 in which case `x && true
+⟹ x` is similar to `n * 1 ⟹ n` and `x || false ⟹ x` is like `n + 0 ⟹
+n`.
 
 Two other rules came from basic logic—given any x:
 
@@ -406,7 +408,8 @@ to get:
 b * (a + c)
 ```
 
-With Booleans the elements of `&&` expressions can be factored out so:
+with Booleans the elements of `&&` expressions `||`’d together can be
+factored out, so:
 
 ```
 (a && b) || (c && d)
@@ -437,13 +440,13 @@ Then factor out the `vacation` from the two terms of that grouped expression:
 (vacation && (weekday || !weekday)) || (!weekday && !vacation)
 ```
 
-Reduce via `x || !x ⟹ true`:
+Reduce `(weekday || !weekday)` via the `x || !x ⟹ true` rule:
 
 ```
 (vacation && true) || (!weekday && !vacation)
 ```
 
-Reduce via `x && true ⟹ x`:
+Reduce `(vacation && true)` via the `x && true ⟹ x` rule:
 
 ```
 vacation || (!weekday && !vacation)
@@ -490,15 +493,13 @@ combinations of arguments we could get. We kind of know they are
 because that was how we constructed the very first version of the
 function. However we can also use a similar kind of logic to further
 simplify the test in the `else if` branch as we did in simplifying the
-boolean expression in the `if` test. Similar to one of the last steps
+Boolean expression in the `if` test. Similar to one of the last steps
 above, we know that if we end up in the `else if` branch that
 `vacation` must false because otherwise the `if` test would have been
 true. Similarly, if `weekday` was false then `!weekday` would be true
-and the `if` test would have been true. So if we’re in the `else if`
-test `weekday` must be true.
-
-Therefore we can replace `vacation` with `false` and `weekday` with
-`true` in the `else if` test:
+and the `if` test would have been true; therefore if we’re in the
+`else if` test `weekday` must be true. So we can replace `vacation`
+with `false` and `weekday` with `true` in the `else if` test:
 
 ```javascript
 function sleep_in(weekday, vacation) {
