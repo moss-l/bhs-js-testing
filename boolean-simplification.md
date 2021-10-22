@@ -491,53 +491,39 @@ because that was how we constructed the very first version of the
 function. However we can also use a similar kind of logic to further
 simplify the test in the `else if` branch as we did in simplifying the
 boolean expression in the `if` test. Similar to one of the last steps
-above, we know
+above, we know that if we end up in the `else if` branch that
+`vacation` must false because otherwise the `if` test would have been
+true. Similarly, if `weekday` was false then `!weekday` would be true
+and the `if` test would have been true. So if we’re in the `else if`
+test `weekday` must be true.
 
-
-
-```javascript
-function sleep_in(weekday, vacation) {
-  if (vacation || !weekday) {
-    return true;
-  } else if (weekday && !false){
-    return false;
-  }
-}
-```
-
+Therefore we can replace `vacation` with `false` and `weekday` with
+`true` in the `else if` test:
 
 ```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || !weekday) {
     return true;
-  } else if (weekday && true){
+  } else if (true && !false){
     return false;
   }
 }
 ```
 
+Hopefully you can see how `true && !false` can be further simplified
+all the way down to `true` giving us:
 
 ```javascript
 function sleep_in(weekday, vacation) {
   if (vacation || !weekday) {
     return true;
-  } else if (true && true){
+  } else if (true) {
     return false;
   }
 }
 ```
 
-
-```javascript
-function sleep_in(weekday, vacation) {
-  if (vacation || !weekday) {
-    return true;
-  } else if (true){
-    return false;
-  }
-}
-```
-
+which is equivalent to:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -549,7 +535,17 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
+And now we’re ready for the final Boolean related simplification.
 
+## If you need to return a boolean and you have one, just return it.
+
+Look carefully at the version of the function just above. Just the
+same way you don’t need to compare a Boolean value with `== true` to
+determine whether it is true—it already is either true or false—you
+don’t need to use an `if` on a Boolean value to decide whether to
+return `true` or `false`. If you have an expression to put in the `if`
+test, and you’re going to return true if it’s true and false if it’s
+false, just return it:
 
 ```javascript
 function sleep_in(weekday, vacation) {
