@@ -1,44 +1,46 @@
 # Boolean simplification
 
-One of the seemingly simplest concepts in programming but which may be
-new to you (unless you've studied logic) is the idea of Boolean
-values. On the other hand, we're all actually quite familiar with the
-idea of true and false and are good at reasoning about simple Boolean
-expressions: if I tell you that I only eat when I have food and am
-hungry and then I tell you I have a bunch of bananas but am not
-hungry, you can probably correctly predict that I will not eat because
-you understand that the *and* in “have food and am hungry” means both
-facts have to be true for me to eat. On the other hand, if I told you
-that I eat whenever I'm hungry or when I'm bored you can probably
-predict that even if I'm not hungry but I'm bored, I'm probably
-eating.
+We're all familiar with the idea of truth and falsity and most of us
+are perfectly capable of reasoning about simple logical expressions:
+if I tell you that I only eat when I have food and am hungry and then
+I tell you I have a bunch of bananas but am not hungry, you can
+probably correctly predict that I will not eat because you understand
+that the *and* in “have food and am hungry” means both facts have to
+be true for me to eat. On the other hand, if I told you that I eat
+whenever I'm hungry or bored you can probably predict that even if I'm
+not hungry but I'm bored, I'm probably eating. In computers we call
+this kind of logic “Boolean logic”, originally after George Boole who
+discussed what he called “Boolean algebra” in his books *The
+Mathematical Analysis of Logic* and *An Investigation of the Laws of
+Thought*. (In Javascript in we talk about Boolean expressions that
+evaluate to one of the two Boolean values, `true` or `false`.)
 
-Several of the problems in the JS 1-10 problem set involve these kinds
-of Boolean expressions. The very first asks for a function,
+Several of the problems in the JS 1-10 problem set involve Boolean
+expressions. The very first, as you may recall, asks for a function,
 `sleep_in`, that given two Boolean values, one saying whether it's a
 weekday and the other saying whether we're on vacation, returns `true`
 if we can sleep in which we can do, according to the problem
 statement: “if it is not a weekday or we're on vacation” and otherwise
 `false`.
 
-However despite our intuitive familiarity with practical Boolean logic
-(I eat when I’m hungry and have food) when it comes time to render
-these statements in code using Boolean values, it’s easy to get lost
-in a maze of true/false branches and write something that seems quite
-complex for a relatively simple question such as, can I sleep in
-today?
+But despite our intuitive familiarity with practical logic when it
+comes time to render these statements in code, it’s not uncommon to
+get lost in a maze of if statements and complicated expressions that
+seem way more complex than ought to be needed to answer a simple
+question like whether we can sleep in.
 
 Luckily there are a few simple techniques for simplifying Boolean
-expressions, similar to the way we simplify mathematical expressions.
+expressions, that will let us tame this complexity.
 
 To illustrate them, lets take a look at one way to implement the
-`sleep_in` function. Since there are only two arguments (`weekday` and
-`vacation`) and they can each only take one of two values (`true` and
-`false`) there are exactly four possible cases. So if we didn’t have
-any other clever ideas, we could just write a series of `if`
-statements to cover all four possible combinations of the two
-arguments: (`true`, `true`), (`true`, `false`), (`false`, `true`), and
-(`false`, `false`), For instance, one could write this skeleton:
+`sleep_in` function that many students start with. Since there are
+only two arguments (`weekday` and `vacation`) and they can each only
+take one of two values (`true` and `false`) there are exactly four
+possible cases. So if we didn’t have any other clever ideas, we could
+just write a series of `if` statements to cover all four possible
+combinations of the two arguments: (`true`, `true`), (`true`,
+`false`), (`false`, `true`), and (`false`, `false`), For instance,
+something like this skeleton:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -264,7 +266,7 @@ style we could immediately simplify the test conditions back to what
 they were before. However if the test conditions are more complicated,
 as they are in our current version of `sleep_in`, it may not be
 obvious how to simplify them right away. But it’s still worth
-converting if only to make our intent—that the four branches be
+converting if only to make our intent—that the four branches are
 mutually exclusive—more clear:
 
 ```javascript
