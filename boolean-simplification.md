@@ -550,7 +550,7 @@ function sleep_in(weekday, vacation) {
 
 And now we’re ready for the final Boolean related simplification.
 
-## If you need to return a boolean and you have one, just return it.
+## If you need to return a Boolean and you have one, just return it.
 
 Look carefully at the version of the function just above. Just the
 same way you don’t need to compare a Boolean value with `== true` to
@@ -605,13 +605,13 @@ vacation or it is not a weekday”.
 Which may raise the question, do we have to go through all those
 tedious simplification steps every time we write a simple function?
 
-Luckly the answer is no. You will need to get some familiarity with
+Luckily the answer is no. You will need to get some familiarity with
 them because Boolean logic is pretty central to computer programming
-but once you get used to expressing combinations of boolean values you
+but once you get used to expressing combinations of Boolean values you
 will naturally simplify as you go. You will never write `x == true`
 when you could just write `x`. And if you know you are writing a set
 of mutually exclusive branches you will start with an `if/else
-if/else` construct rather than a set of indpendent `if` statements
+if/else` construct rather than a set of independent `if` statements
 with more complicated test conditions.
 
 And once you get comfortable with the idea that Boolean values are
