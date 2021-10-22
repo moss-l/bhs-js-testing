@@ -357,15 +357,20 @@ simplifying uses of Booleans but it’s useful here.
 
 ## Remove duplicate code
 
-It may not be obvious what code is duplicated here as it’s a pretty
-small amount. But there are three copies of `return true`, one in each
-of the first three branches of our `if/else`. Usually we want to
-remove duplicate code because it’s hard to read and hard to change:
-you have to read carefully to ensure that it’s actually doing the same
-thing as other copies and if you need to change it, you need to change
-all the copies. In this case those reasons don’t really apply but it’s
-still worth seeing how we can get rid of the duplication and it will
-move us into a position where we can further simplify things.
+It is almost always a good idea to try to remove duplicated code.
+Duplicated code, i.e. the same code occuring more than one place in
+your program, makes a program harder to read and harder to change.
+Harder to read because you have to read very carefully to make sure
+that what looks like duplicate code is actually the same as other
+copies. And harder to change because if you need to change it, you
+need to make sure you change all the copies.
+
+In this function it may not be obvious what code is duplicated, as
+it’s a pretty small amount. But there *are* three copies of `return
+true`, one in each of the first three branches of our `if/else`. While
+this is a pretty mild case of code duplication, it’s still worth
+seeing how we can get rid of it as it will move us into a position
+where we can further simplify things.
 
 First off, since the branches of our `if/else` construct are mutually
 exclusive their ordering doesn’t matter so let’s reorder them to put
@@ -385,12 +390,12 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-We can now read the first three branches together as, “return `true`
-if the first test condition is true or the second test condition is
-true or the third test condition is true.” Well, we have a Boolean
-operator that can combine Boolean values with a logical “or”: `||`. So
-we can rewrite with one test condition that `||`’s together the three
-conditions under which we return `true`:
+Now we can now read the first three branches together as, “return
+`true` if the first test condition is true or the second test
+condition is true or the third test condition is true.” Well, we have
+a Boolean operator that can combine Boolean values with a logical
+“or”: `||` so we can rewrite with one test condition that `||`’s
+together the three conditions under which we return `true`:
 
 ```javascript
 function sleep_in(weekday, vacation) {
