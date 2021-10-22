@@ -181,8 +181,8 @@ with how we use `if` statements.
 By itself an `if` statement just controls whether the code inside its
 `{}`s executes. Sometimes of course we want to do something else when
 the tested condition is not true. We could write that with another
-`if` clause with a condition that is true when the the first `if`’s
-condition is false and vice versa:
+`if` clause with a test condition that is true when the the first
+`if`’s test condition is false and vice versa:
 
 ```javascript
 if (timeForBed) {
@@ -195,11 +195,12 @@ if (!timeForBed) {
 ```
 
 However this is unnecessarily complicated. To understand the code we
-have to mentally parse two separate conditions and notice that only
-one of them can be true at a time and therefore that it’s impossible
-that we will end up eating snacks after we’ve brushed our teeth. In
-this case because one condition is `!` the other that’s not too hard
-to see but it would be even more clear if we used an `else` clause:
+have to mentally parse two separate test conditions and notice that
+only one of them can be true at a time and therefore that it’s
+impossible that we will end up eating snacks after we’ve brushed our
+teeth. In this case because one test condition is `!` the other that’s
+not too hard to see but it would be even more clear if we used an
+`else` clause:
 
 ```javascript
 if (timeForBed) {
@@ -218,8 +219,7 @@ then we eat snacks or read depending on whether we’re hungry.
 ```javascript
 if (timeForBed) {
   brushTeeth();
-}
-else {
+} else {
   if (hungry) {
     eatSnacks();
   } else {
@@ -245,8 +245,8 @@ The meaning is the same but it makes it a bit more clear that there
 are three branches: the time for bed branch, the not time for bed and
 hungry branch, and the neither time for bed nor hungry branch. To
 express the same thing as a series of independent `if` clauses we
-would need to `&&` in the the negation of all the previous conditions
-like this:
+would need to `&&` in the the negation of all the previous test
+conditions like this:
 
 ```javascript
 if (timeForBed) {
@@ -261,12 +261,12 @@ if (!timeForBed && !hungry) {
 ```
 
 If we had code like this and we converted it to chained `if/else`
-style we could immediately simplify the conditions back to what they
-were before. However if the conditions are more complicated, as they
-are in our current version of `sleep_in` it may not be obvious how to
-simplify them right away. But it’s still worth converting if only to
-make our intent—that the four branches be mutually exclusive—more
-clear:
+style we could immediately simplify the test conditions back to what
+they were before. However if the test conditions are more complicated,
+as they are in our current version of `sleep_in` it may not be obvious
+how to simplify them right away. But it’s still worth converting if
+only to make our intent—that the four branches be mutually
+exclusive—more clear:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -284,9 +284,9 @@ function sleep_in(weekday, vacation) {
 
 Assuming the code was right before, this doesn’t change it’s behavior
 all. And because each `if` statement contained a `return` clause, we
-kno for certain that as one of the conditions is true we will return
-from the function and the other `if` statements will not get a chance
-to execute. So this is certainly logically equivalent.
+know for certain that as one of the test conditions is true we will
+return from the function and the other `if` statements will not get a
+chance to execute. So this is certainly logically equivalent.
 
 Since they’re mutually exclusive it doesn’t matter what order they
 appear in so let’s reorder so all the branches in which we return
@@ -307,14 +307,14 @@ function sleep_in(weekday, vacation) {
 ```
 
 You might also notice that we don’t have a plain `else` clause here.
-That’s fine—if none of the conditions are true then we will fall out
-after the last clause and then rather than returning a value
+That’s fine—if none of the test conditions are true then we will fall
+out after the last clause and then rather than returning a value
 explicitly from `sleep_in` it will implicitly return `undefined`.
 Which should raise the question, do these four branches cover all the
 possible cases so this function is in fact defined for all possible
 inputs? If they do (and we constructed this function in the first
-place so they would), then logically we could take the condition off
-the last `else if` like this:
+place so they would), then logically we could take the test condition
+off the last `else if` like this:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -330,9 +330,9 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-However, let’s leave it with the condition for now and see if after
-some other simplifications we can’t prove to ourselves that we have
-captured all the possibilities.
+However, let’s leave it with the test condition for now and see if
+after some other simplifications we can’t prove to ourselves that we
+have captured all the possibilities.
 
 The next simplification is one that is applicable to far more than
 simplifying uses of Booleans but it’s useful here.
@@ -350,12 +350,12 @@ still worth seeing how we can get rid of the duplication and it will
 move us into a position where we can further simplify things.
 
 Since the duplication occurs in different branches of the `if/else`
-structure it’s essentially saying, “return `true` if the first
-condition is true or the second condition is true or the third
-condition is true.” Well, we have a Boolean operator that can combine
-Boolean values with a logical “or”: `||`. So we can rewrite with one
-condition that or’s together the three conditions under which we
-return `true`:
+structure it’s essentially saying, “return `true` if the first test
+condition is true or the second test condition is true or the third
+test condition is true.” Well, we have a Boolean operator that can
+combine Boolean values with a logical “or”: `||`. So we can rewrite
+with one test condition that or’s together the three conditions under
+which we return `true`:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -568,3 +568,55 @@ function sleep_in(weekday, vacation) {
 
 
 ## Okay cool, but this seems really tedious
+
+We’ve come a long way from our original
+
+```javascript
+function sleep_in(weekday, vacation) {
+  if (weekday == true && vacation == true) {
+    return true;
+  }
+  if (weekday == true && vacation == false) {
+    return false;
+  }
+  if (weekday == false && vacation == true) {
+    return true;
+  }
+  if (weekday == false && vacation == false) {
+    return true;
+  }
+}
+```
+
+to:
+
+```javascript
+function sleep_in(weekday, vacation) {
+  return vacation || !weekday;
+}
+```
+
+Note also that the final version is actually a pretty direct
+translation of the original problem statement that we were to return
+true, “if it is not a weekday or we're on vacation”. (We reversed the
+order of the tests but you can read it as, “return whether we are on
+vacation or it is not a weekday”.
+
+Which may raise the question, do we have to go through all those
+tedious simplification steps every time we write a simple function?
+
+Luckly the answer is no. You will need to get some familiarity with
+them because Boolean logic is pretty central to computer programming
+but once you get used to expressing combinations of boolean values you
+will naturally simplify as you go. You will never write `x == true`
+when you could just write `x`. And if you know you are writing a set
+of mutually exclusive branches you will start with an `if/else
+if/else` construct rather than a set of indpendent `if` statements
+with more complicated test conditions.
+
+And once you get comfortable with the idea that Boolean values are
+just another kind of value that you can compute with and return from
+functions, when faced with a problem like `sleep_in` you might realize
+you don’t even need an `if`; you just need to write the expression
+that captures the desired logic, as we did in our final version of the
+function.
