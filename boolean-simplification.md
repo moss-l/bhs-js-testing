@@ -81,15 +81,15 @@ step rerun the tests and make sure it’s still correct.
 
 The very first simplification is one of my favorites:
 
-## Replace all comparisons to literal `true` and `false` values with just the thing or `!` the thing.
+## Replace all comparisons to literal `true` and `false` with just the thing or `!` the thing.
 
 There are lots of expressions that evaluate to a boolean value
-including variables like `vacation` and `weekday` whose values are
-booleans as well as more complex expressions involving `&&`, `||`, and
-`!`. But there are only two literal booleans: `true` and `false`.
-While occasionally you will need to use literal `true` and `false` in
-your code, you should never compare to either of them. Look at what
-comparing to the literal `true` does:
+including variables like `vacation` and `weekday` as well as more
+complex expressions involving `&&`, `||`, and `!`. But there are only
+two literal booleans: `true` and `false`. While occasionally you will
+need to use literal `true` and `false` in your code, you should never
+compare to either of them. Look at what comparing to the literal
+`true` does:
 
 ```
 true == true ⟹ true
@@ -276,7 +276,7 @@ contains a `return` clause which means as soon as one of the
 conditions is true we will return from the function and the other `if`
 statements will not get a chance to execute. But it’s still a good
 idea to express what we mean and in this case the idea is these four
-branches represent for mutually exclusive possibilities.
+branches represent four mutually exclusive possibilities.
 
 Since they’re mutually exclusive it doesn’t matter what order they
 appear in so let’s reorder so all the branches that return `true` are
@@ -296,10 +296,14 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-Notice that we don’t have a plain `else` clause. That’s fine though it
-should raise the question, do these four branches cover all the
-possible cases? If they do we could take the condition off the last
-`else if` like this:
+You might notice that we don’t have a plain `else` clause here. That’s
+fine—if none of the conditions are true then we will fall out after
+the last clause and then rather than returning a value explicitly from
+`sleep_in` it will implicitly return `undefined`. Whic should raise
+the question, do these four branches cover all the possible cases so
+this function is in fact defined for all possible inputs? If they do,
+then logically we could take the condition off the last `else if` like
+this:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -315,9 +319,31 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-However, let’s leave it with the test for now and see if after some
-other simplifications we can’t prove to ourselves that we have
+However, let’s leave it with the condition for now and see if after
+some other simplifications we can’t prove to ourselves that we have
 captured all the possibilities.
+
+The next simplification is one that is applicable to far more than
+simplifying uses of Booleans but it’s useful here:
+
+## Remove duplicate code
+
+It may not be obvious what code is duplicated here as it’s a pretty
+small amount but there are three copies of `return true`, one in each
+of the first three branches of our `if/else`. Usually we want to
+remove duplicate code because it’s hard to read and hard to change:
+you have to read carefully to ensure that it’s actually doing the same
+thing as other copies and if you need to change it, you need to change
+all the copies. In this case those reasons don’t really apply but it’s
+still worth seeing how we can get rid of the duplication and it will
+move us into a position where we can further simplify things.
+
+Since the duplication occurs in different branches if the `if/else`
+structure it’s essentially saying, “return `true` if the first condition
+is true or the second condition is true or the third condition is
+true.” Well, we have a boolean operator that can combine boolean
+values with a logical “or”: `||`. So we can rewrite with one condition
+that or’s together the three conditions under which we return `true`:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -329,42 +355,124 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-
-
-```javascript
-function sleep_in(weekday, vacation) {
-  if (vacation || (!weekday && !vacation)) {
-    return true;
-  } else if (weekday && !vacation){
-    return false;
-  }
-}
-```
-
-
+It’s not clear that that’s a huge improvement in readability but now
+we’ve got something to work with. Consider this this gnarly expression:
 
 ```javascript
-function sleep_in(weekday, vacation) {
-  if (vacation || (!weekday && !false)) {
-    return true;
-  } else if (weekday && !vacation){
-    return false;
-  }
-}
+(weekday && vacation) || (!weekday && vacation) || (!weekday && !vacation)
 ```
 
+Now we can get down to simplifying actual expressions. This process is
+just like simplifying mathematical expressions except with slightly
+different rules. With numbers we’re used to rules like for all *x* “1
+times *x* is *x*” and “0 + *x* is *x*” and “*x* / *x* is 1” (except
+when *x* is zero on the last one. Thus you could simplify the
+following expression via the following steps, keeping in mind PEMDAS.
 
-
-```javascript
-function sleep_in(weekday, vacation) {
-  if (vacation || (!weekday && true)) {
-    return true;
-  } else if (weekday && !vacation){
-    return false;
-  }
-}
+```
+(32 - 32) + x * (50 / 50)
+0 + x * 1
+0 + x
+x
 ```
 
+In Boolean logic the rules are actually quite similar:
+
+```
+x && true ⟹ x
+x || false ⟹ y
+```
+
+If you squint you can think of boolean `&&` as multiplication and
+`||` as addition and `true` as 1 and `false` as 0 in which case `x &&
+true` is similar to `n * 1` and `x || false` is like `n + 0`.
+
+Two other rules came from basic logic—given any x:
+
+```
+x && !x ⟹ false // i.e. you can’t be both hungry and not hungry.
+x || !x ⟹ true  // i.e. you are always either hungry or not hungry.
+```
+
+And just like in math where we can factor out the `b` in:
+
+```
+(a * b) + (c * b)
+```
+
+to get:
+
+```
+b * (a + c)
+```
+
+With Booleans the elements of `&&` expressions can be factored out so:
+
+```
+(a && b) || (c && d)
+```
+
+is equivalent to:
+
+```
+b && (a + c)
+```
+
+With those rules in mind let’s tackle the big Boolean expression from
+the first branch of our `if` statement:
+
+```
+(weekday && vacation) || (!weekday && vacation) || (!weekday && !vacation)
+```
+
+Group the first two expressions to tackle them first:
+
+```
+((weekday && vacation) || (!weekday && vacation)) || (!weekday && !vacation)
+```
+
+Then factor out the `vacation` from the two terms of that grouped expression:
+
+```
+(vacation && (weekday || !weekday)) || (!weekday && !vacation)
+```
+
+Reduce via `x || !x ⟹ true`:
+
+```
+(vacation && true) || (!weekday && !vacation)
+```
+
+Reduce via `x && true ⟹ x`:
+
+```
+vacation || (!weekday && !vacation)
+```
+
+Almost there. Now consider how this expression will be evaluated. If
+`vacation` is true the value of the whole expression is true and we
+don’t even have to think about the part after the `||`. Therefore the
+only time the second term is relevant is when `vacation` is false. So
+replace `vacation` with `false` in the second term:
+
+```
+vacation || (!weekday && !false)
+```
+
+Now there are just a couple more simple steps:
+
+```
+vacation || (!weekday && true)
+```
+
+And:
+
+```
+vacation || !weekday
+```
+
+Dropping that much simpler expression back into our `if` clause we end
+up with this:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -375,6 +483,15 @@ function sleep_in(weekday, vacation) {
   }
 }
 ```
+
+I mentioned earlier on that we’d want to make sure that our four
+branches were in fact exhaustive, covering all the possible
+combinations of arguments we could get. We kind of know they are
+because that was how we constructed the very first version of the
+function. However we can also use a similar kind of logic to further
+simplify the test in the `else if` branch as we did in simplifying the
+boolean expression in the `if` test. Similar to one of the last steps
+above, we know
 
 
 
