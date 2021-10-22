@@ -23,17 +23,16 @@ more complex than ought to be needed to answer a simple question like
 whether we can sleep in.
 
 Luckily there are a few simple techniques for simplifying Boolean
-expressions that will let us tame this complexity.
+expressions that will let us tame this complexity. Let’s examine them
+with a look at one way to implement the `sleep_in` function from the
+the JS 1-10 problem set.
 
-To illustrate them, let’s take a look at one way to implement the
-`sleep_in` function, the first problem the the JS 1-20 problem set.
-
-As you may recall, `sleep_in` is supposed to be a function that called
-with two Boolean values, one saying whether it’s a weekday and the
-other saying whether we're on vacation, returns `true` if we are
-allowed to sleep which and `false` otherwise. According to the
-problem, we are allowed to sleep in “if it is not a weekday or we're
-on vacation”.
+As you may recall, `sleep_in` is supposed to be a function that when
+called with two Boolean values, one saying whether it’s a weekday and
+the other saying whether we're on vacation returns `true` if we are
+allowed to sleep in and `false` otherwise. According to the problem,
+we are allowed to sleep in “if it is not a weekday or we're on
+vacation”.
 
 Since there are only two arguments (`weekday` and `vacation`) and they
 can each only take one of two values (`true` and `false`) there are
@@ -80,10 +79,11 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-This is not exactly how I’d would recommend writing this function but
-it is indeed how many new programmers would write it. And it is a
-correct definition of the requested function which is great news,
-because now we can simplify things in careful steps and after each
+This is not how I’d personally write this function but there are a lot
+of ways to get to the correct answer and this is indeed how many new
+programmers would write it. And it has the very important virtue of
+being correct. Which is great news because once we’ve got a correct
+implementation we can change things in careful steps and after each
 step rerun the tests to make sure we haven’t broken it. In these notes
 I’m going to discuss how I’d go about simplifying code like this.
 
