@@ -387,8 +387,8 @@ Because you already know those rules from math class you presumably
 understand the following simplification:
 
 ```
-(32 - 32) + x * (50 / 50)
-0 + x * 1
+(32 - 32) + x × (50 / 50)
+0 + x × 1
 0 + x
 x
 ```
@@ -478,7 +478,7 @@ replace `vacation` with `false` in the second term:
 vacation || (!weekday && !false)
 ```
 
-Now there are just a couple more simple steps:
+Now there are just a couple steps to go:
 
 ```
 vacation || (!weekday && true)
@@ -505,18 +505,17 @@ function sleep_in(weekday, vacation) {
 
 I mentioned earlier on that we’d want to make sure that our four
 branches were in fact exhaustive, covering all the possible
-combinations of arguments we could get. We kind of know they are
-because that was how we constructed the very first version of the
-function. However we can also use a similar kind of logic to further
-simplify the test in the `else if` branch as we did in simplifying the
-Boolean expression in the `if` test. Similar to one of the last steps
-above, we know that we only end up in the `else if` branch if the test
-expression in the `if` branch was false. And we know that in order for
-`vacation || !weekday` to be false both sides of the `||` need to be
-false which means `vacation` would have to be false and `weekday`
-would have to be true. Therefore in the `else if` test expression we
-can replace `weekday` and `vacation` with the values we know they must
-have if we got there:
+combinations of arguments we could get. We’re pretty sure they are
+because that’s how we constructed the very first version of the
+function. However we can also use a similar kind of logic as we just
+used in the last few steps of simplifying the `if ` test condition to
+further simplify the test in the `else if` branch: We know that we
+only end up in the `else if` branch if the test condition in the `if`
+branch was false. And we know that in order for `vacation || !weekday`
+to be false both sides of the `||` need to be false which means
+`vacation` would have to be false and `weekday` would have to be true.
+Therefore in the `else if` test condition we can replace `weekday` and
+`vacation` with the values we know they must have if we got there:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -562,8 +561,8 @@ same way you don’t need to compare a Boolean value with `== true` to
 determine whether it is true—it already is either true or false—you
 don’t need to use an `if` on a Boolean value to decide whether to
 return `true` or `false`. If you have an expression to put in the `if`
-test, and you’re going to return true if it’s true and false if it’s
-false, just return it:
+test, and you’re going to return `true` if it’s true and `false` if
+it’s false, just return it:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -602,7 +601,7 @@ function sleep_in(weekday, vacation) {
 ```
 
 Note also that the final version is actually a pretty direct
-translation of the original problem statement that we were to return
+translation of the original problem statement that we should return
 true, “if it is not a weekday or we're on vacation”. (We reversed the
 order of the tests but you can read it as, “return whether we are on
 vacation or it is not a weekday”.
@@ -615,9 +614,9 @@ them because Boolean logic is pretty central to computer programming
 but once you get used to expressing combinations of Boolean values you
 will naturally simplify as you go. You will never write `x == true`
 when you could just write `x`. And if you know you are writing a set
-of mutually exclusive branches you will start with an `if/else
-if/else` construct rather than a set of independent `if` statements
-with more complicated test conditions.
+of mutually exclusive branches you will start with an `if/else`
+construct rather than a set of independent `if` statements with more
+complicated test conditions.
 
 And once you get comfortable with the idea that Boolean values are
 just another kind of value that you can compute with and return from
