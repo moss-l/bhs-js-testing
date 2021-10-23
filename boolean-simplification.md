@@ -29,18 +29,25 @@ the JS 1-10 problem set.
 
 As you may recall, `sleep_in` is supposed to be a function that when
 called with two Boolean values, one saying whether it’s a weekday and
-the other saying whether we're on vacation answers the simple question
-of whether we are allowed to sleep in, returning `true` if we can and
-`false` if we can’t. According to the problem, we are allowed to sleep
-in “if it is not a weekday or we're on vacation”.
+the other saying whether we're on vacation, answers the simple
+question of whether we are allowed to sleep in, returning `true` if we
+can and `false` if we can’t. According to the problem, we are allowed
+to sleep in “if it is not a weekday or we're on vacation”.
 
-Since there are only two arguments—`weekday` and `vacation`—and they
-can each only take one of two values—`true` and `false`—there are
-exactly four possible cases to handle. So if we don’t have any other
-clever ideas, we can just write a series of `if` statements to cover
-all four possible combinations of the two arguments: (`true`, `true`),
-(`true`, `false`), (`false`, `true`), and (`false`, `false`), giving
-us something like this skeleton:
+There’s a way to implement `sleep_in` in a simple one-line function
+that you might write if were fully comfortable with Boolean
+expressions. If you wrote that, good job; you may not need to read
+these notes. If you didn,t we will get to that implementation by the
+end of these notes starting from a more complex version that is like
+what several of you wrote.
+
+Since `sleep_in` has only two arguments—`weekday` and `vacation`—and
+they can each take only one of two values—`true` and `false`—there are
+exactly four possible cases we have to handle. So if we don’t have any
+other insight about how to proceed, we can just write a series of `if`
+statements to cover all four possible combinations of the two
+arguments: (`true`, `true`), (`true`, `false`), (`false`, `true`), and
+(`false`, `false`), giving us something like this skeleton:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -60,7 +67,7 @@ function sleep_in(weekday, vacation) {
 ```
 
 The only thing that is left is to replace the `TODO` comments with
-something that returns the right value for each case, like this:
+something that returns the correct value for each case, like this:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -85,7 +92,11 @@ programmers would write it. And it has the very important virtue of
 being correct. Which is great news because once we’ve got a correct
 implementation we can change things in careful steps and after each
 step rerun the tests to make sure we haven’t broken it. In these notes
-I’m going to discuss how I’d go about simplifying code like this.
+I’m going to discuss how I’d go about simplifying code like this to
+get to something a more experienced programmer might write directly.
+These simplifications are useful whenever you are using Booleans which
+will be pretty much whenever you are writing programs so they’re worth
+understanding for much more than solving this toy problem.
 
 The very first simplification is one of my favorites.
 
@@ -806,10 +817,11 @@ expressions we can use here, called De Morgan’s laws, that say:
 To apply those to human examples, if I’m neither hungry nor bored, I
 can describe that, in accordance with De Morgan’s first law, either as
 “I’m not hungry or bored” or “I’m not hungry and I’m not bored”. And
-according to De Morgan’s second law, if I’m not full *and* sleepy
-that’s the same as saying I’m either not full or I’m not sleepy. (I
-might be neither. But if I’m not both, I’m definitely not at least one
-of them. Logicians sometimes talk weird but they’re rarely wrong.)
+according to De Morgan’s second law, if I’m not both full sleepy
+that’s the same as saying I’m either not full or I’m not sleepy. (The
+“or” in this case includes the possibility that I’m neither. But if
+I’m not both, I’m definitely not at least one of them. Logicians
+sometimes talk weird but they’re rarely wrong.)
 
 Applying the second law to our return value we get:
 
