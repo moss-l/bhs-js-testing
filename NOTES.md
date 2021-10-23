@@ -276,6 +276,7 @@ and how we call them. A function definition starts with the word
 ```
 function double(n) {
   return n * 2;
+}
 ```
 
 The name after `function` is the name of the function being defined.
