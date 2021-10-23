@@ -364,7 +364,7 @@ simplifying uses of Booleans but it’s useful here.
 ## Remove duplicate code
 
 It is almost always a good idea to try to remove duplicate code.
-Duplicate code, i.e. the same code occuring more than one place in
+Duplicate code, i.e. the same code occurring more than one place in
 your program, makes a program harder to read and harder to change.
 Harder to read because you have to read very carefully to make sure
 that what looks like duplicate code is actually the same as other
@@ -380,7 +380,7 @@ where we can further simplify things.
 
 First off, since the branches of our `if/else` construct are mutually
 exclusive their ordering doesn’t matter so let’s reorder them to put
-all the branches in which we return `true` together:
+all the branches containing `return true` together:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -415,11 +415,11 @@ function sleep_in(weekday, vacation) {
 
 The gets us from three copies of `return true` to one but it’s not
 clear that it’s otherwise a huge improvement in readability. But if
-the test condition wasn’t so complicated this would be quite simple
+the test condition wasn’t so complicated this would be pretty simple
 code, so now let’s look at how we can simplify that unfortunately
 complex Boolean expression.
 
-## Simplifing complicated Boolean expressions
+## Simplifying complicated Boolean expressions
 
 Consider the gnarly expression we just wrote as our first test
 condition:
@@ -696,12 +696,12 @@ function.
 ## Appendix: there’s more than one way to do it
 
 As I was reading through these notes, I realized there’s another path
-to simplfying things that might be even more direct (but wouldn’t have
-let me cover all the topics I did). At the end of the “Chain mutually
-exclusive if statements with else clauses” section I pointed out that
-if we’re confident that all the test conditions are mutually exclusive
-we can drop the test condition from the last branch of the `if/else`
-to transform this:
+to simplifying things that might be even more direct (but wouldn’t
+have let me cover all the topics I did). At the end of the “Chain
+mutually exclusive if statements with else clauses” section I pointed
+out that if we’re confident that all the test conditions are mutually
+exclusive we can drop the test condition from the last branch of the
+`if/else` to transform this:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -734,7 +734,7 @@ function sleep_in(weekday, vacation) {
 ```
 
 I then backed off that approach in order to talk about removing
-duplicate code and simplfying complex Boolean expressions. However we
+duplicate code and simplifying complex Boolean expressions. However we
 could have kept going down that path. With this version, once we reach
 the last `else if` we know we are definitely going to return `true`,
 either because the test condition in the `else if` will be true or
@@ -812,7 +812,7 @@ function sleep_in(weekday, vacation) {
 
 That’s pretty simple but that `!` on a parenthesized expression that
 itself has a `!` on one of the expressions is a bit hard to
-understand. Luckily there’s one more trick for simplfying Boolean
+understand. Luckily there’s one more trick for simplifying Boolean
 expressions we can use here, called De Morgan’s laws, that say:
 
 ```
