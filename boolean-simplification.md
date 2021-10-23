@@ -723,9 +723,10 @@ could have kept going down that path. With this version, once we reach
 the last `else if` we know we are definitely going to return `true`,
 either because the test condition in the `else if` will be true or
 because we will continue on to the final `else` clause and
-unconditionally return `true`. So we don’t really need to check the
-last `else if` test condition in order to determine the result which
-means we can collapse the last two clauses like this:
+unconditionally return `true`. Which means we don’t really need to
+check the last `else if` test condition in order to determine the
+final result and that means we can collapse the last two clauses like
+this:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -755,7 +756,8 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-Now we can collapse those two clauses by the same argument as before:
+Now we can collapse the last two clauses by the same argument as
+before:
 
 
 ```javascript
@@ -792,9 +794,9 @@ function sleep_in(weekday, vacation) {
 ```
 
 That’s pretty simple but that `!` on a parenthesized expression that
-itself has a `!` on one of the expressions is a bit hard to parse.
-Luckily there’s one more trick for simplfying Boolean expressions we
-can use here, called De Morgan’s laws, that say:
+itself has a `!` on one of the expressions is a bit hard to
+understand. Luckily there’s one more trick for simplfying Boolean
+expressions we can use here, called De Morgan’s laws, that say:
 
 ```
 !(a || b) is equivalent to !a && !b
@@ -805,10 +807,9 @@ To apply those to human examples, if I’m neither hungry nor bored, I
 can describe that, in accordance with De Morgan’s first law, either as
 “I’m not hungry or bored” or “I’m not hungry and I’m not bored”. And
 according to De Morgan’s second law, if I’m not full *and* sleepy
-that’s the same as saying I’m either not full or I’m not sleepy.
-(Logically I could possibly be neither. But if I’m not both, I’m
-definitely not at least one of them. Logicians sometimes talk weird
-but they’re not wrong.)
+that’s the same as saying I’m either not full or I’m not sleepy. (I
+might be neither. But if I’m not both, I’m definitely not at least one
+of them. Logicians sometimes talk weird but they’re rarely wrong.)
 
 Applying the second law to our return value we get:
 
