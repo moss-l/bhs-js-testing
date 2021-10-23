@@ -16,11 +16,10 @@ In Javascript—and many other languages—we call the two values `true`
 and `false` Booleans and expressions that evaluate to those values,
 Boolean expressions.
 
-But despite our intuitive familiarity with practical logic when it
-comes time to render these statements in code, many new programmers
-get lost in a maze of `if` statements and expressions that seem way
-more complex than ought to be needed to answer fairly simple
-questions.
+But despite our intuitive familiarity with practical logic, when it
+comes time to render these statements in code many new programmers get
+lost in a maze of `if` statements and expressions that seem way more
+complex than ought to be needed to answer fairly simple questions.
 
 Luckily there are a few simple techniques for simplifying Boolean
 expressions that will let us tame this complexity. Let’s examine them
@@ -37,12 +36,12 @@ to sleep in “if it is not a weekday or we're on vacation”.
 There’s a way to implement `sleep_in` in a simple one-line function
 that you might write if were fully comfortable with Boolean
 expressions. If you wrote that, good job; you may not need to read
-these notes. If you didn,t we will get to that implementation by the
-end of these notes starting from a more complex version that is like
-what several of you wrote.
+these notes. If you didn’t read on: we will get to that implementation
+by the end of these notes starting from a more complex version that is
+like what several of you wrote.
 
 Since `sleep_in` has only two arguments—`weekday` and `vacation`—and
-they can each take only one of two values—`true` and `false`—there are
+they can each take one of only two values—`true` and `false`—there are
 exactly four possible cases we have to handle. So if we don’t have any
 other insight about how to proceed, we can just write a series of `if`
 statements to cover all four possible combinations of the two
@@ -78,7 +77,7 @@ function sleep_in(weekday, vacation) {
     return false; // Can’t sleep in because it’s a regular week day.
   }
   if (weekday == false && vacation == true) {
-    return true; // We can sleeep in because we’re on vacation. Also it’s the weekend
+    return true; // We can sleep in because we’re on vacation. Also it’s the weekend
   }
   if (weekday == false && vacation == false) {
     return true; // We can sleep in because it’s the weekend.
@@ -88,8 +87,8 @@ function sleep_in(weekday, vacation) {
 
 This is not how I’d personally write this function but there are a lot
 of ways to get to the correct answer and this is indeed how many new
-programmers would write it. And it has the very important virtue of
-being correct. Which is great news because once we’ve got a correct
+programmers would write it. And it does have the very important virtue
+of being correct. Which is great news because once we’ve got a correct
 implementation we can change things in careful steps and after each
 step rerun the tests to make sure we haven’t broken it. In these notes
 I’m going to discuss how I’d go about simplifying code like this to
@@ -190,7 +189,7 @@ has to do with how we use `if` statements which is closely related.
 By itself an `if` statement just controls whether the code inside its
 `{}`s executes. Sometimes of course we want to do something else when
 the test condition is not true. We could write that with another `if`
-clause with a test condition that is true when the the first `if`’s
+statement with a test condition that is true when the the first `if`’s
 test condition is false and vice versa:
 
 ```javascript
@@ -219,11 +218,12 @@ if (timeForBed) {
 }
 ```
 
-Sometimes there might be more than just two cases. For instance, we
-probably shouldn’t *always* eat just because it’s not bedtime. So
-let’s add another Boolean `hungry`. If it’s bedtime, it doesn’t matter
-if we’re hungry—we have to brush our teeth. But if it’s not bedtime
-then we eat snacks or read depending on whether we’re hungry.
+Sometimes, however, there might be more than just two cases we need to
+handle. For instance, we probably shouldn’t *always* eat just because
+it’s not bedtime. So let’s add another Boolean `hungry`. If it’s
+bedtime, it doesn’t matter if we’re hungry—we have to brush our teeth.
+But if it’s not bedtime then we eat snacks or read depending on
+whether we’re hungry.
 
 ```javascript
 if (timeForBed) {
@@ -330,13 +330,14 @@ function sleep_in(weekday, vacation) {
 ```
 
 You might also notice that we don’t have a plain `else` clause here.
-That’s fine—if none of the test conditions are true then we will fall
-out after the last clause and then rather than returning a value
-explicitly the function will implicitly return `undefined`. Since
-we’re pretty certain these four branches cover all the possible cases
-and thus we will never return `undefined` we could take the test
-condition off the last `else if` like this without changing the
-behavior of the function:
+That’s fine—if none of the test conditions are true then executions
+will continue after the last clause and then rather than returning a
+value explicitly the function will implicitly return `undefined` when
+it hits the end of the function without having returned. Since we’re
+pretty certain these four branches cover all the possible cases and
+thus we will never return `undefined` we could take the test condition
+off the last `else if` like this without changing the behavior of the
+function:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -412,9 +413,11 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-It’s not clear that that’s a huge improvement in readability but now
-we’ve got something to work with and can move on to the meat of
-simplifying Boolean expressions.
+The gets us from three copies of `return true` to one but it’s not
+clear that it’s otherwise a huge improvement in readability. But if
+the test condition wasn’t so complicated this would be quite simple
+code, so now let’s look at how we can simplify that unfortunately
+complex Boolean expression.
 
 ## Simplifing complicated Boolean expressions
 
@@ -456,9 +459,9 @@ false || x ⟹ x
 ```
 
 If you squint you can think of the Boolean values `true` and `false`
-as analogous 1 and 0 and the operators `&&` and `||` as analogs to
-multiplication and addition in which case `true && x ⟹ x` is similar
-to `1 × x ⟹ x` and `false || x ⟹ x` is like `0 + x ⟹ x`.
+as analogous to 1 and 0 and the operators `&&` and `||` as analogs to
+`×` and `+` in which case `true && x ⟹ x` is similar to `1 × x ⟹ x`
+and `false || x ⟹ x` is like `0 + x ⟹ x`.
 
 Two other rules came from basic logic, what Aristotle called the law
 of the excluded middle:
@@ -633,6 +636,8 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
+Ta da! The promised one-line version of the function.
+
 ## Okay cool, but this seems really tedious.
 
 We’ve come a long way from our original
@@ -684,7 +689,7 @@ And once you get comfortable with the idea that Boolean values are
 just another kind of value that you can compute with and return from
 functions, when faced with a problem like `sleep_in` you might realize
 you don’t even need an `if`; you just need to write the expression
-that captures the desired logic, as we did in our final version of the
+that captures the desired logic as we did in our final version of the
 function.
 
 
@@ -692,11 +697,11 @@ function.
 
 As I was reading through these notes, I realized there’s another path
 to simplfying things that might be even more direct (but wouldn’t have
-let me cover all the topics I did). Look back at the end of the “Chain
-mutually exclusive if statements with else clauses” section where I
-pointed out that given that all the test conditions are mutually
-exclusive we can drop the test condition from the last branch of the
-`if/else` to transform this:
+let me cover all the topics I did). At the end of the “Chain mutually
+exclusive if statements with else clauses” section I pointed out that
+if we’re confident that all the test conditions are mutually exclusive
+we can drop the test condition from the last branch of the `if/else`
+to transform this:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -784,7 +789,8 @@ function sleep_in(weekday, vacation) {
 This isn’t quite ready for the “just return the Boolean value”
 simplification since we return `false` when the test condition is true
 and `true` when the test condition is false. But we can swap that
-around easily enough:
+around easily enough by flipping the whole test condition with `!` and
+then flipping the values we return from each branch:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -796,7 +802,7 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-And now just return the value:
+And now we’re ready to just return the value:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -817,7 +823,7 @@ expressions we can use here, called De Morgan’s laws, that say:
 To apply those to human examples, if I’m neither hungry nor bored, I
 can describe that, in accordance with De Morgan’s first law, either as
 “I’m not hungry or bored” or “I’m not hungry and I’m not bored”. And
-according to De Morgan’s second law, if I’m not both full sleepy
+according to De Morgan’s second law, if I’m not both full and sleepy
 that’s the same as saying I’m either not full or I’m not sleepy. (The
 “or” in this case includes the possibility that I’m neither. But if
 I’m not both, I’m definitely not at least one of them. Logicians
