@@ -719,12 +719,13 @@ function sleep_in(weekday, vacation) {
 
 I then backed off that approach in order to talk about removing
 duplicate code and simplfying complex Boolean expressions. However we
-could have kept going down that path. With the version above, once we
-reach the last `else if` we know we are going to return `true`, either
-because the test condition will be true or because we will continue on
-to the final `else` clause. So we don’t really need to check the last
-`else if` test condition and can collapse the last two clauses like
-this:
+could have kept going down that path. With this version, once we reach
+the last `else if` we know we are definitely going to return `true`,
+either because the test condition in the `else if` will be true or
+because we will continue on to the final `else` clause and
+unconditionally return `true`. So we don’t really need to check the
+last `else if` test condition in order to determine the result which
+means we can collapse the last two clauses like this:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -790,17 +791,26 @@ function sleep_in(weekday, vacation) {
 }
 ```
 
-Pretty simple but there is one more trick for simplfying Boolean expressions we can use here, called De Morgan’s laws, that say:
+That’s pretty simple but that `!` on a parenthesized expression that
+itself has a `!` on one of the expressions is a bit hard to parse.
+Luckily there’s one more trick for simplfying Boolean expressions we
+can use here, called De Morgan’s laws, that say:
 
 ```
 !(a || b) is equivalent to !a && !b
 !(a && b) is equivalent to !a || !b
 ```
 
-I.e. if you have a `!` of a an expression involving an `&&` you can
-move the `!` onto the individual elements and change the `&&` to an
-`||` and vice versa. Applying the law we get:
+To apply those to human examples, if I’m neither hungry nor bored, I
+can describe that, in accordance with De Morgan’s first law, either as
+“I’m not hungry or bored” or “I’m not hungry and I’m not bored”. And
+according to De Morgan’s second law, if I’m not full *and* sleepy
+that’s the same as saying I’m either not full or I’m not sleepy.
+(Logically I could possibly be neither. But if I’m not both, I’m
+definitely not at least one of them. Logicians sometimes talk weird
+but they’re not wrong.)
 
+Applying the second law to our return value we get:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -810,4 +820,10 @@ function sleep_in(weekday, vacation) {
 
 Which is exactly the same as where we arrived via the other
 simplification path except with the order of the operands to the `||`
-reversed.
+reversed. It also happens to exactly match the original problem
+statement that we can sleep in “if it is not a weekday or we're on
+vacation”.
+
+In this case, assuming you think of it, this is a faster way to the
+final simplified version than the original path we took. But it’s good
+to have all these different techniques in your bag of tricks.
