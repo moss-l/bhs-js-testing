@@ -19,8 +19,8 @@ Boolean expressions.
 But despite our intuitive familiarity with practical logic when it
 comes time to render these statements in code, many new programmers
 get lost in a maze of `if` statements and expressions that seem way
-more complex than ought to be needed to answer a simple question like
-whether we can sleep in.
+more complex than ought to be needed to answer fairly simple
+questions.
 
 Luckily there are a few simple techniques for simplifying Boolean
 expressions that will let us tame this complexity. Let’s examine them
@@ -29,16 +29,16 @@ the JS 1-10 problem set.
 
 As you may recall, `sleep_in` is supposed to be a function that when
 called with two Boolean values, one saying whether it’s a weekday and
-the other saying whether we're on vacation returns `true` if we are
-allowed to sleep in and `false` otherwise. According to the problem,
-we are allowed to sleep in “if it is not a weekday or we're on
-vacation”.
+the other saying whether we're on vacation answers the simple question
+of whether we are allowed to sleep in, returning `true` if we can and
+`false` if we can’t. According to the problem, we are allowed to sleep
+in “if it is not a weekday or we're on vacation”.
 
-Since there are only two arguments (`weekday` and `vacation`) and they
-can each only take one of two values (`true` and `false`) there are
-exactly four possible cases. So if we didn’t have any other clever
-ideas, we could just write a series of `if` statements to cover all
-four possible combinations of the two arguments: (`true`, `true`),
+Since there are only two arguments—`weekday` and `vacation`—and they
+can each only take one of two values—`true` and `false`—there are
+exactly four possible cases to handle. So if we don’t have any other
+clever ideas, we can just write a series of `if` statements to cover
+all four possible combinations of the two arguments: (`true`, `true`),
 (`true`, `false`), (`false`, `true`), and (`false`, `false`), giving
 us something like this skeleton:
 
@@ -96,8 +96,8 @@ including variables like `vacation` and `weekday` as well as more
 complex expressions involving `&&`, `||`, and `!`. But there are only
 two literal Booleans: `true` and `false`. While occasionally you will
 need to use literal `true` and `false` in your code, you should never
-compare to either of them. Look at what comparing to the literal
-`true` does:
+compare to either of them. To see why look at what comparing to the
+literal `true` does:
 
 ```
 true == true ⟹ true
@@ -178,9 +178,9 @@ has to do with how we use `if` statements which is closely related.
 
 By itself an `if` statement just controls whether the code inside its
 `{}`s executes. Sometimes of course we want to do something else when
-the tested condition is not true. We could write that with another
-`if` clause with a test condition that is true when the the first
-`if`’s test condition is false and vice versa:
+the test condition is not true. We could write that with another `if`
+clause with a test condition that is true when the the first `if`’s
+test condition is false and vice versa:
 
 ```javascript
 if (timeForBed) {
@@ -284,9 +284,9 @@ exclusive because the first `if` whose test condition is true will
 `return`, but we do need to make sure that the test conditions are
 comprehensive, meaning that every value of `speed` will satisfy one of
 them. We can make the latter much easier to see, and halve the number
-of comparisons we need to do, if we chain the `if` statements and
-remove the parts of the test conditions that are handled by earlier
-cases:
+of comparisons we need to think about, if we chain the `if` statements
+and remove the parts of the test conditions that are handled by
+earlier cases:
 
 ```javascript
 if (speed < 61) {
@@ -321,10 +321,11 @@ function sleep_in(weekday, vacation) {
 You might also notice that we don’t have a plain `else` clause here.
 That’s fine—if none of the test conditions are true then we will fall
 out after the last clause and then rather than returning a value
-explicitly it will implicitly return `undefined`. Since we’re pretty
-certain these four branches cover all the possible cases and thus we
-will never return `undefined` we could take the test condition off the
-last `else if` like this without changing the behavior of the function:
+explicitly the function will implicitly return `undefined`. Since
+we’re pretty certain these four branches cover all the possible cases
+and thus we will never return `undefined` we could take the test
+condition off the last `else if` like this without changing the
+behavior of the function:
 
 ```javascript
 function sleep_in(weekday, vacation) {
@@ -674,3 +675,139 @@ functions, when faced with a problem like `sleep_in` you might realize
 you don’t even need an `if`; you just need to write the expression
 that captures the desired logic, as we did in our final version of the
 function.
+
+
+## Appendix: there’s more than one way to do it
+
+As I was reading through these notes, I realized there’s another path
+to simplfying things that might be even more direct (but wouldn’t have
+let me cover all the topics I did). Look back at the end of the “Chain
+mutually exclusive if statements with else clauses” section where I
+pointed out that given that all the test conditions are mutually
+exclusive we can drop the test condition from the last branch of the
+`if/else` to transform this:
+
+```javascript
+function sleep_in(weekday, vacation) {
+  if (weekday && vacation) {
+    return true;
+  } else if (weekday && !vacation) {
+    return false;
+  } else if (!weekday && vacation) {
+    return true;
+  } else if (!weekday && !vacation) {
+    return true;
+  }
+}
+```
+
+into this:
+
+```javascript
+function sleep_in(weekday, vacation) {
+  if (weekday && vacation) {
+    return true;
+  } else if (weekday && !vacation) {
+    return false;
+  } else if (!weekday && vacation) {
+    return true;
+  } else {
+    return true;
+  }
+}
+```
+
+I then backed off that approach in order to talk about removing
+duplicate code and simplfying complex Boolean expressions. However we
+could have kept going down that path. With the version above, once we
+reach the last `else if` we know we are going to return `true`, either
+because the test condition will be true or because we will continue on
+to the final `else` clause. So we don’t really need to check the last
+`else if` test condition and can collapse the last two clauses like
+this:
+
+```javascript
+function sleep_in(weekday, vacation) {
+  if (weekday && vacation) {
+    return true;
+  } else if (weekday && !vacation) {
+    return false;
+  } else {
+    return true;
+  }
+}
+```
+
+Now, let’s take advantage of the fact that these conditions are still
+mutually exclusive and reorder them to put the two branches that
+return `true` together at the end:
+
+```javascript
+function sleep_in(weekday, vacation) {
+  if (weekday && !vacation) {
+    return false;
+  } else if (weekday && vacation) {
+    return true;
+  } else {
+    return true;
+  }
+}
+```
+
+Now we can collapse those two clauses by the same argument as before:
+
+
+```javascript
+function sleep_in(weekday, vacation) {
+  if (weekday && !vacation) {
+    return false;
+  } else {
+    return true;
+  }
+}
+```
+
+This isn’t quite ready for the “just return the Boolean value”
+simplification since we return `false` when the test condition is true
+and `true` when the test condition is false. But we can swap that
+around easily enough:
+
+```javascript
+function sleep_in(weekday, vacation) {
+  if (!(weekday && !vacation)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+```
+
+And now just return the value:
+
+```javascript
+function sleep_in(weekday, vacation) {
+  return !(weekday && !vacation);
+}
+```
+
+Pretty simple but there is one more trick for simplfying Boolean expressions we can use here, called De Morgan’s laws, that say:
+
+```
+!(a || b) is equivalent to !a && !b
+!(a && b) is equivalent to !a || !b
+```
+
+I.e. if you have a `!` of a an expression involving an `&&` you can
+move the `!` onto the individual elements and change the `&&` to an
+`||` and vice versa. Applying the law we get:
+
+
+```javascript
+function sleep_in(weekday, vacation) {
+  return !weekday || vacation;
+}
+```
+
+Which is exactly the same as where we arrived via the other
+simplification path except with the order of the operands to the `||`
+reversed.
