@@ -36,7 +36,7 @@ to sleep in “if it is not a weekday or we're on vacation”.
 There’s a way to implement `sleep_in` in a simple one-line function
 that you might write if were fully comfortable with Boolean
 expressions. If you wrote that, good job; you may not need to read
-these notes. If you didn’t read on: we will get to that implementation
+these notes. If you didn’t, read on: we will get to that implementation
 by the end of these notes starting from a more complex version that is
 like what several of you wrote.
 
