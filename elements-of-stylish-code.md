@@ -224,11 +224,111 @@ because of the English-language relationship between `scores` and
 
 
 
-## Divide and conquer
+## Taming code structure with divide and conquer
 
-The fundamental strategy of programming is divide and conquer. Every
-school of thought about programming from structured programming in the
-50s to present-day object oriented and functional styles is arguably
-about different ways ways of dividing large programs into smaller,
-intellectually managable chunks and then recombining them in reliable
-ways.
+While choosing good names is perhaps the most important part of
+writing readable code, there is one critical aspect of our programs
+that is not addressed by even the best naming choices: program
+structure.
+
+Structure is about how we break up our code into smaller pieces. Do we
+have one big function with lots of complicated control flow or lots of
+little functions that do their work by calling other functions? Do
+different parts of our code communicate through shared variables or
+are functions largely stand-alone with arguments passed in and values
+returned out?
+
+The fundamental strategy of programming is the same strategy used by
+Philip II of Macedon, Julius Caesar, Napoleon, and anyone else trying
+to get a handle on an unruly empire: divide and conquer.
+
+In programming this strategy means dividing the functionality of a
+program into smaller pieces and implementing each of the smaller
+pieces more or less separately before combining the pieces to produce
+the larger desired functionality. Every school of thought about
+programming from the so-called “structured programming” in the 50s to
+present-day object oriented and functional styles is about different
+ways ways of dividing large programs into smaller, intellectually
+managable chunks and then recombining them in reliable ways.
+
+But there’s more to producing well-structured code than just splittng
+things into arbitrary chunks. The most important idea about code
+structure is to split things into *cohesive* parts. Cohesive literally
+means “sticks together well” and when we talk about code we say a
+chunk of code is cohesive if it does one thing well and everything in
+that code is related to doing that thing.
+
+To take a simple example, consider this code from a genetic algorithm.
+The outer loop is looping `populationSize` times pushing new strands
+of `dna` onto `population` while the inner loop is creating the
+individual strands of `dna`.
+
+```javascript
+for (let i = 0; n < populationSize; i++) {
+  let dna = "";
+  for (let j = 0; j < phrase.length; j++) {
+    dna += random(alphabet);
+  }
+  population.push(dna);
+}
+```
+
+That is reasonably cohesive—it’s only seven lines long and it all
+seems related to building up an initial population of random DNA. But
+remember how when talking about variable names I said that while we
+should use `j` as the index variable if we have to write a nested
+`for`loop, that it’s even better to see if we can just get rid of the
+nested loop. That’s because nested loops are often doing two things.
+And that is the case here. The outer loop is building up a random
+population while the inner loop is responsible for generating random
+DNA to put in that population.
+
+So let’s split those two parts. First take the inner loop and break it
+out into a function:
+
+```javascript
+function randomDNA(length) {
+  let dna = "";
+  for (let i = 0; i < length; i++) {
+    dna += random(alphabet);
+  }
+  return dna;
+}
+```
+
+Then change the body of the outer loop to just call this function:
+
+```javascript
+for (let i = 0; n < populationSize; i++) {
+  population.push(randomDNA(phrase.length));
+}
+```
+
+Notice how since the `randomDNA` function only cares about the length
+of the DNA it is supposed to create, that’s all we pass in; we let the
+caller take care of deciding what that length should be, in this case
+the length of `phrase`.
+
+Given that the original was only seven lines of code, this isn’t an
+earth shattering improvement but it does illustrate the point of how
+even a few lines of code can be hiding multiple bits of functionality.
+And there are a couple advantages to this version of the code. Perhaps
+the biggest is that we’ve introduced a new name by creating the
+`randomDNA`function we’ve given a name to the bit of previously
+anonymous code that we extracted from the inner loop. Having that name
+we can now read the population building loop as English: “Loop
+populationSize times, adding a new piece of random DNA the length of
+the phrase to the population.” We could also test `randomDNA`
+independently of the outer loop:
+
+```
+> alphabet = "abcdefghijklmnopqrstuvwxyz !"
+< "abcdefghijklmnopqrstuvwxyz !"
+> randomDNA(10)
+< "zoveyuktig"
+> randomDNA(20)
+< "cjmknglbqqygckmuhchn"
+
+
+
+​
