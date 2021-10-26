@@ -27,14 +27,14 @@ write. I’ll take about some of the more important ones in these notes.
 ## Use good names
 
 One of simplest things you can do to make your code easier to
-understand is to use good names. This is the biggest difference
-between human readers of code and the computer. For the computer names
-are just arbitrary labels that could literally be anything and which
-may not even exist by the time the program is running. (You may write
-a program in terms of a variable like `score` once the program is
-running the value of `score` lives in some particular bit of memory in
-the computer and the running code is all in terms of that bit of
-memory; the name is no longer needed.)
+understand is to use good names. The need for good names is the
+biggest difference between human readers of code and the computer. For
+the computer names are just arbitrary labels that could literally be
+anything and which may not even exist by the time the program is
+running. (You may write a program in terms of a variable like `score`
+once the program is running the value of `score` lives in some
+particular bit of memory in the computer and the running code is all
+in terms of that bit of memory; the name is no longer needed.)
 
 But for humans, obviously meaningful names are a huge aid to
 understanding. Yet despite that, new programmers tend to not pay
@@ -89,7 +89,7 @@ falls into four common naming traps:
   of typing is not worth the confusion it can cause.
 
 - **Overly generic**. `number` on the other hand is not a great name
-  in this context because it is to generic. While it is descriptive
+  in this context because it is too generic. While it is descriptive
   (assuming the score is indeed a number) it is descriptive at the
   wrong level of abstraction. The score may be a number but lots of
   things are numbers. Why is this number interesting? Well, because
@@ -132,7 +132,7 @@ because the name has a very limited scope, meaning it can only be
 referred to from a small section of code.
 
 The classic example of this is the loop variable in a `for` loop,
-looping over a string or array. It’s scope is limited to the body of
+looping over a string or array. Its scope is limited to the body of
 the loop which hopefully should only be a few lines. Thus it’s
 actually a good idea to use an inignificant name, almost always `i`,
 to convey that this is just a regular `for` loop like almost every
@@ -150,8 +150,8 @@ is actually clearer and easier to read than something longer like
 `index`. If the loop variable was anything other than `i` an
 experienced programmer would slow down to see what was different about
 this particular `for` loop. (If you have nested `for` loops, the inner
-loop should use `j` but as we’ll discuss later it’s probably better to
-see if you can’t get rid of the nesting instead.)
+loop should use `j` but, as we’ll discuss later, it’s probably better
+to see if you can’t get rid of the nesting instead.)
 
 Similarly, if you are writing a function that doesn’t care about the
 meaning of its arguments beyond what kind of values they are, then it
@@ -173,10 +173,10 @@ function maximum(numbers) {
 
 ### Connect through names
 
-The final trick with names is not to use them to show how different
-parts of your code are connected by using the same name everywhere to
-refer to the same conceptual thing and, conversely, to use different
-names for different things.
+The final trick with names is to use them to show how different parts
+of your code are connected by using the same name everywhere to refer
+to the same conceptual thing and, conversely, to use different names
+for different things.
 
 For instance, if you have two different functions that take the score
 of the game an an argument, use the same name in each:
