@@ -134,7 +134,7 @@ referred to from a small section of code.
 The classic example of this is the loop variable in a `for` loop,
 looping over a string or array. Its scope is limited to the body of
 the loop which hopefully should only be a few lines. Thus it’s
-actually a good idea to use an inignificant name, almost always `i`,
+actually a good idea to use an insignificant name, almost always `i`,
 to convey that this is just a regular `for` loop like almost every
 other `for` loop:
 
@@ -199,7 +199,7 @@ One could use `xyz` while the other used `abc` without changing the
 logic at all. But to a human reader, beyond the fact that `score` is a
 better name than either `xyz` or `abc`, it can be a useful clue that
 these functions operate on the same kind of thing—not on arbitrary
-vaules, not even on any old numbers, but on numbers that can represent
+values, not even on any old numbers, but on numbers that can represent
 a score in the game.
 
 The flip side of this rule of thumb is *don’t* use the same name to
@@ -247,9 +247,9 @@ the larger desired functionality. Every school of thought about
 programming from the so-called “structured programming” in the 50s to
 present-day object oriented and functional styles is about different
 ways ways of dividing large programs into smaller, intellectually
-managable chunks and then recombining them in reliable ways.
+manageable chunks and then recombining them in reliable ways.
 
-But there’s more to producing well-structured code than just splittng
+But there’s more to producing well-structured code than just splitting
 things into arbitrary chunks. The most important idea about code
 structure is to split things into *cohesive* parts. Cohesive literally
 means “sticks together well” and when we talk about code we say a
@@ -262,7 +262,7 @@ lacking in cohesion, any card could come after every other. But if you
 organize the deck by suit so all the hearts are together and all the
 diamonds together, etc. rather than just one random deck you have a
 deck organized into four parts, each of which is fairly cohesive, and
-thus the deck as a whole has more discernable structure.
+thus the deck as a whole has more discernible structure.
 
 ### Increase cohesion with small functions
 
@@ -362,7 +362,7 @@ function initializePopulation() {
 Looks cool, right? However there’s a problem. This function depends on
 several variables that since they are not defined inside the function
 must be defined outside, presumably as global variables. That is, to
-understand this fuction we need to see some more code, something like
+understand this function we need to see some more code, something like
 this:
 
 ```javascript
@@ -435,7 +435,7 @@ scoreFitness();
 initializePopulation();
 ```
 
-That won’t even obviously fail at runtime because `population` is
+That won’t even obviously fail at run time because `population` is
 already initialized to an empty array so `scoreFitness` will happily
 do nothing, leaving `fitnessScores` empty. Only then will `population`
 will be filled in by `initializePopulation`. Presumably some later
@@ -444,7 +444,8 @@ code will choke on the fact that `fitnessScores` is empty while
 
 In the explicit arguments version, as soon as we go to call
 `scoreFitness` we will realize we need a population argument and the
-only way to get a population is to call `initializePopulation` first.
+only way to get a population is to call `initializePopulation` first
+so we will be naturally prevented from making this mistake.
 
 Similarly with the global variables version we need to be much more
 careful to clear out the global variables at appropriate times if we
@@ -478,7 +479,7 @@ references `populationSize` and `targetPhrase`. Does that matter? It
 depends. If we take those as constants that are defined just to give a
 name to a particular value then it’s more okay to have that dependency
 on them. But if either or both of those values were going to be
-determined at runtime, if, for instance, we wanted to get the target
+determined at run time, if, for instance, we wanted to get the target
 phrase as input from the user and the populationSize from a
 configuration file, then we should definitely rewrite
 `initializePopulation` like this:
@@ -497,8 +498,10 @@ Otherwise to actually use `initializePopulation` we’d have to make
 sure the global variables were set up properly before we called it
 which is the same problem as having to make sure `population` is
 filled in before calling `scoreFitness`. A similar issue exists in
-`randomDNA`: is `alphabet` a constant part of the program or a value
+`randomDNA`. Is `alphabet` a constant part of the program or a value
 that could possibly change? If the latter it would be best for
 `randomDNA` to accept it as a second argument. When in doubt, a good
 policy is to have all the values a function depends on passed in as
-arguments.
+arguments. Even if we end up passing in the value of some global
+variable to these lower-level functions it makes them more standalone
+and easier to understand and test in complete isolation.
