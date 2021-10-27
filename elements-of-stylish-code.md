@@ -386,7 +386,9 @@ coupling connects two bits of code that could otherwise be independent
 of each other, forcing them to move together. For instance, in a
 genetic algorithm, the next step after initializing the population is
 probably to score all the elements of the current population.
-Following the style of this code we might have something like this:
+Following the style of this code we might have something like this
+(assuming we have a function `fitness` that computes the fitness of
+one member of the population):
 
 ```javascript
 let fitnessScores = [];
@@ -423,3 +425,80 @@ set of `fitnessScores`. Which is of course what the versions with
 global variables were doing to but when we pass relevant inputs as
 arguments and return outputs as the return values of functions it
 makes the wiring between the functions explicit rather than implicit.
+
+The explicit wiring, in addition to being more readable, also makes it
+easier to write correct code. With the global variable style there’s
+nothing obvious to stop us from writing the two lines out of order:
+
+```javascript
+scoreFitness();
+initializePopulation();
+```
+
+That won’t even obviously fail at runtime because `population` is
+already initialized to an empty array so `scoreFitness` will happily
+do nothing, leaving `fitnessScores` empty. Only then will `population`
+will be filled in by `initializePopulation`. Presumably some later
+code will choke on the fact that `fitnessScores` is empty while
+`population` is full of DNA but the error was here.
+
+In the explicit arguments version, as soon as we go to call
+`scoreFitness` we will realize we need a population argument and the
+only way to get a population is to call `initializePopulation` first.
+
+Similarly with the global variables version we need to be much more
+careful to clear out the global variables at appropriate times if we
+want to call these functions again.
+
+For all these reasons it is much better to write those two functions
+like this:
+
+```javascript
+function initializePopulation() {
+  let population = [];
+  for (let i = 0; n < populationSize; i++) {
+    population.push(randomDNA(targetPhrase.length));
+  }
+  return population;
+}
+
+function scoreFitness(population) {
+  let fitnessScores = [];
+  for (let i = 0; i < population.length; i++) {
+    fitnessScores.push(fitness(population[i]));
+  }
+  return fitnessScores;
+}
+```
+
+
+However you might notice that even in this version
+`initializePopulation` is not free from global variables as it
+references `populationSize` and `targetPhrase`. Does that matter? It
+depends. If we take those as constants that are defined just to give a
+name to a particular value then it’s more okay to have that dependency
+on them. But if either or both of those values were going to be
+determined at runtime, if, for instance, we wanted to get the target
+phrase as input from the user and the populationSize from a
+configuration file, then we should definitely rewrite
+`initializePopulation` like this:
+
+```javascript
+function initializePopulation(populationSize, targetPhrase) {
+  let population = [];
+  for (let i = 0; n < populationSize; i++) {
+    population.push(randomDNA(targetPhrase.length));
+  }
+  return population;
+}
+```
+
+Otherwise to actually use `initializePopulation` we’d have to make
+sure the global variables were set up properly before we called it
+which is the same problem as having to make sure `population` is
+filled in before calling `scoreFitness`. A similar issue exists in
+`randomDNA`: is `alphabet` a constant part of the program or a value
+that could possibly change? If the latter it would be best for
+`randomDNA` to accept it as a second argument. When in doubt, a good
+policy is to have all the values a function depends on passed in as
+arguments.
