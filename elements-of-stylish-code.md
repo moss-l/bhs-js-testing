@@ -222,8 +222,6 @@ collection of the kind of values we pass around with the name `score`
 because of the English-language relationship between `scores` and
 `score`.
 
-
-
 ## Taming code structure with divide and conquer
 
 While choosing good names is perhaps the most important part of
@@ -256,17 +254,28 @@ things into arbitrary chunks. The most important idea about code
 structure is to split things into *cohesive* parts. Cohesive literally
 means “sticks together well” and when we talk about code we say a
 chunk of code is cohesive if it does one thing well and everything in
-that code is related to doing that thing.
+that code is related to doing that thing. A larger program made up of
+independent cohesive parts is a lot easier to understand than the same
+functionality all jumbled together. Imagine your whole program was a
+deck of cards. If it’s completely shuffled the deck is completely
+lacking in cohesion, any card could come after every other. But if you
+organize the deck by suit so all the hearts are together and all the
+diamonds together, etc. rather than just one random deck you have a
+deck organized into four parts, each of which is fairly cohesive, and
+thus the deck as a whole has more discernable structure.
 
-To take a simple example, consider this code from a genetic algorithm.
-The outer loop is looping `populationSize` times pushing new strands
-of `dna` onto `population` while the inner loop is creating the
-individual strands of `dna`.
+### Increase cohesion with small functions
+
+One of the best ways to increase cohesion is to group related code
+together in functions. To take a simple example, consider this code
+from a genetic algorithm. The outer loop is looping `populationSize`
+times pushing new strands of `dna` onto `population` while the inner
+loop is creating the individual strands of `dna`.
 
 ```javascript
 for (let i = 0; n < populationSize; i++) {
   let dna = "";
-  for (let j = 0; j < phrase.length; j++) {
+  for (let j = 0; j < targetPhrase.length; j++) {
     dna += random(alphabet);
   }
   population.push(dna);
@@ -279,7 +288,7 @@ remember how when talking about variable names I said that while we
 should use `j` as the index variable if we have to write a nested
 `for`loop, that it’s even better to see if we can just get rid of the
 nested loop. That’s because nested loops are often doing two things.
-And that is the case here. The outer loop is building up a random
+And that’s the case here. The outer loop is building up a random
 population while the inner loop is responsible for generating random
 DNA to put in that population.
 
@@ -300,14 +309,14 @@ Then change the body of the outer loop to just call this function:
 
 ```javascript
 for (let i = 0; n < populationSize; i++) {
-  population.push(randomDNA(phrase.length));
+  population.push(randomDNA(targetPhrase.length));
 }
 ```
 
 Notice how since the `randomDNA` function only cares about the length
 of the DNA it is supposed to create, that’s all we pass in; we let the
 caller take care of deciding what that length should be, in this case
-the `phrase.length`.
+the `targetPhrase.length`.
 
 Given that the original was only seven lines of code, this isn’t an
 earth shattering improvement but it does illustrate the point of how
@@ -319,7 +328,7 @@ anonymous code that we extracted from the inner loop.
 
 Having that name we can now read the population building loop as
 English: “Loop populationSize times, adding a new piece of random DNA
-the length of the phrase to the population.”
+the same length as our target phrase to the population.”
 
 It also means we can test `randomDNA` independently of the outer loop.
 Even something as simple as trying it out in a Javascript console:
@@ -336,3 +345,81 @@ Even something as simple as trying it out in a Javascript console:
 Or we could write automated tests that ensure `randomDNA` behaves as
 expected, always returning a string of the right length and always
 returning strings containing only characters from `alphabet`.
+
+### Connect functions with arguments and return values, not global variables
+
+We didn’t look at where the original population building loop came
+from but imagine it was itself from a nice small function like this:
+
+```javascript
+function initializePopulation() {
+  for (let i = 0; n < populationSize; i++) {
+    population.push(randomDNA(targetPhrase.length));
+  }
+}
+```
+
+Looks cool, right? However there’s a problem. This function depends on
+several variables that since they are not defined inside the function
+must be defined outside, presumably as global variables. That is, to
+understand this fuction we need to see some more code, something like
+this:
+
+```javascript
+let populationSize = 1000;
+let targetPhrase = "to be, or not to be, that is the question"
+let population = [];
+```
+
+We’ll leave aside the use of `populationSize` and even `targetPhrase`
+for a moment; they are potentially slightly less problematic. But
+let’s take a look at `population`, the array that
+`initializePopulation` is filling up.
+
+In addition to the code outside `initializePopulation` that is
+responsible for setting up `population` as an empty array, presumably
+somewhere else there is code that uses `population` after it has been
+filled. That shared use of `population`, with `initializePopulation`
+changing it's value before another function uses it introduces what we
+call *coupling*. Like a coupling between two railroad cars, a code
+coupling connects two bits of code that could otherwise be independent
+of each other, forcing them to move together. For instance, in a
+genetic algorithm, the next step after initializing the population is
+probably to score all the elements of the current population.
+Following the style of this code we might have something like this:
+
+```javascript
+let fitnessScores = [];
+
+function scoreFitness() {
+  for (let i = 0; i < population.length; i++) {
+    fitnessScores.push(fitness(population[i]));
+  }
+}
+```
+
+There are a couple problems with this style of code. The main one,
+from a readability point of view, is that you have very few clues at
+the point where a function is called what it might be doing beyond
+it’s name. Compare these two lines, using the two functions we just
+defined:
+
+```javascript
+initializePopulation();
+scoreFitness();
+```
+
+to these:
+
+```javascript
+let population = initializePopulation();
+let fitnessScores = scoreFitness(population);
+```
+
+In the second we can see a lot more about how these functions are
+related. `initializePopulation` somehow computes a new value for
+`population` and then `scoreFitness` uses that population to produce a
+set of `fitnessScores`. Which is of course what the versions with
+global variables were doing to but when we pass relevant inputs as
+arguments and return outputs as the return values of functions it
+makes the wiring between the functions explicit rather than implicit.
