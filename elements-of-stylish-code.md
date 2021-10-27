@@ -307,7 +307,7 @@ for (let i = 0; n < populationSize; i++) {
 Notice how since the `randomDNA` function only cares about the length
 of the DNA it is supposed to create, that’s all we pass in; we let the
 caller take care of deciding what that length should be, in this case
-the length of `phrase`.
+the `phrase.length`.
 
 Given that the original was only seven lines of code, this isn’t an
 earth shattering improvement but it does illustrate the point of how
@@ -315,20 +315,24 @@ even a few lines of code can be hiding multiple bits of functionality.
 And there are a couple advantages to this version of the code. Perhaps
 the biggest is that we’ve introduced a new name by creating the
 `randomDNA`function we’ve given a name to the bit of previously
-anonymous code that we extracted from the inner loop. Having that name
-we can now read the population building loop as English: “Loop
-populationSize times, adding a new piece of random DNA the length of
-the phrase to the population.” We could also test `randomDNA`
-independently of the outer loop:
+anonymous code that we extracted from the inner loop.
 
-```
+Having that name we can now read the population building loop as
+English: “Loop populationSize times, adding a new piece of random DNA
+the length of the phrase to the population.”
+
+It also means we can test `randomDNA` independently of the outer loop.
+Even something as simple as trying it out in a Javascript console:
+
+```javascript
 > alphabet = "abcdefghijklmnopqrstuvwxyz !"
-< "abcdefghijklmnopqrstuvwxyz !"
+"abcdefghijklmnopqrstuvwxyz !"
 > randomDNA(10)
-< "zoveyuktig"
+"zoveyuktig"
 > randomDNA(20)
-< "cjmknglbqqygckmuhchn"
+"cjmknglbqqygckmuhchn"
+```
 
-
-
-​
+Or we could write automated tests that ensure `randomDNA` behaves as
+expected, always returning a string of the right length and always
+returning strings containing only characters from `alphabet`.
