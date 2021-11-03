@@ -37,7 +37,7 @@ stored in memory; it is just the way we write values in a program and
 also how they will usually be displayed back to us by Javascript if we
 print them or they show up in an error message.
 
-Throughout this document I'll can use the arrow symbol, ⟹, to mean
+Throughout this document I'll use the arrow symbol, ⟹, to mean
 "the thing on the left has the value on the right" to illustrate the
 values of different expressions in Javascript. Note: the ⟹ is not part
 of the code; you'll never type it in your programs. With literal
@@ -276,6 +276,7 @@ and how we call them. A function definition starts with the word
 ```
 function double(n) {
   return n * 2;
+}
 ```
 
 The name after `function` is the name of the function being defined.
