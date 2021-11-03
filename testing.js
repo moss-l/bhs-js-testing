@@ -52,7 +52,9 @@ function setup() {
  */
 function testResults(fn) {
   return testData.test_cases[fn].map(c => {
-    const got = window[fn].apply(null, c.input);
+    // Copy arg so test function can't mutate the test data.
+    const argCopy = JSON.parse(JSON.stringify(c.input));
+    const got = window[fn].apply(null, argCopy);
     return {
       input: c.input,
       got: got,
