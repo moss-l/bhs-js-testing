@@ -53,7 +53,7 @@
       "all_positive",
       "same_vowels",
       "times_ten",
-      "shift_right",
+      "types",
       "no_vowels",
       "double_matrix",
       "sum_nums",
@@ -464,6 +464,9 @@
     ],
     "times_ten": [
       {"input": [[2, 5, 9, 10]], "output": [20, 50, 90, 100]}
+    ],
+    "types": [
+      {"input": [[{ name: '' }, 10, "left-side"]], "output": ["Object", "number", "string"]}
     ],
     "shift_right": [
       {"input": [[{"name": ""}, 10, "left-side"]], "output": ["left-side", {"name": ""}, 10]}
