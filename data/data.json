@@ -59,6 +59,7 @@
       "sum_nums",
       "product_matrix",
       "objectify",
+      "average",
       "lucky_numbers"
     ],
     "HL Recursion": [
@@ -485,6 +486,9 @@
     ],
     "objectify": [
       {"input": [[["Thundercats", "80s"], ["The Powerpuff Girls", "90s"], ["Sealab 2021", "00s"]]], "output": {"Thundercats": "80s", "The Powerpuff Girls": "90s", "Sealab 2021": "00s"}}
+    ],
+    "average": [
+      {"input": [[10,15,20,25,30,35]], "output": 22.5}
     ],
     "lucky_numbers": [
       {"input": [[30, 48, 11, 5, 32]], "output": "Your lucky numbers are: 30, 48, 11, 5, and 32"}
