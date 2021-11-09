@@ -466,7 +466,7 @@
       {"input": [[2, 5, 9, 10]], "output": [20, 50, 90, 100]}
     ],
     "types": [
-      {"input": [[{ name: '' }, 10, "left-side"]], "output": ["Object", "number", "string"]}
+      {"input": [[{"name":""}, 10, "left-side"]], "output": ["Object", "number", "string"]}
     ],
     "shift_right": [
       {"input": [[{"name": ""}, 10, "left-side"]], "output": ["left-side", {"name": ""}, 10]}
