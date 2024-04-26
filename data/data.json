@@ -58,7 +58,7 @@
       "double_matrix",
       "sum_nums",
       "product_matrix",
-      "objectify",
+      "average",
       "lucky_numbers"
     ],
     "Recursion": [
@@ -484,8 +484,8 @@
     "product_matrix": [
       {"input": [[[1, 2, 3], [4, 5], [6]]], "output": 720}
     ],
-    "objectify": [
-      {"input": [[["Thundercats", "80s"], ["The Powerpuff Girls", "90s"], ["Sealab 2021", "00s"]]], "output": {"Thundercats": "80s", "The Powerpuff Girls": "90s", "Sealab 2021": "00s"}}
+    "average": [
+      {"input": [[10,20,30,50,100]], "output": 42}
     ],
     "lucky_numbers": [
       {"input": [[30, 48, 11, 5, 32]], "output": "Your lucky numbers are: 30, 48, 11, 5, and 32"}
