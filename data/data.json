@@ -525,7 +525,7 @@
     ],
     "reverseString": [
       {"input": [0], "output": 0},
-      {"input": [0], "output": 0},
+      {"input": [0], "output": 0}
     ],
     "sumDigits": [
       {"input": [0], "output": 0},
