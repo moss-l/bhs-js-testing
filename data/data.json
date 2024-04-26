@@ -65,7 +65,11 @@
       "triangle",
       "fibonacci",
       "countHi",
-      "sumDigits"
+      "sumDigits", 
+      "reverseString",
+      "sumDigits",
+      "palindrome",
+      "binarySearch"
     ]
   },
   "test_cases": {
@@ -518,6 +522,22 @@
       {"input": [235], "output": 10},
       {"input": [49], "output": 13},
       {"input": [730], "output": 10}
+    ],
+    "reverseString": [
+      {"input": [0], "output": 0},
+      {"input": [0], "output": 0},
+    ],
+    "sumDigits": [
+      {"input": [0], "output": 0},
+      {"input": [0], "output": 0}
+    ],
+    "palindrome": [
+      {"input": [0], "output": 0},
+      {"input": [0], "output": 0}
+    ],
+    "binarySearch": [
+      {"input": [0], "output": 0},
+      {"input": [0], "output": 0}
     ]
   }
 }
