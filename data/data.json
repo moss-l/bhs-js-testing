@@ -47,21 +47,21 @@
     "Eat Cake!": [
       "eat_cake"
     ],
-    "HL F/M/R": [
+    "F/M/R": [
       "all_even",
       "no_space",
       "all_positive",
       "same_vowels",
       "times_ten",
-      "types",
+      "shift_right",
       "no_vowels",
       "double_matrix",
       "sum_nums",
       "product_matrix",
-      "average",
+      "objectify",
       "lucky_numbers"
     ],
-    "HL Recursion": [
+    "Recursion": [
       "triangle",
       "fibonacci",
       "countHi",
@@ -454,19 +454,16 @@
       {"input": [[-2, 1, 3, 4, 5, 39, 42]], "output": [-2, 4, 42]}
     ],
     "no_space": [
-      {"input": [["hi", "foo", "what the"]], "output": ["hi", "foo"]}
+      {"input": [["hi", "foo", "what the"]], "output": [["hi", "foo"]]}
     ],
     "all_positive": [
-      {"input": [[[1, 3, 6], [2, 6, 8], [5, 8, 24]]], "output": [[2, 6, 8]]}
+      {"input": [[[1, 3, 6], [2, 6, 8], [5, 8, 24]]], "output": [2, 6, 8]}
     ],
     "same_vowels": [
       {"input": [["racecar", "amalgam", "oligopoly", "zoom"]], "output": ["amalgam", "zoom"]}
     ],
     "times_ten": [
       {"input": [[2, 5, 9, 10]], "output": [20, 50, 90, 100]}
-    ],
-    "types": [
-      {"input": [[{"name":""}, 10, "left-side"]], "output": ["object", "number", "string"]}
     ],
     "shift_right": [
       {"input": [[{"name": ""}, 10, "left-side"]], "output": ["left-side", {"name": ""}, 10]}
@@ -485,9 +482,6 @@
     ],
     "objectify": [
       {"input": [[["Thundercats", "80s"], ["The Powerpuff Girls", "90s"], ["Sealab 2021", "00s"]]], "output": {"Thundercats": "80s", "The Powerpuff Girls": "90s", "Sealab 2021": "00s"}}
-    ],
-    "average": [
-      {"input": [[10,15,20,25,30,35]], "output": 22.5}
     ],
     "lucky_numbers": [
       {"input": [[30, 48, 11, 5, 32]], "output": "Your lucky numbers are: 30, 48, 11, 5, and 32"}
