@@ -533,8 +533,8 @@
     ],
     "palindrome": [
       {"input": ["never odd or even"], "output": true},
-      {"input": ["a man a plan a canal panama"], "output": true}
-      {"input": ["a man a plan a dam panama"], "output": false}
+      {"input": ["a man a plan a canal panama"], "output": true},
+      {"input": ["a man a plan a dam panama"], "output": false},
       {"input": ["odd and even"], "output": false}
     ],
     "binarySearch": [
