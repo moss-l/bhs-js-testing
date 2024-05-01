@@ -535,7 +535,11 @@
       {"input": ["neveroddoreven"], "output": true},
       {"input": ["amanaplanacanalpanama"], "output": true},
       {"input": ["amanaplanadampanama"], "output": false},
-      {"input": ["oddandeven"], "output": false}
+      {"input": ["tacocat"], "output": true},
+      {"input": ["tacodog"], "output": false},
+      {"input": ["racecar"], "output": true},
+      {"input": ["lightningmcqueen"], "output": false}
+
     ],
     "binarySearch": [
       {"input": [[-1,2,3,6,7],3], "output": 2},
