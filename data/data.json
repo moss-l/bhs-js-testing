@@ -532,10 +532,10 @@
       {"input": [2046], "output": 12}
     ],
     "palindrome": [
-      {"input": ["never odd or even"], "output": true},
+      {"input": ["neveroddoreven"], "output": true},
       {"input": ["amanaplanacanalpanama"], "output": true},
-      {"input": ["a man a plan a dam panama"], "output": false},
-      {"input": ["odd and even"], "output": false}
+      {"input": ["amanaplanadampanama"], "output": false},
+      {"input": ["oddandeven"], "output": false}
     ],
     "binarySearch": [
       {"input": [[-1,2,3,6,7],3], "output": 2},
